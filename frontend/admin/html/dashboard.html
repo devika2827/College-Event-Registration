@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h2>CampusHub</h2>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="active">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+
+                <a href="manage-event.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Manage Events
+                </a>
+
+                <a href="registrations.html">
+                    <i class="fa-solid fa-users"></i>
+                    Registrations
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <header class="topbar">
+
+                <h1>Dashboard</h1>
+
+                <div class="profile">
+                    <i class="fa-solid fa-user"></i>
+                    Admin
+                </div>
+
+            </header>
+
+            <section class="cards">
+
+        <div class="stats-grid">
+
+            <div class="stat-card blue">
+                <h4>Total Events</h4>
+                <h2 id="totalEvents">0</h2>
+                <p>All Events</p>
+            </div>
+
+            <div class="stat-card green">
+                <h4>Registrations</h4>
+                <h2 id="totalRegistrations">0</h2>
+                <p>Total Registrations</p>
+            </div>
+
+            <div class="stat-card orange">
+                <h4>Upcoming</h4>
+                <h2 id="upcomingEvents">0</h2>
+                <p>Upcoming Events</p>
+            </div>
+
+            <div class="stat-card red">
+                <h4>Completed</h4>
+                <h2 id="completedEvents">0</h2>
+                <p>Completed Events</p>
+            </div>
+
+        </div>
+
+    </section>
+    <br>
+    <br>
+    <section class="recent-events">
+
+        <div class="section-title">
+            <h2>Upcoming Events</h2>
+            <a href="manage-event.html" class="view-all-btn">
+                View All →
+            </a>
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Event</th>
+                    <th>Date</th>
+                    <th>Days Left</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="upcomingEventsTable">
+
+                <tr>
+                    <td>Hackathon 2026</td>
+                    <td>25 Jul 2026</td>
+                    <td><span class="badge open">Open</span></td>
+                </tr>
+
+                <tr>
+                    <td>AI Workshop</td>
+                    <td>30 Jul 2026</td>
+                    <td><span class="badge closed">Closed</span></td>
+                </tr>
+
+                <tr>
+                    <td>Cultural Fest</td>
+                    <td>12 Aug 2026</td>
+                    <td><span class="badge open">Open</span></td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+        </main>
+
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+
+</body>
+
+</html>

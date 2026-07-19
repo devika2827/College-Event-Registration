@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h2>CampusHub</h2>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" >
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+
+                <a href="manage-events.html" class="active">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Manage Events
+                </a>
+
+                <a href="registrations.html">
+                    <i class="fa-solid fa-users"></i>
+                    Registrations
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <header class="topbar">
+
+                <h1>Manage Events</h1>
+
+                <div class="profile">
+                    <i class="fa-solid fa-user"></i>
+                    Admin
+                </div>
+
+            </header>
+
+            <section class="events-container">
+
+                <div class="events-header">
+
+                    <h2>All Events</h2>
+
+                    <button id="addEventBtn">
+                        <i class="fa-solid fa-plus"></i>
+                        Create Event
+                    </button>
+
+                </div>
+
+                <div class="toolbar">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search events..."
+                    >
+
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="Technical">Technical</option>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Sports">Sports</option>
+                    </select>
+
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Event</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Venue</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="eventTableBody">
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+            <!-- Add Event Modal -->
+
+            <div class="modal" id="eventModal">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h2>Create Event</h2>
+                        <span id="closeModal">&times;</span>
+                    </div>
+
+                    <form id="eventForm">
+
+                        <div class="form-grid">
+
+                            <!-- Event Name -->
+                            <div class="form-group">
+                                <label>Event Name</label>
+                                <input type="text" id="eventName" required>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="form-group">
+                                <label>Category</label>
+
+                                <select id="eventCategory">
+                                    <option>Technical</option>
+                                    <option>Workshop</option>
+                                    <option>Cultural</option>
+                                    <option>Sports</option>
+                                </select>
+                            </div>
+
+                            <!-- Event Date -->
+                            <div class="form-group">
+                                <label>Event Date</label>
+                                <input type="date" id="eventDate" required>
+                            </div>
+
+                            <!-- Registration Deadline -->
+                            <div class="form-group">
+                                <label>Registration Deadline</label>
+                                <input type="date" id="registrationDeadline" required>
+                            </div>
+
+                            <!-- Start Time -->
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="time" id="startTime" required>
+                            </div>
+
+                            <!-- End Time -->
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input type="time" id="endTime" required>
+                            </div>
+
+                            <!-- Venue -->
+                            <div class="form-group">
+                                <label>Venue</label>
+
+                                <select id="eventVenue">
+
+                                    <option value="">Select Venue</option>
+                                    <option>Auditorium</option>
+                                    <option>Seminar Hall</option>
+                                    <option>Innovation Lab</option>
+                                    <option>Room 301</option>
+                                    <option>Room 302</option>
+                                    <option>Basketball Court</option>
+                                    <option>Amphitheatre</option>
+                                    <option value="other">Other</option>
+
+                                </select>
+                            </div>
+
+                            <!-- Capacity -->
+                            <div class="form-group">
+                                <label>Capacity</label>
+                                <input type="number" id="eventCapacity" required>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="form-group">
+                                <label>Status</label>
+
+                                <select id="eventStatus">
+                                    <option>Open</option>
+                                    <option>Closed</option>
+                                </select>
+                            </div>
+
+                            <!-- Custom Venue -->
+                            <div
+                                class="form-group"
+                                id="customVenueGroup"
+                                style="display:none;"
+                            >
+
+                                <label>Custom Venue</label>
+
+                                <input
+                                    type="text"
+                                    id="customVenue"
+                                    placeholder="Enter venue"
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <!-- Description -->
+
+                        <div class="form-group full-width">
+
+                            <label>Description</label>
+
+                            <textarea
+                                id="eventDescription"
+                                rows="5"
+                                placeholder="Write about the event..."
+                            ></textarea>
+
+                        </div>
+
+                        <!-- Banner -->
+
+                        <!-- <div class="form-group full-width">
+
+                            <label>Event Banner</label>
+
+                            <div class="upload-box" id="uploadBox">
+
+                                <input
+                                    type="file"
+                                    id="eventBanner"
+                                    accept="image/*"
+                                    hidden
+                                >
+
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                                <h3>Upload Banner</h3>
+
+                                <p>Click to upload an image</p>
+
+                            </div>
+
+                            <img id="bannerPreview">
+
+                        </div> -->
+
+                        <div class="modal-actions">
+
+                            <button
+                                type="button"
+                                class="cancel-btn"
+                                id="cancelBtn"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="save-btn"
+                            >
+                                Save Event
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal" id="deleteModal">
+
+                <div class="delete-modal">
+
+                    <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
+
+                    <h2>Delete Event?</h2>
+
+                    <p>
+                        This action cannot be undone.
+                    </p>
+
+                    <div class="delete-actions">
+
+                        <button id="cancelDelete" class="cancel-btn">
+                            Cancel
+                        </button>
+
+                        <button id="confirmDelete" class="delete-confirm-btn">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+    <script src="../js/api.js"></script>
+    
+    <script src="../js/manage-event.js"></script>
+
+</body>
+
+</html>
