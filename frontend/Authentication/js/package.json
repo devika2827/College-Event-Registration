@@ -7,6 +7,10 @@
   "type": "commonjs",
   "main": "Login.js",
   "scripts": {
+    "start": "node Login.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }

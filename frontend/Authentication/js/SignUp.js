@@ -1,5 +1,6 @@
 const API_BASE = 'http://localhost:5000/api/auth';
-
+import dotenv from 'dotenv';
+dotenv.config({ path: '../../.env' });
 const form = document.getElementById('signupForm');
 const submitBtn = document.getElementById('submitBtn');
 const toast = document.getElementById('toast');
