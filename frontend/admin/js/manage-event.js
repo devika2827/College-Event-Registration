@@ -1,3 +1,5 @@
+const API_URL = "http://localhost:5001/api/events";
+
 let events = []
 
 let editEventId = null;
