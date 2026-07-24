@@ -1,14 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
 
-dotenv.config();
+import dotenv from "dotenv";
 
-const connectDB = require("./config/db");
+dotenv.config({
+    path: "./.env",
+});
+
+import connectDB from "./config/db.js";
 
 const eventRoutes = require("./routes/eventRoutes");
-
-connectDB();
 
 const app = express();
 
@@ -19,6 +20,13 @@ app.use("/api/events", eventRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+connectDB()
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+})
+.catch((error) => {
+    console.log(error.message);
+    process.exit(1);
 });
