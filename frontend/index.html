@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse Events</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav>
+      <h2>EventHub</h2>
+
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+    </nav>
+
+    <section class="hero">
+      <h1>Browse Events</h1>
+
+      <p>Discover exciting college events.</p>
+    </section>
+
+    <section class="controls">
+      <input type="text" id="search" placeholder="Search events..." />
+
+      <select id="category">
+        <option value="All">All Categories</option>
+        <option value="Tech">Tech</option>
+        <option value="Sports">Sports</option>
+        <option value="Workshop">Workshop</option>
+      </select>
+    </section>
+
+    <section class="cards" id="cards"></section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
