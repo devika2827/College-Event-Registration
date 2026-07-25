@@ -1,13 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 
-dotenv.config({
-    path: "./.env",
-});
+dotenv.config();
 
-import connectDB from "./config/db.js";
+const connectDB = require("./config/db");
 
 const eventRoutes = require("./routes/eventRoutes");
 
