@@ -1,14 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+const dns=require("dns");
 const dotenv = require("dotenv");
-
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 dotenv.config();
 
 const connectDB = require("./config/db");
 
 const eventRoutes = require("./routes/eventRoutes");
-
-connectDB();
 
 const app = express();
 
@@ -19,6 +18,13 @@ app.use("/api/events", eventRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+connectDB()
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+})
+.catch((error) => {
+    console.log(error.message);
+    process.exit(1);
 });
