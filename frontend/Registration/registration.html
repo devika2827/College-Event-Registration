@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | EventHub</title>
+  <link rel="stylesheet" href="registration.css">
+</head>
+<body>
+
+  <!-- ===== Navbar (same structure as your Browse Events page) ===== -->
+  <header class="navbar">
+    <div class="navbar-left">EventHub</div>
+    <nav class="navbar-right">
+      <a href="../index.html">Home</a>
+      <a href="../events/events.html">Events</a>
+      <a href="../profile/profile.html">Profile</a>
+    </nav>
+  </header>
+
+  <main class="registration-page">
+
+    <!-- Page heading -->
+    <section class="page-heading">
+      <h1>Event Registration</h1>
+      <p>Confirm your details to secure your spot.</p>
+    </section>
+
+    <div class="registration-wrapper">
+
+      <!-- ===== LEFT: Event info card (filled in by JS using the event id) ===== -->
+      <section class="event-info-card" id="eventInfoCard">
+        <img id="eventImage" class="event-image" src="" alt="Event banner">
+
+        <div class="event-info-body">
+          <h2 id="eventTitle">Loading event…</h2>
+
+          <ul class="event-meta">
+            <li>📅 <span id="eventDate">--</span></li>
+            <li>📍 <span id="eventLocation">--</span></li>
+            <li>🏷️ Category: <span id="eventCategory">--</span></li>
+            <li>💺 Seats left: <span id="eventSeats">--</span></li>
+          </ul>
+
+          <p id="eventDescription" class="event-description">--</p>
+        </div>
+      </section>
+
+      <!-- ===== RIGHT: Registration form ===== -->
+      <section class="registration-form-card">
+        <h2>Your Details</h2>
+
+        <form id="registrationForm" novalidate>
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="e.g. Aditi Sharma" required>
+            <span class="error-msg" id="fullNameError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">College Email</label>
+            <input type="email" id="email" name="email" placeholder="e.g. aditi@college.edu" required>
+            <span class="error-msg" id="emailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" required>
+            <span class="error-msg" id="phoneError"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="rollNo">Roll No / Student ID</label>
+              <input type="text" id="rollNo" name="rollNo" placeholder="e.g. 21CS045" required>
+              <span class="error-msg" id="rollNoError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="year">Year</label>
+              <select id="year" name="year" required>
+                <option value="">Select year</option>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+                <option value="4">4th Year</option>
+              </select>
+              <span class="error-msg" id="yearError"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="teamName">Team Name (optional)</label>
+            <input type="text" id="teamName" name="teamName" placeholder="Leave blank if solo participant">
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">I agree to the event rules and code of conduct.</label>
+            <span class="error-msg" id="termsError"></span>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submitBtn">Confirm Registration</button>
+        </form>
+
+        <!-- Success state shown after submit -->
+        <div class="success-box" id="successBox" hidden>
+          <h2>🎉 You're registered!</h2>
+          <p>A confirmation has been sent for <strong id="successEventName">this event</strong>.
+             Your registration ID is <strong id="successRegId">--</strong>.</p>
+          <a href="../events/events.html" class="btn-secondary">Back to Events</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="registration.js"></script>
+</body>
+</html>
