@@ -1,43 +1,34 @@
 const events = [
   {
+    id: 1,
     title: "Hackathon 2025",
     category: "Tech",
-    date: "12 July",
-    venue: "Main Hall",
-    image: "https://picsum.photos/400/250?1",
+    date: "12 July 2025",
+    time: "9:00 AM",
+    venue: "Main Auditorium",
+    registrations: 150,
+    lastDate: "5 July 2025",
+    prize: "₹20,000",
+    description: "24-hour coding competition.",
+    rules: ["Bring College ID", "Laptop compulsory", "Maximum 4 members"],
+    image:
+      "https://www.shutterstock.com/image-vector/hackathon-banner-illustration-abstract-futuristic-260nw-1662606928.jpg",
   },
 
   {
-    title: "Football Tournament",
-    category: "Sports",
-    date: "20 July",
-    venue: "Sports Ground",
-    image: "https://picsum.photos/400/250?2",
-  },
-
-  {
+    id: 2,
     title: "AI Workshop",
     category: "Workshop",
-    date: "5 August",
+    date: "18 July 2025",
+    time: "11:00 AM",
     venue: "Lab 3",
-    image: "https://picsum.photos/400/250?3",
-  },
-
-  {
-    title: "Web Development Bootcamp",
-    category: "Workshop",
-    date: "10 August",
-    venue: "Computer Lab",
-    image: "https://picsum.photos/400/250?4",
-  },
-
-  {
-    title: "Coding Contest",
-    category: "Tech",
-    date: "15 August",
-    venue: "Seminar Hall",
+    registrations: 80,
+    lastDate: "15 July 2025",
+    prize: "Certificate",
+    description: "Learn AI and Machine Learning.",
+    rules: ["Notebook required", "Free Entry", "Limited Seats"],
     image:
-      "https://media.istockphoto.com/id/1976099664/photo/artificial-intelligence-processor-concept-ai-big-data-array.jpg?s=612x612&w=0&k=20&c=rTtWP9ywxZM_BygzURikdoWRHnO4ohD73Z-RDAg_u8M=",
+      "https://ieaghg.org/wp-content/uploads/2025/03/AI-in-CCUS-Workshop-AI-Technology-held-in-mans-hand-1.webp",
   },
 ];
 
@@ -70,7 +61,9 @@ Category :
 ${event.category}
 </p>
 
-<button>View Details</button>
+<button onclick="viewDetails(${event.id})">
+    View Details
+</button>
 
 </div>
 
@@ -107,3 +100,11 @@ category.addEventListener("change", () => {
 
   displayEvents(filtered);
 });
+
+function viewDetails(id) {
+  const selectedEvent = events.find((event) => event.id === id);
+
+  localStorage.setItem("selectedEvent", JSON.stringify(selectedEvent));
+
+  window.location.href = "event.html";
+}
