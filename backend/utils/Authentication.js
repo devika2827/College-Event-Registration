@@ -1,4 +1,39 @@
 const mailgen = require('mailgen');
+const nodemailer = require('nodemailer');
+const sendEmail = async (options) => {
+    const mailgenerator = new Mailgen({
+        theme: 'default',
+        product: {
+            name: 'YEvent management',
+            link: 'https://yourcompany.com'
+        }
+    
+    });
+    const emailTextual = mailgenerator.generatePlainText(options.mailgenContent);
+    const emailHtml = mailgenerator.generate(options.mailgenContent);    
+
+    const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    secure: false,
+    auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+    },
+    });
+    const mail = {
+        from: "mittal.diyaa19@gmail.com",
+        to: options.to,
+        subject: options.subject,
+        text: emailTextual,
+        html: emailHtml
+    };
+    try {
+        await transporter.sendMail(mail);
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+};
 
 const emailVerificationTemplate = (username, verificationLink) => {
     return {
@@ -36,3 +71,4 @@ const forgotPasswordTemplate = (username, resetLink) => {
 }
 exports.emailVerificationTemplate = emailVerificationTemplate;
 exports.forgotPasswordTemplate = forgotPasswordTemplate;
+exports.sendEmail = sendEmail;
