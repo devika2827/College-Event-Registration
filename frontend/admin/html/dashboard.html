@@ -24,15 +24,13 @@
 
     <div class="dashboard-container">
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
+        <header class="topbar">
 
             <div class="logo">
-                <h2>CampusHub</h2>
+                <h2>EventHub</h2>
             </div>
 
             <nav>
-
                 <a href="dashboard.html" class="active">
                     <i class="fa-solid fa-house"></i>
                     Dashboard
@@ -47,51 +45,46 @@
                     <i class="fa-solid fa-users"></i>
                     Registrations
                 </a>
-
             </nav>
 
-        </aside>
+            <div class="profile">
+                <i class="fa-solid fa-user"></i>
+                Admin
+            </div>
+
+        </header>
+
 
         <!-- Main Content -->
         <main class="content">
 
-            <header class="topbar">
-
-                <h1>Dashboard</h1>
-
-                <div class="profile">
-                    <i class="fa-solid fa-user"></i>
-                    Admin
-                </div>
-
-            </header>
-
-            <section class="cards">
+        <section class="cards">
+            <h1>Dashboard</h1>
 
         <div class="stats-grid">
 
             <div class="stat-card blue">
                 <h4>Total Events</h4>
                 <h2 id="totalEvents">0</h2>
-                <p>All Events</p>
+                
             </div>
 
             <div class="stat-card green">
                 <h4>Registrations</h4>
                 <h2 id="totalRegistrations">0</h2>
-                <p>Total Registrations</p>
+                
             </div>
 
             <div class="stat-card orange">
                 <h4>Upcoming</h4>
                 <h2 id="upcomingEvents">0</h2>
-                <p>Upcoming Events</p>
+                
             </div>
 
             <div class="stat-card red">
                 <h4>Completed</h4>
                 <h2 id="completedEvents">0</h2>
-                <p>Completed Events</p>
+                
             </div>
 
         </div>

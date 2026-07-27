@@ -49,6 +49,9 @@ async function loadDashboard(){
                 (eventDate - today) / (1000 * 60 * 60 * 24)
             );
 
+            const isClosed = event.status === "Closed" || new Date(event.registrationDeadline) < today;
+            const displayStatus = isClosed ? "Closed" : "Open";
+            
             table.innerHTML += `
 
                 <tr>
@@ -61,9 +64,9 @@ async function loadDashboard(){
 
                     <td>
 
-                        <span class="${event.status === "Open" ? "badge open" : "badge closed"}">
+                        <span class="${isClosed ? "badge closed" : "badge open"}">
 
-                            ${event.status}
+                            ${displayStatus}
 
                         </span>
 

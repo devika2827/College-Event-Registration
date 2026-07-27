@@ -27,23 +27,34 @@ const eventSchema = new mongoose.Schema({
         required:true
     },
 
-    endTime:{
+    teamSize:{
+        type:Number,
+        required:true,
+        min:1
+    },
+
+    organizerName:{
         type:String,
         required:true
     },
 
+    organizerContact:{
+        type:String,
+        required:true
+    },
+    
     venue:{
         type:String,
         required:true
     },
 
-    capacity:{
-        type:Number,
-        required:true
-    },
-
     description:{
         type:String
+    },
+
+    rules: {
+        type: String,
+        default: ""
     },
 
     // banner:{
