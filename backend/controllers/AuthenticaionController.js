@@ -55,7 +55,7 @@ const generateAccessAndRefreshTokens = async (UserID) => {
     }
 
 };
-exports = { regUser };
+module.exports = { regUser };
 
 
 
