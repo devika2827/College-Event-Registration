@@ -4,7 +4,7 @@ const sendEmail = async (options) => {
     const mailgenerator = new Mailgen({
         theme: 'default',
         product: {
-            name: 'YEvent management',
+            name: 'Event management',
             link: 'https://yourcompany.com'
         }
     

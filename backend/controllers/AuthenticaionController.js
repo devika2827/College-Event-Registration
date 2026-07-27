@@ -1,30 +1,52 @@
 const User = require("../models/Authentication");
+const sendEmail = require("../utils/Authentication").sendEmail;
+// Register user
+const regUser = async (req, res) => {
 
-// GET all events
-const getEvents = async (req, res) => {
+    const {email,username, password} = req.body;
 
-    try {
+    const existedUser = await User.findOne({
+        $or: [{email},{username}]
+    });
 
-        const events = await Event.find().sort({ createdAt: -1 });
-
-        res.status(200).json(events);
-
-    } catch (error) {
-
-        res.status(500).json({ message: error.message });
-
+    if (existedUser) {
+        return res.status(400).json({ message: "User already exists" });
     }
 
+    try {
+        const user = await User.create({ email, username, password, isEmailVerified: false });
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+    const  { unHashedToken, hashedToken, expiryTime } = user.generateTemporaryToken();
+    user.emailVerificationToken = hashedToken;
+    user.emailVerificationExpiry = expiryTime;
+    await user.save({ validateBeforeSave: false });
+    const verificationLink = `${process.env.FRONTEND_URL}/verify-email/${unHashedToken}`;
+    const mailgenContent = emailVerificationTemplate(user.username, verificationLink);
+    await sendEmail({
+        to: user?.email,
+        subject: 'Email Verification',
+        mailgenContent: emailgenContent(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${unHashedToken}`)
+    });
+    await user.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
+    if(!createdUser){
+        return res.status(400).json({ message: "User not found" });
+    }
+    return res.status(201).json({ message: "User registered successfully", user: createdUser });
 };
 
-// CREATE event
-const createEvent = async (req, res) => {
+const generateAccessAndRefreshTokens = async (UserID) => {
 
     try {
 
-        const event = await Event.create(req.body);
-
-        res.status(201).json(event);
+        const user = await User.findByIdAndUpdate(UserID, { refreshToken: user.generateRefreshToken() });
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+        user.refreshToken = refreshToken;
+        await user.save({ validateBeforeSave: false });
+        return { accessToken, refreshToken };
 
     } catch (error) {
 
@@ -33,78 +55,7 @@ const createEvent = async (req, res) => {
     }
 
 };
+exports = { regUser };
 
-// UPDATE event
-const updateEvent = async (req, res) => {
 
-    try {
 
-        const event = await Event.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true
-            }
-        );
-
-        if (!event) {
-
-            return res.status(404).json({
-                message: "Event not found"
-            });
-
-        }
-
-        res.json(event);
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
-    }
-
-};
-
-// DELETE event
-const deleteEvent = async (req, res) => {
-
-    try {
-
-        const event = await Event.findByIdAndDelete(req.params.id);
-
-        if (!event) {
-
-            return res.status(404).json({
-                message: "Event not found"
-            });
-
-        }
-
-        res.json({
-            message: "Event deleted successfully"
-        });
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
-
-};
-
-module.exports = {
-
-    getEvents,
-
-    createEvent,
-
-    updateEvent,
-
-    deleteEvent
-
-};
