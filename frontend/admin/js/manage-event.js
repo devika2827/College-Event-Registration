@@ -36,6 +36,16 @@ const cancelDeleteBtn = document.getElementById("cancelDelete");
 let deleteEventId = null;
 
 const venueSelect = document.getElementById("eventVenue");
+venueSelect.addEventListener("change", () => {
+
+if(venueSelect.value === "other"){
+    customVenueGroup.style.display = "flex";
+}
+else{
+    customVenueGroup.style.display = "none";
+}
+});
+    
 const customVenueGroup = document.getElementById("customVenueGroup");
 
 // const uploadBox = document.getElementById("uploadBox");
@@ -94,6 +104,9 @@ function displayEvents(filteredEvents = events) {
     }
 
     filteredEvents.forEach((event) => {
+        
+        const isClosed = event.status === "Closed" || new Date(event.registrationDeadline) < new Date();
+        const displayStatus = isClosed ? "Closed" : "Open";
 
         tableBody.innerHTML += `
 
@@ -101,12 +114,12 @@ function displayEvents(filteredEvents = events) {
 
             <td>${event.name}</td>
             <td>${event.category}</td>
-            <<td>${new Date(event.date).toLocaleDateString("en-GB")}</td>
+            <td>${new Date(event.date).toLocaleDateString("en-GB")}</td>
             <td>${event.venue}</td>
 
             <td>
-                <span class="${event.status === "Open" ? "open badge" : "closed badge"}">
-                    ${event.status}
+                <span class="${isClosed ? "closed badge" : "open badge"}">
+                    ${displayStatus}
                 </span>
             </td>
 
@@ -115,14 +128,14 @@ function displayEvents(filteredEvents = events) {
                     class="edit-btn"
                     onclick="editEvent('${event._id}')"
                 >
-                    <i class="fa-solid fa-pen"></i>
+                    <p>Edit</p>
                 </button>
 
                 <button
                     class="delete-btn"
                     onclick="deleteEvent('${event._id}')"
                 >
-                    <i class="fa-solid fa-trash"></i>
+                    <p>Delete</p>
                 </button>
             </td>
 
@@ -146,8 +159,10 @@ function editEvent(id){
     document.getElementById("eventDate").value = event.date.split("T")[0];
     document.getElementById("registrationDeadline").value = event.registrationDeadline || "";
     document.getElementById("startTime").value = event.startTime || "";
-    document.getElementById("endTime").value = event.endTime || "";
-
+    document.getElementById("teamSize").value = event.teamSize || "";
+    document.getElementById("organizerName").value = event.organizerName || "";
+    document.getElementById("organizerContact").value = event.organizerContact || "";
+    
     if([
         "Auditorium",
         "Seminar Hall",
@@ -169,10 +184,9 @@ function editEvent(id){
 
     }
 
-    document.getElementById("eventCapacity").value = event.capacity;
     document.getElementById("eventStatus").value = event.status;
     document.getElementById("eventDescription").value = event.description || "";
-
+    document.getElementById("eventRules").value = event.rules || "";
     document.querySelector(".modal-header h2").textContent = "Edit Event";
 
     modal.style.display = "flex";
@@ -220,8 +234,6 @@ confirmDeleteBtn.onclick = async () => {
 
     deleteModal.style.display="none";
 
-    deleteModal.style.display = "none";
-
 };
 
 cancelDeleteBtn.onclick = () => {
@@ -250,27 +262,19 @@ form.addEventListener("submit", async function(e){
         
 
         name: document.getElementById("eventName").value,
-
         category: document.getElementById("eventCategory").value,
-
         date: document.getElementById("eventDate").value,
-
         registrationDeadline: document.getElementById("registrationDeadline").value,
-
         venue: venueSelect.value === "other"
                 ? document.getElementById("customVenue").value
                 : venueSelect.value,
-
-        capacity: document.getElementById("eventCapacity").value,
-
         status: document.getElementById("eventStatus").value,
-
         startTime: document.getElementById("startTime").value,
-
-        endTime: document.getElementById("endTime").value,
-
+        teamSize: document.getElementById("teamSize").value,
+        organizerName: document.getElementById("organizerName").value,
+        organizerContact: document.getElementById("organizerContact").value,
         description: document.getElementById("eventDescription").value,
-
+        rules: document.getElementById("eventRules").value,
         // banner: document.getElementById("eventBanner").files[0]
         //     ? document.getElementById("eventBanner").files[0].name
         //     : "No Banner",
@@ -290,29 +294,22 @@ form.addEventListener("submit", async function(e){
         alert("Registration deadline must be between today and the event date.");
         return;
     }
-
-    if (newEvent.endTime <= newEvent.startTime) {
-        alert("End time must be after start time.");
+    
+    if (newEvent.teamSize <= 0) {
+        alert("Team size must be at least 1.");
         return;
     }
 
+    if (!/^\d{10}$/.test(newEvent.organizerContact)) {
+        alert("Enter a valid 10-digit contact number.");
+        return;
+    }
+
+
+
     
 
-    venueSelect.addEventListener("change", () => {
 
-        if(venueSelect.value === "other"){
-
-            customVenueGroup.style.display = "flex";
-
-        }
-
-        else{
-
-            customVenueGroup.style.display = "none";
-
-        }
-
-    });
 
     if(editEventId){
 
@@ -366,12 +363,13 @@ const statusFilter = document.getElementById("statusFilter");
 function filterEvents(){
 
     const search = searchInput.value.toLowerCase();
-
     const category = categoryFilter.value;
-
     const status = statusFilter.value;
 
     const filtered = events.filter(event =>{
+
+        const isClosed = event.status === "Closed" || new Date(event.registrationDeadline) < new Date();
+        const computedStatus = isClosed ? "Closed" : "Open";
 
         const matchesSearch =
 
@@ -385,7 +383,7 @@ function filterEvents(){
             !category || event.category === category;
 
         const matchesStatus =
-            !status || event.status === status;
+            !status || computedStatus === status;
 
         return matchesSearch &&
                matchesCategory &&
