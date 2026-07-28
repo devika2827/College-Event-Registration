@@ -6,9 +6,7 @@ const events = [
     date: "12 July 2025",
     time: "9:00 AM",
     venue: "Main Auditorium",
-    registrations: 150,
     lastDate: "5 July 2025",
-    prize: "₹20,000",
     description: "24-hour coding competition.",
     rules: ["Bring College ID", "Laptop compulsory", "Maximum 4 members"],
     image:
@@ -22,9 +20,7 @@ const events = [
     date: "18 July 2025",
     time: "11:00 AM",
     venue: "Lab 3",
-    registrations: 80,
     lastDate: "15 July 2025",
-    prize: "Certificate",
     description: "Learn AI and Machine Learning.",
     rules: ["Notebook required", "Free Entry", "Limited Seats"],
     image:
