@@ -3,7 +3,7 @@ const sendEmail = require("../utils/Authentication").sendEmail;
 // Register user
 const regUser = async (req, res) => {
 
-    const {email,username, password} = req.body;
+    const {name, email, username, password} = req.body;
 
     const existedUser = await User.findOne({
         $or: [{email},{username}]
@@ -12,9 +12,9 @@ const regUser = async (req, res) => {
     if (existedUser) {
         return res.status(400).json({ message: "User already exists" });
     }
-
+    let user;
     try {
-        const user = await User.create({ email, username, password, isEmailVerified: false });
+        user = await User.create({ name, email, username, password, isEmailVerified: false });
         res.status(201).json(user);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -37,23 +37,39 @@ const regUser = async (req, res) => {
     return res.status(201).json({ message: "User registered successfully", user: createdUser });
 };
 
+// const generateAccessAndRefreshTokens = async (UserID) => {
+
+//     try {
+
+//         const user = await User.findByIdAndUpdate(UserID, { refreshToken: user.generateRefreshToken() });
+//         const accessToken = user.generateAccessToken();
+//         const refreshToken = user.generateRefreshToken();
+//         user.refreshToken = refreshToken;
+//         await user.save({ validateBeforeSave: false });
+//         return { accessToken, refreshToken };
+
+//     } catch (error) {
+
+//         res.status(400).json({ message: error.message });
+
+//     }
+
+// };
 const generateAccessAndRefreshTokens = async (UserID) => {
-
     try {
+        const user = await User.findById(UserID);
 
-        const user = await User.findByIdAndUpdate(UserID, { refreshToken: user.generateRefreshToken() });
         const accessToken = user.generateAccessToken();
         const refreshToken = user.generateRefreshToken();
+
         user.refreshToken = refreshToken;
         await user.save({ validateBeforeSave: false });
+
         return { accessToken, refreshToken };
 
     } catch (error) {
-
-        res.status(400).json({ message: error.message });
-
+        throw error;
     }
-
 };
 
 const loginUser = async (req, res) => {

@@ -28,8 +28,7 @@ loginForm.addEventListener("submit", async (e) => {
         const data = await response.json();
 
         if (response.ok) {
-            alert("Login successful!");
-            console.log(data);
+             window.location.href = "../../student-dashboard/index.html";
 
             // Redirect after successful login if needed
             // window.location.href = "../Dashboard/dashboard.html";
