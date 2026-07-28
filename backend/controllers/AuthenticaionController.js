@@ -1,8 +1,4 @@
 const { User } = require("../models/Authentication");
-
-console.log(User);
-console.log(typeof User);
-console.log(User.findOne);
 const sendEmail = require("../utils/Authentication").sendEmail;
 // Register user
 const regUser = async (req, res) => {
