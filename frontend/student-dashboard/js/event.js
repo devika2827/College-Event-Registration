@@ -10,11 +10,7 @@ document.getElementById("time").innerHTML = event.time;
 
 document.getElementById("venue").innerHTML = event.venue;
 
-document.getElementById("registrations").innerHTML = event.registrations;
-
 document.getElementById("lastDate").innerHTML = event.lastDate;
-
-document.getElementById("prize").innerHTML = event.prize;
 
 document.getElementById("description").innerHTML = event.description;
 
