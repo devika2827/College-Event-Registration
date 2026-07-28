@@ -42,7 +42,7 @@ const eventSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    
+
     venue:{
         type:String,
         required:true
@@ -57,9 +57,10 @@ const eventSchema = new mongoose.Schema({
         default: ""
     },
 
-    // banner:{
-    //     type:String
-    // },
+    banner:{
+        type:String,
+        default:""
+    },
 
     status:{
         type:String,
