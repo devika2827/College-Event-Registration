@@ -48,29 +48,29 @@ else{
     
 const customVenueGroup = document.getElementById("customVenueGroup");
 
-// const uploadBox = document.getElementById("uploadBox");
-// const bannerInput = document.getElementById("eventBanner");
-// const preview = document.getElementById("bannerPreview");
+const uploadBox = document.getElementById("uploadBox");
+const bannerInput = document.getElementById("eventBanner");
+const preview = document.getElementById("bannerPreview");
 
-// uploadBox.addEventListener("click", () => {
+uploadBox.addEventListener("click", () => {
 
-//     bannerInput.click();
+    bannerInput.click();
 
-// });
+});
 
-// bannerInput.addEventListener("change", function () {
+bannerInput.addEventListener("change", function () {
 
-//     const file = this.files[0];
+    const file = this.files[0];
 
-//     if(file){
+    if(file){
 
-//         preview.src = URL.createObjectURL(file);
+        preview.src = URL.createObjectURL(file);
 
-//         preview.style.display = "block";
+        preview.style.display = "block";
 
-//     }
+    }
 
-// });
+});
 
 
 // Form
@@ -162,7 +162,7 @@ function editEvent(id){
     document.getElementById("teamSize").value = event.teamSize || "";
     document.getElementById("organizerName").value = event.organizerName || "";
     document.getElementById("organizerContact").value = event.organizerContact || "";
-    
+
     if([
         "Auditorium",
         "Seminar Hall",
