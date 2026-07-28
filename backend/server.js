@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const dns=require("dns");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 dotenv.config();
 
@@ -12,9 +14,12 @@ const authRoutes = require("./routes/AuthenticationRoutes");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "http://127.0.0.1:5500", // Change if your frontend runs on another URL
+    credentials: true,
+}));
 app.use(express.json());
-
+app.use(cookieParser());
 app.use("/api/events", eventRoutes);
 app.use("/api/v1/auth", authRoutes);
 
