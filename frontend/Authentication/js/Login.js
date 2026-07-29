@@ -1,4 +1,23 @@
 const loginForm = document.getElementById("loginForm");
+document.querySelectorAll(".toggle-eye").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        console.log("Eye clicked");
+
+        const input = document.getElementById(button.dataset.target);
+
+        console.log(input);
+
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
+        }
+
+    });
+
+});
 
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
