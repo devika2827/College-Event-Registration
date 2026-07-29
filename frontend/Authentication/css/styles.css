@@ -71,7 +71,7 @@ form {
   gap: 14px;
 }
 
-.field { display: flex; flex-direction: column; gap: 6px; }
+.field { display: flex; flex-direction: column; }
 
 .input-wrap { position: relative; display: flex; align-items: center; }
 
@@ -133,7 +133,7 @@ form {
 .role-pill {
   flex: 1;
   text-align: center;
-  padding: 11px;
+
   font-size: 13.5px;
   font-weight: 600;
   color: var(--muted);
