@@ -36,25 +36,6 @@ const regUser = async (req, res) => {
     }
     return res.status(201).json({ message: "User registered successfully", user: createdUser });
 };
-
-// const generateAccessAndRefreshTokens = async (UserID) => {
-
-//     try {
-
-//         const user = await User.findByIdAndUpdate(UserID, { refreshToken: user.generateRefreshToken() });
-//         const accessToken = user.generateAccessToken();
-//         const refreshToken = user.generateRefreshToken();
-//         user.refreshToken = refreshToken;
-//         await user.save({ validateBeforeSave: false });
-//         return { accessToken, refreshToken };
-
-//     } catch (error) {
-
-//         res.status(400).json({ message: error.message });
-
-//     }
-
-// };
 const generateAccessAndRefreshTokens = async (UserID) => {
     try {
         const user = await User.findById(UserID);
@@ -121,8 +102,28 @@ const loginUser = async (req, res) => {
 
 };
 
+const LogoutUser = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+        user.refreshToken = undefined;
+        user.new= true;
+        const options = {
+            httpOnly: true,
+            secure: true
+        };
+        await user.save({ validateBeforeSave: false });
+        return res.status(200)
+                .clearCookie("accessToken", options)
+                .clearCookie("refreshToken", options)
+                .json({ message: "User logged out successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 
-module.exports = { regUser, loginUser };
+
+module.exports = { regUser, loginUser, LogoutUser };
 
 
 
