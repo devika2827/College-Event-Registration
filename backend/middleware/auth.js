@@ -1,7 +1,7 @@
 const { User } = require("../models/Authentication");
 const jwt = require("jsonwebtoken");
 
-export const verifyToken = async (req, res,next) => {
+const verifyToken = async (req, res,next) => {
     const token = req.cookies?.accessToken || req.header("authorization")?.replace("Bearer ", "");
     if (!token) {
         return res.status(401).json({ message: "Unauthorized request" });
@@ -18,3 +18,5 @@ export const verifyToken = async (req, res,next) => {
         return res.status(401).json({ message: "Unauthorized request" });
     }
 }
+
+module.exports = { verifyToken };
