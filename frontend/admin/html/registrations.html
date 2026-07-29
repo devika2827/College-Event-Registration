@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- Top Bar -->
+        <header class="topbar">
+
+            <div class="logo">
+                <h2>EventHub</h2>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+
+                <a href="manage-event.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Manage Events
+                </a>
+
+                <a href="registrations.html" class="active">
+                    <i class="fa-solid fa-users"></i>
+                    Registrations
+                </a>
+
+            </nav>
+
+            <div class="profile">
+                <i class="fa-solid fa-user"></i>
+                Admin
+            </div>
+
+        </header>
+
+        <!-- Main Content -->
+        <main class="manage-event">
+
+            <section class="events-container">
+
+                <div class="events-header">
+                    <h2>All Registrations</h2>
+                </div>
+
+                <div class="toolbar">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by leader name or email..."
+                    >
+
+                    <select id="eventFilter">
+                        <option value="">All Events</option>
+                    </select>
+
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Team Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Team Size</th>
+                                <th>Registered On</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="registrationTableBody"></tbody>
+
+                    </table>
+                </div>
+
+            </section>
+
+            <!-- Team Details Modal -->
+            <div class="modal" id="teamModal">
+
+                <div class="modal-content" style="width:450px;">
+
+                    <div class="modal-header">
+                        <h2>Team Details</h2>
+                        <span id="closeTeamModal">&times;</span>
+                    </div>
+
+                    <div id="teamModalBody"></div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="../js/registrations.js"></script>
+
+</body>
+
+</html>
