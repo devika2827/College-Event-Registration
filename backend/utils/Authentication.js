@@ -1,7 +1,7 @@
 const mailgen = require('mailgen');
 const nodemailer = require('nodemailer');
 const sendEmail = async (options) => {
-    const mailgenerator = new Mailgen({
+    const mailgenerator = new mailgen({
         theme: 'default',
         product: {
             name: 'Event management',
@@ -9,7 +9,6 @@ const sendEmail = async (options) => {
         }
     
     });
-    const emailTextual = mailgenerator.generatePlainText(options.mailgenContent);
     const emailHtml = mailgenerator.generate(options.mailgenContent);    
 
     const transporter = nodemailer.createTransport({
@@ -22,10 +21,9 @@ const sendEmail = async (options) => {
     },
     });
     const mail = {
-        from: "mittal.diyaa19@gmail.com",
+        from: process.env.MAIL_USER,
         to: options.to,
         subject: options.subject,
-        text: emailTextual,
         html: emailHtml
     };
     try {
@@ -35,7 +33,7 @@ const sendEmail = async (options) => {
     }
 };
 
-const emailVerificationTemplate = (username, verificationLink) => {
+const emailVerificationMail = (username, verificationLink) => {
     return {
         body: {
             name: username,
@@ -69,6 +67,6 @@ const forgotPasswordTemplate = (username, resetLink) => {
         }
     };
 }
-exports.emailVerificationTemplate = emailVerificationTemplate;
+exports.emailVerificationMail = emailVerificationMail;
 exports.forgotPasswordTemplate = forgotPasswordTemplate;
 exports.sendEmail = sendEmail;

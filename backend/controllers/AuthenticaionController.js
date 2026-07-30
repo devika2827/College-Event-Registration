@@ -1,5 +1,7 @@
 const { User } = require("../models/Authentication");
+const { emailVerificationMail } = require("../utils/Authentication");
 const sendEmail = require("../utils/Authentication").sendEmail;
+const crypto = require("crypto");
 // Register user
 const regUser = async (req, res) => {
 
@@ -15,22 +17,20 @@ const regUser = async (req, res) => {
     let user;
     try {
         user = await User.create({ name, email, username, password, isEmailVerified: false });
-        res.status(201).json(user);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        return res.status(400).json({ message: error.message });
+        
     }
     const  { unHashedToken, hashedToken, expiryTime } = user.generateTemporaryToken();
     user.emailVerificationToken = hashedToken;
     user.emailVerificationExpiry = expiryTime;
     await user.save({ validateBeforeSave: false });
-    const verificationLink = `${process.env.FRONTEND_URL}/verify-email/${unHashedToken}`;
-    const mailgenContent = emailVerificationTemplate(user.username, verificationLink);
     await sendEmail({
         to: user?.email,
         subject: 'Email Verification',
-        mailgenContent: emailgenContent(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${unHashedToken}`)
+        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${unHashedToken}`)
     });
-    await user.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
+    const createdUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
     if(!createdUser){
         return res.status(400).json({ message: "User not found" });
     }
@@ -107,7 +107,9 @@ const LogoutUser = async (req, res) => {
         const userId = req.user._id;
         const user = await User.findById(userId);
         user.refreshToken = undefined;
-        user.new= true;
+        if(!user){
+            return res.status(404).json({ message: "User not found" });
+        }
         const options = {
             httpOnly: true,
             secure: true
@@ -128,7 +130,7 @@ const getCurrentUser = async (req, res) => {
     .json({ user: req.user, message: "Current user retrieved successfully" });
 }
 
-const emailVerificationTemplate = async(req, res)=> {
+const verifyEmail = async(req, res)=> {
     const {verificationToken} = req.params;
     if(!verificationToken){
         return res.status(400).json({ message: "Verification token is required" });
@@ -144,14 +146,15 @@ const emailVerificationTemplate = async(req, res)=> {
     if(!user){
         return res.status(400).json({ message: "Invalid or Expired verification token" });
     }
-    user.emailVerified = true;
+    user.isEmailVerified = true;
     user.emailVerificationToken = undefined;
     user.emailVerificationExpiry = undefined;
     await user.save({ validateBeforeSave: false });
     return res.status(200).json({ message: "Email verified successfully" });
 }
+const resendVerificationEmail = async (req, res) => {
+}
 
-module.exports = { regUser, loginUser, LogoutUser, getCurrentUser, emailVerificationTemplate };
 
-
+module.exports = { regUser, loginUser, LogoutUser, getCurrentUser, verifyEmail, resendVerificationEmail };
 
