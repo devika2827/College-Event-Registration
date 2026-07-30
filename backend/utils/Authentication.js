@@ -50,7 +50,7 @@ const emailVerificationMail = (username, verificationLink) => {
         }
     };
 }
-const forgotPasswordTemplate = (username, resetLink) => {
+const forgotPasswordMail = (username, resetLink) => {
     return {
         body: {
             name: username,
@@ -68,5 +68,5 @@ const forgotPasswordTemplate = (username, resetLink) => {
     };
 }
 exports.emailVerificationMail = emailVerificationMail;
-exports.forgotPasswordTemplate = forgotPasswordTemplate;
+exports.forgotPasswordMail = forgotPasswordMail;
 exports.sendEmail = sendEmail;

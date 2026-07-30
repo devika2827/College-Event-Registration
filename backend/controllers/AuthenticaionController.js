@@ -2,6 +2,7 @@ const { User } = require("../models/Authentication");
 const { emailVerificationMail } = require("../utils/Authentication");
 const sendEmail = require("../utils/Authentication").sendEmail;
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 // Register user
 const regUser = async (req, res) => {
 
@@ -153,8 +154,82 @@ const verifyEmail = async(req, res)=> {
     return res.status(200).json({ message: "Email verified successfully" });
 }
 const resendVerificationEmail = async (req, res) => {
+    const User=findById(req.user._id);
+    if(!User){
+        return res.status(409).json({ message: "User not found" });
+    }
+    if(user.isEmailVerified){
+        return res.status(409).json({ message: "Email already verified" });
+    }
+    const  { unHashedToken, hashedToken, expiryTime } = user.generateTemporaryToken();
+    user.emailVerificationToken = hashedToken;
+    user.emailVerificationExpiry = expiryTime;
+    await user.save({ validateBeforeSave: false });
+    await sendEmail({
+        to: user?.email,
+        subject: 'Email Verification',
+        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${unHashedToken}`)
+    });
+    return res.status(201).json({ message: "User registered successfully", user: createdUser });
+
+}
+const refreshAccessToken = async (req, res) => {
+    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+    if (!incomingRefreshToken) {
+        return res.status(401).json({ message: "Refresh token is required" });
+    }
+    try{
+        const decodedtoken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET);
+        const user=await User.findById(decodedtoken?._id);
+        if (!user){
+            return res.status(401).json({ message: "Invalid refresh token" });
+        }
+        if(user.refreshToken !== incomingRefreshToken){
+            return res.status(401).json({ message: "Refresh token is expired" });
+        }
+        const options = {
+            httpOnly: true,
+            secure: true
+        };
+        const { accessToken, refreshToken: newrefreshToken } = await generateAccessAndRefreshTokens(user._id);
+        user.refreshToken = newrefreshToken;
+        await user.save();
+        return res.status(200)
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", newrefreshToken, options)
+            .json({
+                success: true,
+                accessToken,
+                refreshToken: newrefreshToken,
+                message: "Access token refreshed successfully"
+            });
+    } catch (error) {
+        return res.status(403).json({ message: "Invalid refresh token" });
+    }
+}
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    const { unHashedToken, hashedToken, expiryTime } = user.generateTemporaryToken();
+    user.forgotPasswordToken = hashedToken;
+    user.forgotPasswordTokenExpiry = expiryTime;
+    await user.save({ validateBeforeSave: false });
+    await sendEmail({
+        to: user?.email,
+        subject: 'Password Reset',
+        mailgenContent: forgotPasswordMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/reset-password/${unHashedToken}`)
+    });
+    return res.status(200).json({ message: "Password reset email sent successfully" });
+}
+const resetforgotPassword = async (req, res) => {
+    
 }
 
-
-module.exports = { regUser, loginUser, LogoutUser, getCurrentUser, verifyEmail, resendVerificationEmail };
+module.exports = { regUser, loginUser, LogoutUser, 
+    getCurrentUser, verifyEmail, 
+    resendVerificationEmail,refreshAccessToken, 
+    forgotPassword, resetforgotPassword };
 
