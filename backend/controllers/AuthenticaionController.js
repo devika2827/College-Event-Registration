@@ -53,7 +53,6 @@ const generateAccessAndRefreshTokens = async (UserID) => {
         throw error;
     }
 };
-
 const loginUser = async (req, res) => {
 
     const { username, password,email } = req.body;
@@ -102,7 +101,6 @@ const loginUser = async (req, res) => {
     }
 
 };
-
 const LogoutUser = async (req, res) => {
     try {
         const userId = req.user._id;
@@ -124,13 +122,11 @@ const LogoutUser = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
-
 const getCurrentUser = async (req, res) => {
     return res
     .status(200)
     .json({ user: req.user, message: "Current user retrieved successfully" });
-}
-
+};
 const verifyEmail = async(req, res)=> {
     const {verificationToken} = req.params;
     if(!verificationToken){
@@ -152,7 +148,7 @@ const verifyEmail = async(req, res)=> {
     user.emailVerificationExpiry = undefined;
     await user.save({ validateBeforeSave: false });
     return res.status(200).json({ message: "Email verified successfully" });
-}
+};
 const resendVerificationEmail = async (req, res) => {
     const User=findById(req.user._id);
     if(!User){
@@ -172,7 +168,7 @@ const resendVerificationEmail = async (req, res) => {
     });
     return res.status(201).json({ message: "User registered successfully", user: createdUser });
 
-}
+};
 const refreshAccessToken = async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
     if (!incomingRefreshToken) {
@@ -206,7 +202,7 @@ const refreshAccessToken = async (req, res) => {
     } catch (error) {
         return res.status(403).json({ message: "Invalid refresh token" });
     }
-}
+};
 const forgotPassword = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -223,10 +219,9 @@ const forgotPassword = async (req, res) => {
         mailgenContent: forgotPasswordMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/reset-password/${unHashedToken}`)
     });
     return res.status(200).json({ message: "Password reset email sent successfully" });
-}
+};
 const resetforgotPassword = async (req, res) => {
-    
-}
+};
 
 module.exports = { regUser, loginUser, LogoutUser, 
     getCurrentUser, verifyEmail, 
