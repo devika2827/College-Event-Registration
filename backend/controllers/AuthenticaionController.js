@@ -17,7 +17,7 @@ const regUser = async (req, res) => {
     }
     let user;
     try {
-        user = await User.create({ name, email, username, password, isEmailVerified: false });
+        user = await User.create({ name, email, username, password, Verified: false });
     } catch (error) {
         return res.status(400).json({ message: error.message });
         
