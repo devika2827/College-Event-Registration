@@ -3,7 +3,7 @@ const { emailVerificationMail } = require("../utils/Authentication");
 const sendEmail = require("../utils/Authentication").sendEmail;
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-// Register user
+
 const regUser = async (req, res) => {
 
     const {name, email, username, password} = req.body;
@@ -221,8 +221,25 @@ const forgotPassword = async (req, res) => {
     return res.status(200).json({ message: "Password reset email sent successfully" });
 };
 const resetforgotPassword = async (req, res) => {
-};
+    const {ResetToken} = req.params
+    const {newPassword} = req.body
 
+    let hashedToken= crypto
+    .createHash("sha256")
+    .update(ResetToken)
+    .digest("hex")
+
+    const user=await User.findOne({
+        forgotPasswordToken:hashedToken,
+        forgotPasswordTokenExpiry:{ $gt: Date.now()}
+    })
+    if(!user){
+        return res.status(489).json({ message: "Token is invalid or expired"})
+    }
+    
+
+
+};
 module.exports = { regUser, loginUser, LogoutUser, 
     getCurrentUser, verifyEmail, 
     resendVerificationEmail,refreshAccessToken, 
