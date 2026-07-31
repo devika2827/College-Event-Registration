@@ -143,7 +143,7 @@ const verifyEmail = async(req, res)=> {
     if(!user){
         return res.status(400).json({ message: "Invalid or Expired verification token" });
     }
-    user.isEmailVerified = true;
+    user.Verified = true;
     user.emailVerificationToken = undefined;
     user.emailVerificationExpiry = undefined;
     await user.save({ validateBeforeSave: false });
@@ -154,7 +154,7 @@ const resendVerificationEmail = async (req, res) => {
     if(!User){
         return res.status(409).json({ message: "User not found" });
     }
-    if(user.isEmailVerified){
+    if(user.Verified){
         return res.status(409).json({ message: "Email already verified" });
     }
     const  { unHashedToken, hashedToken, expiryTime } = user.generateTemporaryToken();
