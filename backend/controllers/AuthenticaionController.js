@@ -240,7 +240,7 @@ const resetforgotPassword = async (req, res) => {
     user.forgotPasswordTokenExpiry=undefined;
 
     user.password=newPassword;
-    await user.save({ validateBeforeSave=false});
+    await user.save({ validateBeforeSave:false});
 
     return res.status(200).json({ message: "Password reset succesfully"});
 };
