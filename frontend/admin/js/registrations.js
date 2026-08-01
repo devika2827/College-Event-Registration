@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:5001/api/events";
-const EVENTS_API_URL = "http://localhost:5001/api/events";
+const API_URL = "http://localhost:8000/api/events";
+const EVENTS_API_URL = "http://localhost:8000/api/events";
 
 let registrations = [];
 let events = [];

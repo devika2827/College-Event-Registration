@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5001/api/events";
+const API_URL = "http://localhost:8000/api/events";
 
 // fetchEvents()
 const response = await fetch(API_URL, { credentials: "include" });

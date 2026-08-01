@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5001/api/events";
+const API_URL = "http://localhost:8000/api/events";
 const response = await fetch(`${API_URL}/my`, { credentials: "include" });
 
 async function loadDashboard(){

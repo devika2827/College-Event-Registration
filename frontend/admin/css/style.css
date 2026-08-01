@@ -19,30 +19,60 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    background: #1e293b;
+    background: linear-gradient(90deg, #6d0b17, #4b46df);
     color: white;
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: 20px 40px; */
     z-index: 1000;
+}
+
+.topbar-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.topbar-right{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.student-link{
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: .3s;
+}
+
+.student-link:hover{
+    color: white;
 }
 
 .logo{
     flex-shrink: 0;
 }
 
-.topbar nav{
+.topbar-nav{
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 35px;
     flex-wrap: wrap;
-    flex: 1;
+    padding: 14px 40px;
 }
 
 .profile{
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
 }
 
 .topbar nav a{
@@ -56,10 +86,11 @@ body{
     transition:.3s;
 }
 
-.topbar nav a:hover{
+.topbar-nav a:hover{
     background:#334155;
     color:white;
 }
+
 
 .topbar nav .active{
     background:#2563eb;
@@ -549,7 +580,6 @@ body.modal-open{
     }
 
     .profile {
-        padding-top: 12px;
         align-self: flex-start;
     }
 
