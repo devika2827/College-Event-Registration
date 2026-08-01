@@ -18,8 +18,23 @@
       <h2>EventHub</h2>
 
       <ul>
-        <li><a href="../admin/html/dashboard.html">Host</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><button id="host"><a href="../admin/html/dashboard.html">Host</a></button></li>
+        <li> <div class="profile-container">
+        <button id="profileBtn">Profile </button>
+
+        <div id="profileDropdown" class="dropdown">
+            <div class="user-info">
+                <p id="userName">name</p>
+                <p id="userUsername">username</p>
+                <p id="userEmail">email</p>
+            </div>
+
+            <hr>
+
+            <a href="reset-password.html">🔒 Reset Password</a>
+            <a href="#" id="logoutBtn">🚪 Logout</a>
+        </div>
+    </div></li>
       </ul>
     </nav>
 
