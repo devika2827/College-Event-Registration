@@ -27,7 +27,18 @@ const eventSchema = new mongoose.Schema({
         required:true
     },
 
-    endTime:{
+    teamSize:{
+        type:Number,
+        required:true,
+        min:1
+    },
+
+    organizerName:{
+        type:String,
+        required:true
+    },
+
+    organizerContact:{
         type:String,
         required:true
     },
@@ -37,18 +48,19 @@ const eventSchema = new mongoose.Schema({
         required:true
     },
 
-    capacity:{
-        type:Number,
-        required:true
-    },
-
     description:{
         type:String
     },
 
-    // banner:{
-    //     type:String
-    // },
+    rules: {
+        type: String,
+        default: ""
+    },
+
+    banner:{
+        type:String,
+        default:""
+    },
 
     status:{
         type:String,

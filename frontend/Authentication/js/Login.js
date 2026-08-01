@@ -1,80 +1,62 @@
-const API_BASE = 'http://localhost:5000/api/auth';
-import dotenv from 'dotenv';
-dotenv.config({ path: '../../.env' });
-const form = document.getElementById('loginForm');
-const submitBtn = document.getElementById('submitBtn');
-const toast = document.getElementById('toast');
+const loginForm = document.getElementById("loginForm");
+document.querySelectorAll(".toggle-eye").forEach(button => {
 
-document.querySelectorAll('.toggle-eye').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const input = document.getElementById(btn.dataset.target);
-    input.type = input.type === 'password' ? 'text' : 'password';
-  });
-});
+    button.addEventListener("click", () => {
 
-document.querySelectorAll('.social-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    showToast('Social login is not connected yet.', 'error');
-  });
-});
+        console.log("Eye clicked");
 
-function showToast(message, type = 'error') {
-  toast.textContent = message;
-  toast.className = `toast ${type}`;
-}
+        const input = document.getElementById(button.dataset.target);
 
-function clearErrors() {
-  document.querySelectorAll('.field-error').forEach(el => el.textContent = '');
-  toast.className = 'toast';
-}
+        console.log(input);
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  clearErrors();
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
+        }
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-
-  let valid = true;
-  if (!email) {
-    document.getElementById('emailError').textContent = 'Email is required';
-    valid = false;
-  }
-  if (!password || password.length < 6) {
-    document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
-    valid = false;
-  }
-  if (!valid) return;
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Logging in…';
-
-  try {
-    const res = await fetch(`${API_BASE}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
     });
 
-    const data = await res.json();
+});
 
-    if (!res.ok) {
-      showToast(data.message || 'Invalid email or password');
-      return;
+loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const identifier = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const body = { password };
+
+    // Determine whether the user entered an email or username
+    if (identifier.includes("@")) {
+        body.email = identifier;
+    } else {
+        body.username = identifier;
     }
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('role', data.role);
+    try {
+        const response = await fetch("http://localhost:8000/api/v1/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(body),
+        });
 
-    showToast('Login successful — redirecting…', 'success');
-    setTimeout(() => {
-      window.location.href = data.role === 'admin' ? 'dashboard.html' : 'browse.html';
-    }, 700);
+        const data = await response.json();
 
-  } catch (err) {
-    showToast('Could not reach the server. Please try again.');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Log In';
-  }
+        if (response.ok) {
+             window.location.href = "../../student-dashboard/index.html";
+
+            // Redirect after successful login if needed
+            // window.location.href = "../Dashboard/dashboard.html";
+        } else {
+            alert(data.message || "Login failed");
+        }
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Could not connect to the server.");
+    }
 });

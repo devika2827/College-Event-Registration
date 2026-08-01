@@ -21,15 +21,17 @@ const getEvents = async (req, res) => {
 const createEvent = async (req, res) => {
 
     try {
+        const eventData = { ...req.body };
 
-        const event = await Event.create(req.body);
+        if (req.file) {
+            eventData.banner = req.file.filename;
+        }
 
+        const event = await Event.create(eventData);
         res.status(201).json(event);
 
     } catch (error) {
-
         res.status(400).json({ message: error.message });
-
     }
 
 };
@@ -38,10 +40,15 @@ const createEvent = async (req, res) => {
 const updateEvent = async (req, res) => {
 
     try {
+        const eventData = { ...req.body };
+
+        if (req.file) {
+            eventData.banner = req.file.filename;
+        }
 
         const event = await Event.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            eventData,
             {
                 new: true,
                 runValidators: true
@@ -98,13 +105,9 @@ const deleteEvent = async (req, res) => {
 };
 
 module.exports = {
-
     getEvents,
-
     createEvent,
-
     updateEvent,
-
     deleteEvent
 
 };

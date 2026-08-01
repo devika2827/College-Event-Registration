@@ -24,21 +24,21 @@
 
     <div class="dashboard-container">
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
+        <!-- Top Bar -->
+         <header class="topbar">
 
             <div class="logo">
-                <h2>CampusHub</h2>
+                <h2>EventHub</h2>
             </div>
 
             <nav>
 
-                <a href="dashboard.html" >
+                <a href="dashboard.html">
                     <i class="fa-solid fa-house"></i>
                     Dashboard
                 </a>
 
-                <a href="manage-events.html" class="active">
+                <a href="manage-event.html" class="active">
                     <i class="fa-solid fa-calendar-days"></i>
                     Manage Events
                 </a>
@@ -50,21 +50,17 @@
 
             </nav>
 
-        </aside>
+            <div class="profile">
+                <i class="fa-solid fa-user"></i>
+                Admin
+            </div>
+
+        </header>
+
+    
 
         <!-- Main Content -->
-        <main class="content">
-
-            <header class="topbar">
-
-                <h1>Manage Events</h1>
-
-                <div class="profile">
-                    <i class="fa-solid fa-user"></i>
-                    Admin
-                </div>
-
-            </header>
+        <main class="manage-event">
 
             <section class="events-container">
 
@@ -103,28 +99,30 @@
 
                 </div>
 
-                <table>
+                <div class="table-wrapper">
+                    <table>
 
-                    <thead>
+                        <thead>
 
-                        <tr>
+                            <tr>
 
-                            <th>Event</th>
-                            <th>Category</th>
-                            <th>Date</th>
-                            <th>Venue</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                                <th>Event</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Venue</th>
+                                <th>Status</th>
+                                <th>Actions</th>
 
-                        </tr>
+                            </tr>
 
-                    </thead>
+                        </thead>
 
-                    <tbody id="eventTableBody">
+                        <tbody id="eventTableBody">
 
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
+                </div>
 
             </section>
 
@@ -173,18 +171,13 @@
                                 <input type="date" id="registrationDeadline" required>
                             </div>
 
-                            <!-- Start Time -->
+                            <!--Time -->
                             <div class="form-group">
-                                <label>Start Time</label>
+                                <label>Time</label>
                                 <input type="time" id="startTime" required>
                             </div>
 
-                            <!-- End Time -->
-                            <div class="form-group">
-                                <label>End Time</label>
-                                <input type="time" id="endTime" required>
-                            </div>
-
+        
                             <!-- Venue -->
                             <div class="form-group">
                                 <label>Venue</label>
@@ -194,20 +187,31 @@
                                     <option value="">Select Venue</option>
                                     <option>Auditorium</option>
                                     <option>Seminar Hall</option>
-                                    <option>Innovation Lab</option>
+                                    <option>Ground</option>
                                     <option>Room 301</option>
                                     <option>Room 302</option>
                                     <option>Basketball Court</option>
-                                    <option>Amphitheatre</option>
                                     <option value="other">Other</option>
 
                                 </select>
                             </div>
 
-                            <!-- Capacity -->
+                            <!-- Team Size -->
                             <div class="form-group">
-                                <label>Capacity</label>
-                                <input type="number" id="eventCapacity" required>
+                                <label>Team Size</label>
+                                <input type="number" id="teamSize" min="1" placeholder="e.g. 4" required>
+                            </div>
+
+                            <!-- Organizer Name -->
+                            <div class="form-group">
+                                <label>Organizer Name</label>
+                                <input type="text" id="organizerName" required>
+                            </div>
+
+                            <!-- Organizer Contact -->
+                            <div class="form-group">
+                                <label>Organizer Contact</label>
+                                <input type="tel" id="organizerContact" placeholder="10-digit phone number" required>
                             </div>
 
                             <!-- Status -->
@@ -252,21 +256,25 @@
                             ></textarea>
 
                         </div>
+                        
+                        <!-- Rules -->
+                        <div class="form-group full-width">
+                            <label>Rules</label>
+                            <textarea
+                                id="eventRules"
+                                rows="5"
+                                placeholder="Enter event rules..."
+                            ></textarea>
+                        </div>
 
                         <!-- Banner -->
 
-                        <!-- <div class="form-group full-width">
-
+                        <div class="form-group full-width">
                             <label>Event Banner</label>
 
                             <div class="upload-box" id="uploadBox">
-
-                                <input
-                                    type="file"
-                                    id="eventBanner"
-                                    accept="image/*"
-                                    hidden
-                                >
+                                <input type="file" id="eventBanner" accept="image/*" hidden>
+                                
 
                                 <i class="fa-solid fa-cloud-arrow-up"></i>
 
@@ -278,7 +286,7 @@
 
                             <img id="bannerPreview">
 
-                        </div> -->
+                        </div>
 
                         <div class="modal-actions">
 

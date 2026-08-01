@@ -2,23 +2,29 @@ const express = require("express");
 const cors = require("cors");
 const dns=require("dns");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 dotenv.config();
 
 const connectDB = require("./config/db");
 
 const eventRoutes = require("./routes/eventRoutes");
-const registrationRoutes = require("./routes/registrationRoutes"); // <-- New line
-
-
+const eventRoutes = require("./routes/eventRoutes");
+const registrationRoutes = require("./routes/registrationRoutes");
+const authRoutes = require("./routes/AuthenticationRoutes");
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "http://127.0.0.1:5500", // Change if your frontend runs on another URL
+    credentials: true,
+}));
 app.use(express.json());
-
+app.use(cookieParser());
 app.use("/api/events", eventRoutes);
-app.use("/api/registrations", registrationRoutes); // <-- New line
-
+app.use("/api/registrations", registrationRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/uploads", express.static("uploads"));
 
 const PORT = process.env.PORT || 5000;
 
