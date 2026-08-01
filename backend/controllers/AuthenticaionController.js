@@ -216,7 +216,7 @@ const forgotPassword = async (req, res) => {
     await sendEmail({
         to: user?.email,
         subject: 'Password Reset',
-        mailgenContent: forgotPasswordMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/reset-password/${unHashedToken}`)
+        mailgenContent: forgotPasswordMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/forgot-password/${unHashedToken}`)
     });
     return res.status(200).json({ message: "Password reset email sent successfully" });
 };
