@@ -10,7 +10,6 @@ dotenv.config();
 const connectDB = require("./config/db");
 
 const eventRoutes = require("./routes/eventRoutes");
-const eventRoutes = require("./routes/eventRoutes");
 const registrationRoutes = require("./routes/registrationRoutes");
 const authRoutes = require("./routes/AuthenticationRoutes");
 const app = express();
