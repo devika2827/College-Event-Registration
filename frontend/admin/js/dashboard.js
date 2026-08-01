@@ -1,4 +1,5 @@
 const API_URL = "http://localhost:5001/api/events";
+const response = await fetch(API_URL, { credentials: "include" });
 
 async function loadDashboard(){
 
@@ -64,7 +65,7 @@ async function loadDashboard(){
         document.getElementById("upcomingEvents").textContent = upcomingEvents;
         document.getElementById("completedEvents").textContent = completedEvents;
     }
-    
+
     catch(error){
         console.log(error);
     }

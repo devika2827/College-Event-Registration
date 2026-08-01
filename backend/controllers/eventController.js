@@ -2,26 +2,19 @@ const Event = require("../models/Event");
 
 // GET all events
 const getEvents = async (req, res) => {
-
     try {
-
-        const events = await Event.find().sort({ createdAt: -1 });
-
+        const events = await Event.find({createdBy: req.user._id}).sort({ createdAt: -1 });
         res.status(200).json(events);
-
     } catch (error) {
-
         res.status(500).json({ message: error.message });
-
     }
 
 };
 
 // CREATE event
 const createEvent = async (req, res) => {
-
     try {
-        const eventData = { ...req.body };
+        const eventData = { ...req.body, createdBy: req.user._id };
 
         if (req.file) {
             eventData.banner = req.file.filename;
@@ -55,6 +48,10 @@ const updateEvent = async (req, res) => {
             }
         );
 
+        if (event.createdBy.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Not authorized to edit this event" });
+        }
+        
         if (!event) {
 
             return res.status(404).json({
@@ -90,6 +87,10 @@ const deleteEvent = async (req, res) => {
 
         }
 
+        if (event.createdBy.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Not authorized to delete this event" });
+        }
+
         res.json({
             message: "Event deleted successfully"
         });
@@ -109,5 +110,4 @@ module.exports = {
     createEvent,
     updateEvent,
     deleteEvent
-
 };

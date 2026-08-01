@@ -1,5 +1,22 @@
 const API_URL = "http://localhost:5001/api/events";
 
+// fetchEvents()
+const response = await fetch(API_URL, { credentials: "include" });
+
+// delete
+await fetch(`${API_URL}/${deleteEventId}`, {
+    method: "DELETE",
+    credentials: "include"
+});
+
+// create/update
+await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(newEvent)
+});
+
 let events = []
 
 let editEventId = null;
