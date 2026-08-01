@@ -10,8 +10,9 @@ dotenv.config();
 const connectDB = require("./config/db");
 
 const eventRoutes = require("./routes/eventRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const registrationRoutes = require("./routes/registrationRoutes");
 const authRoutes = require("./routes/AuthenticationRoutes");
-
 const app = express();
 
 app.use(cors({
@@ -21,6 +22,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/events", eventRoutes);
+app.use("/api/registrations", registrationRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/uploads", express.static("uploads"));
 
