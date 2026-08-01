@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/details.css" />
+    <link rel="stylesheet" href="../../navbar/css/navbar.css" />
 
     <link
       rel="stylesheet"
@@ -14,29 +15,21 @@
     />
   </head>
   <body>
-    <nav>
-      <h2>EventHub</h2>
+    <div id="navbar"></div>
+  <script>
+    fetch("../../navbar/html/navbar.html")
+    .then(response => response.text())
+    .then(data => {
 
-      <ul>
-        <li><button id="host"><a href="../../admin/html/dashboard.html">Host</a></button></li>
-        <li> <div class="profile-container">
-        <button id="profileBtn">Profile </button>
+    document.getElementById("navbar").innerHTML = data;
 
-        <div id="profileDropdown" class="dropdown">
-            <div class="user-info">
-                <p id="userName">name</p>
-                <p id="userUsername">username</p>
-                <p id="userEmail">email</p>
-            </div>
+    const script = document.createElement("script");
+    script.src = "../../navbar/js/navbar.js";
+    document.body.appendChild(script);
 
-            <hr>
-
-            <a href="reset-password.html">🔒 Reset Password</a>
-            <a href="#" id="logoutBtn">🚪 Logout</a>
-        </div>
-    </div></li>
-      </ul>
-    </nav>
+    });
+  </script>
+      
 
     <section class="hero">
       <h1>Browse Events</h1>
