@@ -23,7 +23,15 @@ let editEventId = null;
 
 async function fetchEvents(){
     try{
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}/my`, { credentials: "include" });
+        
+        if (!response.ok) {
+            console.log("Failed to fetch events:", response.status);
+            events = [];
+            filterEvents();
+            return;
+        }
+ 
         events = await response.json();
         filterEvents();
     }
@@ -208,7 +216,8 @@ window.onclick = (e) => {
 confirmDeleteBtn.onclick = async () => {
 
     await fetch(`${API_URL}/${deleteEventId}`,{
-        method:"DELETE"
+        method:"DELETE",
+        credentials: "include"
     });
 
     fetchEvents();
@@ -310,16 +319,41 @@ form.addEventListener("submit", async function(e){
         await fetchEvents();
     }
 
-    
+    let response;
+
+    if(editEventId){
+
+        response = await fetch(`${API_URL}/${editEventId}`,{
+            method:"PUT",
+            headers:{ "Content-Type":"application/json" },
+            credentials: "include",
+            body:JSON.stringify(newEvent)
+        });
+
+    }
+    else{
+
+        response = await fetch(API_URL,{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            credentials: "include",
+            body:JSON.stringify(newEvent)
+        });
+
+    }
+
+    if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        alert(errData.message || "Something went wrong saving the event.");
+        return; // stop here — don't reset/close on failure
+    }
+
+    await fetchEvents();
 
     form.reset();
-
     editEventId = null;
-
     document.querySelector(".modal-header h2").textContent = "Create Event";
-
     preview.style.display = "none";
-
     closeModal();
 });
 

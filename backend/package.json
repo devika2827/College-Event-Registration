@@ -14,6 +14,7 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
+    "cookie": "^2.0.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -23,7 +24,8 @@
     "mongoose": "^9.7.4",
     "multer": "^2.2.0",
     "nodemailer": "^9.0.3",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "parser": "^0.1.4"
   },
   "allowScripts": {
     "bcrypt@6.0.0": true

@@ -15,7 +15,7 @@ const authRoutes = require("./routes/AuthenticationRoutes");
 const app = express();
 
 app.use(cors({
-    origin: "http://127.0.0.1:5500", // Change if your frontend runs on another URL
+    origin: "http://127.0.0.1:5500", 
     credentials: true,
 }));
 app.use(express.json());

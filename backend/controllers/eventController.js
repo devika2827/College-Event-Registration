@@ -14,7 +14,7 @@ const getEvents = async (req, res) => {
 // GET only the logged-in admin's own events
 const getMyEvents = async (req, res) => {
     try {
-        const events = await Event.find({ createdBy: req.user.id }).sort({ createdAt: -1 });
+        const events = await Event.find({ createdBy: req.user._id }).sort({ createdAt: -1 });
         res.status(200).json(events);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -43,6 +43,20 @@ const createEvent = async (req, res) => {
 const updateEvent = async (req, res) => {
 
     try {
+
+        const exising = await Event.findById(req.params.id);
+
+        if (!existing) {
+
+            return res.status(404).json({
+                message: "Event not found"
+            });
+        }
+
+        if (existing.createdBy.toString() !== req.user._id) {
+            return res.status(403).json({ message: "Not authorized to edit this event" });
+        }
+
         const eventData = { ...req.body };
 
         if (req.file) {
@@ -57,10 +71,6 @@ const updateEvent = async (req, res) => {
                 runValidators: true
             }
         );
-
-        if (event.createdBy.toString() !== req.user.id) {
-            return res.status(403).json({ message: "Not authorized to edit this event" });
-        }
         
         if (!event) {
 
@@ -87,7 +97,7 @@ const deleteEvent = async (req, res) => {
 
     try {
 
-        const event = await Event.findByIdAndDelete(req.params.id);
+        const event = await Event.findById(req.params.id);
 
         if (!event) {
 
@@ -97,9 +107,11 @@ const deleteEvent = async (req, res) => {
 
         }
 
-        if (event.createdBy.toString() !== req.user.id) {
+        if (event.createdBy.toString() !== req.user._id) {
             return res.status(403).json({ message: "Not authorized to delete this event" });
         }
+
+        await Event.findByIdAndDelete(req.params.id);
 
         res.json({
             message: "Event deleted successfully"
@@ -119,7 +131,7 @@ const getRegistrationsForMyEvents = async (req, res) => {
 
     try {
 
-        const myEventIds = await Event.find({ createdBy: req.user.id }).distinct("_id");
+        const myEventIds = await Event.find({ createdBy: req.user._id }).distinct("_id");
 
         const registrations = await Registration.find({ event: { $in: myEventIds } })
             .populate("event", "name date category")

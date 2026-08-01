@@ -1,16 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middleware/upload");
-const requireAuth = require("../middleware/auth");
-const {getEvents, createEvent, updateEvent, deleteEvent, getRegistrationsForMyEvents} = require("../controllers/eventController");
+const { verifyToken } = require("../middleware/auth");
+const {getEvents, getMyEvents, createEvent, updateEvent, deleteEvent, getRegistrationsForMyEvents} = require("../controllers/eventController");
 
-router.get("/", requireAuth, getEvents);
-router.get("/my", requireAuth, getMyEvents);
-router.get("/registrations/mine", requireAuth, getRegistrationsForMyEvents);
-router.post("/", requireAuth, upload.single("banner"), createEvent);
-router.put("/:id", requireAuth, upload.single("banner"), updateEvent);
-router.post("/", requireAuth, createEvent);
-router.put("/:id", requireAuth, updateEvent);
-router.delete("/:id", requireAuth, deleteEvent);
+router.get("/", getEvents);
+router.get("/my", verifyToken, getMyEvents);
+router.get("/registrations/mine", verifyToken, getRegistrationsForMyEvents);
+router.post("/", verifyToken, upload.single("banner"), createEvent);
+router.put("/:id", verifyToken, upload.single("banner"), updateEvent);
+router.delete("/:id", verifyToken, deleteEvent);
 
 module.exports = router;

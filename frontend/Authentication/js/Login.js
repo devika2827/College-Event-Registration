@@ -35,7 +35,7 @@ loginForm.addEventListener("submit", async (e) => {
     }
 
     try {
-        const response = await fetch("http://localhost:8000/api/v1/auth/login", {
+        const response = await fetch("http://localhost:5001/api/v1/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
