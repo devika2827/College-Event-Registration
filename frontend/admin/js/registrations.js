@@ -4,6 +4,9 @@ const EVENTS_API_URL = "http://localhost:5001/api/events";
 let registrations = [];
 let events = [];
 
+const response = await fetch(`${API_URL}/registrations/mine`, { credentials: "include" });
+registrations = await response.json();
+
 async function fetchRegistrations() {
 
     try {

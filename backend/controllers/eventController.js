@@ -1,14 +1,24 @@
 const Event = require("../models/Event");
+const Registration = require("../models/Registration");
 
-// GET all events
+// GET all events (public — students browsing)
 const getEvents = async (req, res) => {
     try {
-        const events = await Event.find({createdBy: req.user._id}).sort({ createdAt: -1 });
+        const events = await Event.find().sort({ createdAt: -1 });
         res.status(200).json(events);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+};
 
+// GET only the logged-in admin's own events
+const getMyEvents = async (req, res) => {
+    try {
+        const events = await Event.find({ createdBy: req.user.id }).sort({ createdAt: -1 });
+        res.status(200).json(events);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 // CREATE event
@@ -105,9 +115,32 @@ const deleteEvent = async (req, res) => {
 
 };
 
+const getRegistrationsForMyEvents = async (req, res) => {
+
+    try {
+
+        const myEventIds = await Event.find({ createdBy: req.user.id }).distinct("_id");
+
+        const registrations = await Registration.find({ event: { $in: myEventIds } })
+            .populate("event", "name date category")
+            .sort({ createdAt: -1 });
+
+        res.status(200).json(registrations);
+
+    } catch (error) {
+
+        res.status(500).json({ message: error.message });
+
+    }
+
+};
+
 module.exports = {
     getEvents,
+    getMyEvents,
     createEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    getRegistrationsForMyEvents
 };
+
