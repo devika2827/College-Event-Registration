@@ -14,7 +14,57 @@
     />
   </head>
   <body>
-    <div id="navbar"></div>
+    <nav class="navbar">
+
+    <div class="logo">
+        Nexus
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <button id="homeBtn">
+                <i class="fa-solid fa-house"></i> Host
+            </button>
+        </li>
+
+        <li class="profile-container">
+
+            <button id="profileBtn">
+                <i class="fa-solid fa-user"></i> Profile
+            </button>
+
+            <div id="profileDropdown" class="dropdown">
+
+                <div class="user-info">
+
+                    <p id="userName">Your Name</p>
+
+                    <p id="userUsername">@username</p>
+
+                    <p id="userEmail">example@email.com</p>
+
+                </div>
+
+                <hr>
+
+
+                <a href="../reset-password/index.html">
+                    <i class="fa-solid fa-key"></i>
+                    Reset Password
+                </a>
+
+                <a href="#" id="logoutBtn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+
+            </div>
+
+        </li>
+
+    </ul>
+
+</nav>
       
 
     <section class="hero">
