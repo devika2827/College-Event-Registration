@@ -5,7 +5,7 @@
   font-family: Arial, sans-serif;
 }
 
-bbody {
+body {
   background: linear-gradient(135deg, #eef2ff, #f8fafc);
   color: #1f2937;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -175,4 +175,184 @@ nav a:hover {
   align-items: center;
 
   gap: 10px;
+}
+.userName{
+  color: #e3546c;
+  font-weight: bold;
+  font-size: 20px;
+}
+.logo{
+  font-weight: bold;
+  font-size: 48px;
+}
+/* ===== Navbar ===== */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 60px;
+
+    background:linear-gradient(90deg,#6d0b17,#4b46df);
+
+    position:sticky;
+    top:0;
+
+    z-index:1000;
+}
+
+.logo a{
+    text-decoration:none;
+    color:white;
+    font-size:32px;
+    font-weight:bold;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+
+    list-style:none;
+}
+
+.nav-links li{
+    position:relative;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+    font-weight:500;
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#ffd54f;
+}
+
+/* ===== Profile Button ===== */
+#homeBtn{
+    background:none;
+    border:none;
+    color:white;
+
+    font-size:20px;
+    font-weight:500;
+
+    cursor:pointer;
+}
+#homeBtn:hover{
+    color:#ffd54f;
+}
+
+#profileBtn{
+    background:none;
+    border:none;
+    color:white;
+
+    font-size:18px;
+    font-weight:500;
+
+    cursor:pointer;
+}
+
+#profileBtn:hover{
+    color:#ffd54f;
+}
+
+/* ===== Dropdown ===== */
+
+.profile-container{
+    position:relative;
+}
+
+.dropdown{
+    position:absolute;
+    top:45px;
+    right:0;
+
+    width:270px;
+
+    background:white;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+    display:none;
+}
+
+.dropdown.active{
+    display:block;
+}
+
+/* ===== User Info ===== */
+
+.user-info{
+    padding:18px;
+}
+
+/* ===== Dropdown Links ===== */
+
+.dropdown a{
+    display:block;
+
+    padding:15px 18px;
+
+    color:#222;
+
+    text-decoration:none;
+
+    transition:.3s;
+}
+
+.dropdown a:hover{
+    background:#f4f4f4;
+    color:#4b46df;
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:768px){
+
+    .navbar{
+        padding:18px 25px;
+    }
+
+    .logo a{
+        font-size:26px;
+    }
+
+    .nav-links{
+        gap:15px;
+    }
+
+    .nav-links a,
+    #profileBtn{
+        font-size:16px;
+    }
+
+}
+
+#userName{
+  color:#000000;
+  font-weight:bold;
+  font-size:25px;
+}
+
+#userUsername{
+  color:#000000;
+  font-weight:bold;
+  font-size:15px;
+}
+#userEmail{
+  color:#000000;
+  font-weight:bold;
+  font-size:15px;
 }

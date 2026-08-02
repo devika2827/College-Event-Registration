@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/details.css" />
-    <link rel="stylesheet" href="../../navbar/css/navbar.css" />
 
     <link
       rel="stylesheet"
@@ -15,20 +14,57 @@
     />
   </head>
   <body>
-    <div id="navbar"></div>
-  <script>
-    fetch("../../navbar/html/navbar.html")
-    .then(response => response.text())
-    .then(data => {
+    <nav class="navbar">
 
-    document.getElementById("navbar").innerHTML = data;
+    <div class="logo">
+        Nexus
+    </div>
 
-    const script = document.createElement("script");
-    script.src = "../../navbar/js/navbar.js";
-    document.body.appendChild(script);
+    <ul class="nav-links">
+        <li>
+            <button id="homeBtn">
+                <i class="fa-solid fa-bullhorn"></i> Host
+            </button>
+        </li>
 
-    });
-  </script>
+        <li class="profile-container">
+
+            <button id="profileBtn">
+                <i class="fa-solid fa-user"></i> Profile
+            </button>
+
+            <div id="profileDropdown" class="dropdown">
+
+                <div class="user-info">
+
+                    <p id="userName">Your Name</p>
+
+                    <p id="userUsername">@username</p>
+
+                    <p id="userEmail">example@email.com</p>
+
+                </div>
+
+                <hr>
+
+
+                <a href="../reset-password/index.html">
+                    <i class="fa-solid fa-key"></i>
+                    Reset Password
+                </a>
+
+                <a href="#" id="logoutBtn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+
+            </div>
+
+        </li>
+
+    </ul>
+
+</nav>
       
 
     <section class="hero">
