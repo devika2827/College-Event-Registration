@@ -3,6 +3,7 @@ const cors = require("cors");
 const dns=require("dns");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/api/events", eventRoutes);
 app.use("/api/registrations", registrationRoutes);
 app.use("/api/v1/auth", authRoutes);

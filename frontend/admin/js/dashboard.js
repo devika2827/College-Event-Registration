@@ -1,10 +1,9 @@
 const API_URL = "http://localhost:8000/api/events";
-const response = await fetch(`${API_URL}/my`, { credentials: "include" });
 
 async function loadDashboard(){
 
     try{
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}/my`, { credentials: "include" });
 
         const events = await response.json();
 
@@ -50,7 +49,7 @@ async function loadDashboard(){
 
                 <tr>
                     <td>${event.name}</td>
-                    <td>${new Date(event.date).toLocaleDateString("en-GB")}</td
+                    <td>${new Date(event.date).toLocaleDateString("en-GB")}</td>
                     <td>${daysLeft} day${daysLeft !== 1 ? "s" : ""}</td>
                     <td>
                         <span class="${isClosed ? "badge closed" : "badge open"}">

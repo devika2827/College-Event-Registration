@@ -107,7 +107,7 @@ const deleteEvent = async (req, res) => {
 
         }
 
-        if (event.createdBy.toString() !== req.user._id) {
+        if (event.createdBy.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Not authorized to delete this event" });
         }
 

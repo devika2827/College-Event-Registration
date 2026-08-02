@@ -1,22 +1,5 @@
 const API_URL = "http://localhost:8000/api/events";
 
-// fetchEvents()
-const response = await fetch(API_URL, { credentials: "include" });
-
-// delete
-await fetch(`${API_URL}/${deleteEventId}`, {
-    method: "DELETE",
-    credentials: "include"
-});
-
-// create/update
-await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(newEvent)
-});
-
 let events = []
 
 let editEventId = null;
@@ -287,36 +270,6 @@ form.addEventListener("submit", async function(e){
     if (!/^\d{10}$/.test(newEvent.organizerContact)) {
         alert("Enter a valid 10-digit contact number.");
         return;
-    }
-
-    if(editEventId){
-
-        await fetch(`${API_URL}/${editEventId}`,{
-
-            method:"PUT",
-
-            headers:{
-                "Content-Type":"application/json"
-            },
-
-            body:JSON.stringify(newEvent)
-
-        });
-    }
-    else{
-
-        await fetch(API_URL,{
-
-            method:"POST",
-
-            headers:{
-                "Content-Type":"application/json"
-            },
-
-            body:JSON.stringify(newEvent)
-
-        });
-        await fetchEvents();
     }
 
     let response;

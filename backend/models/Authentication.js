@@ -60,12 +60,12 @@ userSchema.methods.isPasswordCorrect = async function(enteredPassword){
     return await bcrypt.compare(enteredPassword, this.password);
 }
 userSchema.methods.generateAccessToken = function(){
-    const payload = { id: this._id, email: this.email, username: this.Username };
+    const payload = { _id: this._id, email: this.email, username: this.Username };
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
     return accessToken;
 }
 userSchema.methods.generateRefreshToken = function(){
-    const payload = { id: this._id };
+    const payload = { _id: this._id };
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
     return refreshToken;
 }

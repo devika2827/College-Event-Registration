@@ -7,7 +7,7 @@ const verifyToken = async (req, res,next) => {
         return res.status(401).json({ message: "Unauthorized request" });
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         const user = await User.findById(decoded?._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry"); 
         if (!user) {
             return res.status(401).json({ message: "Invalid token" });
