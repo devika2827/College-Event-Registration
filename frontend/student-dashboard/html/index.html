@@ -12,60 +12,62 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar">
+    
+      <header class="topbar">
+        <div class="topbar-top">
 
-    <div class="logo">
-        Nexus
-    </div>
+            <div class="logo">
+                <h2>Nexus</h2>
+            </div>
 
-    <ul class="nav-links">
-        <li>
-            <button id="homeBtn">
-                <i class="fa-solid fa-bullhorn"></i> Host
-            </button>
-        </li>
+            <div class="topbar-right">
 
-        <li class="profile-container">
+                <a href="../../admin/html/dashboard.html" class="student-link" id="homeBtn">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Host
+                </a>
 
-            <button id="profileBtn">
-                <i class="fa-solid fa-user"></i> Profile
-            </button>
+                <div class="profile-container">
 
-            <div id="profileDropdown" class="dropdown">
+                    <div class="profile" id="profileBtn">
+                        <i class="fa-solid fa-user"></i>
+                        Profile
+                    </div>
 
-                <div class="user-info">
+                    <div id="profileDropdown" class="dropdown">
 
-                    <p id="userName">Your Name</p>
+                        <div class="user-info">
+                            <p id="userName">Your Name</p>
+                            <p id="userUsername">@username</p>
+                            <p id="userEmail">example@email.com</p>
+                        </div>
 
-                    <p id="userUsername">@username</p>
+                        <hr>
 
-                    <p id="userEmail">example@email.com</p>
+                        <a href="../reset-password/index.html">
+                            <i class="fa-solid fa-key"></i>
+                            Reset Password
+                        </a>
+
+                        <a href="#" id="logoutBtn">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Logout
+                        </a>
+
+                    </div>
 
                 </div>
 
-                <hr>
-
-
-                <a href="../reset-password/index.html">
-                    <i class="fa-solid fa-key"></i>
-                    Reset Password
-                </a>
-
-                <a href="#" id="logoutBtn">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Logout
-                </a>
-
             </div>
 
-        </li>
-
-    </ul>
-
-</nav>
-      
+        </div>
+    </header>
 
     <section class="hero">
       <h1>Browse Events</h1>

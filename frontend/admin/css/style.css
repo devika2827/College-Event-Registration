@@ -15,16 +15,12 @@ body{
 
 /* Top Bar */
 .topbar{
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
     background: linear-gradient(90deg, #6d0b17, #4b46df);
     color: white;
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px; */
     z-index: 1000;
 }
 
@@ -72,7 +68,7 @@ body{
     display: flex;
     align-items: center;
     gap: 8px;
-
+    cursor: pointer;
 }
 
 .topbar nav a{
@@ -105,7 +101,7 @@ body{
 }
 
 .manage-event{
-    padding-top:205px;
+    padding-top:20px;
     padding-left:35px;
     padding-right:35px;
 }
@@ -585,6 +581,61 @@ body.modal-open{
 
     .content{
         width:100%;
-        padding:130px 35px 35px;
+        padding:20px 35px 35px;
     }
+}
+
+.profile-container{
+    position:relative;
+}
+
+.dropdown{
+    position:absolute;
+    top:45px;
+    right:0;
+    width:270px;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    display:none;
+}
+
+.dropdown.active{
+    display:block;
+}
+
+.user-info{
+    padding:18px;
+}
+
+.dropdown a{
+    display:block;
+    padding:15px 18px;
+    color:#222;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.dropdown a:hover{
+    background:#f4f4f4;
+    color:#4b46df;
+}
+
+#userName{
+    color:#000000;
+    font-weight:bold;
+    font-size:20px;
+}
+
+#userUsername{
+    color:#000000;
+    font-weight:bold;
+    font-size:15px;
+}
+
+#userEmail{
+    color:#000000;
+    font-weight:bold;
+    font-size:15px;
 }
