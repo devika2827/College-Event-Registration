@@ -109,10 +109,7 @@ function viewDetails(id) {
 
 const profileBtn = document.getElementById("profileBtn");
 const dropdown = document.getElementById("profileDropdown");
-const homeBtn = document.getElementById("homeBtn");
-homeBtn.addEventListener("click", function () {
-    window.location.href = "../../admin/html/dashboard.html";
-});
+
 // Open/Close on Profile click
 profileBtn.addEventListener("click", function (e) {
     e.stopPropagation();
