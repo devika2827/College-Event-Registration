@@ -344,21 +344,6 @@ function filterEvents(){
     displayEvents(filtered);
 }
 
-const profileBtn = document.getElementById("profileBtn");
-const dropdown = document.getElementById("profileDropdown");
-
-profileBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-});
-
-dropdown.addEventListener("click", function (e) {
-    e.stopPropagation();
-});
-
-document.addEventListener("click", function () {
-    dropdown.classList.remove("active");
-});
 
 searchInput.addEventListener("input", filterEvents);
 categoryFilter.addEventListener("change", filterEvents);
