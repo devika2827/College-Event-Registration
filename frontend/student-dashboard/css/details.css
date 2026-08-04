@@ -3,7 +3,7 @@ button {
 
   width: calc(100% - 40px);
 
-  padding: 14px;
+  height: 50px;
 
   border: none;
 
@@ -136,6 +136,8 @@ button:hover {
 
 #registerBtn {
   width: 100%;
+
+  height: 60px;
 
   padding: 18px;
 
