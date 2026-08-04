@@ -105,8 +105,6 @@ function viewDetails(id) {
   window.location.href = "event.html";
 }
 
-//Profile dropdown box
-
 const profileBtn = document.getElementById("profileBtn");
 const dropdown = document.getElementById("profileDropdown");
 

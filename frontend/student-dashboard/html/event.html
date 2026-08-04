@@ -11,9 +11,50 @@
   </head>
 
   <body>
-    <nav>
-      <h2>EventHub</h2>
-    </nav>
+     <header class="topbar">
+        <div class="topbar-top">
+
+            <div class="logo">
+                <h2>Nexus</h2>
+            </div>
+
+            <div class="topbar-right">
+                <div class="profile-container">
+
+                    <div class="profile" id="profileBtn">
+                        <i class="fa-solid fa-user"></i>
+                        Profile
+                    </div>
+
+                    <div id="profileDropdown" class="dropdown">
+
+                        <div class="user-info">
+                            <p id="userName">Your Name</p>
+                            <p id="userUsername">@username</p>
+                            <p id="userEmail">example@email.com</p>
+                        </div>
+
+                <hr>
+
+                <button id="editProfileBtn">
+                    <i class="fa-solid fa-key"></i>
+                    Reset Password
+                </button>
+            
+
+                <button id="logoutBtn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </header>
 
     <div class="details">
       <img id="eventImage" />
