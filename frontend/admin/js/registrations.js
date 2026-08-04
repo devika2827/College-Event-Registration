@@ -5,7 +5,7 @@ let registrations = [];
 let events = [];
 
 const response = await fetch(`${API_URL}/registrations/mine`, { credentials: "include" });
-registrations = await response.json();
+
 
 async function fetchRegistrations() {
 

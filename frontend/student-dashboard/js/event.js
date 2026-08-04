@@ -1,22 +1,17 @@
-const event = JSON.parse(localStorage.getItem("selectedEvent"));
+const eventData = JSON.parse(localStorage.getItem("selectedEvent"));
 
-document.getElementById("eventImage").src = event.image;
-
-document.getElementById("title").innerHTML = event.title;
-
-document.getElementById("date").innerHTML = event.date;
-
-document.getElementById("time").innerHTML = event.time;
-
-document.getElementById("venue").innerHTML = event.venue;
-
-document.getElementById("lastDate").innerHTML = event.lastDate;
-
-document.getElementById("description").innerHTML = event.description;
+document.getElementById("eventImage").src = `/uploads/${eventData.banner}`;
+document.getElementById("title").innerHTML = eventData.name;
+document.getElementById("date").innerHTML = new Date(eventData.date).toLocaleDateString();
+document.getElementById("time").innerHTML = eventData.startTime;
+document.getElementById("venue").innerHTML = eventData.venue;
+document.getElementById("lastDate").innerHTML = new Date(eventData.registrationDeadline).toLocaleDateString();
+document.getElementById("description").innerHTML = eventData.description;
+document.getElementById("teamSize").innerHTML = eventData.teamSize;
 
 const rules = document.getElementById("rules");
 
-event.rules.forEach((rule) => {
+eventData.rules.forEach((rule) => {
   rules.innerHTML += `<li>${rule}</li>`;
 });
 

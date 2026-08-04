@@ -59,7 +59,7 @@ const updateEvent = async (req, res) => {
 
     try {
 
-        const exising = await Event.findById(req.params.id);
+        const existing = await Event.findById(req.params.id);
 
         if (!existing) {
 

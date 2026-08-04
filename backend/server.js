@@ -16,7 +16,7 @@ const authRoutes = require("./routes/AuthenticationRoutes");
 const app = express();
 
 app.use(cors({
-    origin: "http://127.0.0.1:5500", 
+    origin: "http://localhost:8000", 
     credentials: true,
 }));
 app.use(express.json());
@@ -25,9 +25,9 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/api/events", eventRoutes);
 app.use("/api/registrations", registrationRoutes);
 app.use("/api/v1/auth", authRoutes);
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 connectDB()
 .then(() => {
