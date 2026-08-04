@@ -148,7 +148,7 @@ const getRegistrationsForMyEvents = async (req, res) => {
 
         const myEventIds = await Event.find({ createdBy: req.user._id }).distinct("_id");
 
-        const registrations = await Registration.find({ event: { $in: myEventIds } })
+        const registrations = await Registration.find({ eventId: { $in: myEventIds } })
             .populate("event", "name date category")
             .sort({ createdAt: -1 });
 

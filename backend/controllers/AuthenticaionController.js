@@ -1,6 +1,5 @@
 const { User } = require("../models/Authentication");
-const { emailVerificationMail } = require("../utils/Authentication");
-const sendEmail = require("../utils/Authentication").sendEmail;
+const { emailVerificationMail, forgotPasswordMail, sendEmail } = require("../utils/Authentication");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
@@ -140,8 +139,8 @@ const verifyEmail = async(req, res)=> {
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
-    const user = await User.findOne( { emailVerificationToken: hashedToken },
-        {emailVerificationExpiry: { $gt: Date.now() }} );
+    const user = await User.findOne( { emailVerificationToken: hashedToken ,
+        emailVerificationExpiry: { $gt: Date.now() }} );
     if(!user){
         return res.status(400).json({ message: "Invalid or Expired verification token" });
     }
@@ -152,9 +151,9 @@ const verifyEmail = async(req, res)=> {
     return res.status(200).json({ message: "Email verified successfully" });
 };
 const resendVerificationEmail = async (req, res) => {
-    const User=findById(req.user._id);
-    if(!User){
-        return res.status(409).json({ message: "User not found" });
+    const user= await User.findById(req.user._id);
+    if(!user){
+        return res.status(404).json({ message: "User not found" });
     }
     if(user.Verified){
         return res.status(409).json({ message: "Email already verified" });
@@ -164,11 +163,11 @@ const resendVerificationEmail = async (req, res) => {
     user.emailVerificationExpiry = expiryTime;
     await user.save({ validateBeforeSave: false });
     await sendEmail({
-        to: user?.email,
+        to: user.email,
         subject: 'Email Verification',
         mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${unHashedToken}`)
     });
-    return res.status(201).json({ message: "User registered successfully", user: createdUser });
+    return res.status(200).json({ message: "Verification email sent successfully" });
 
 };
 const refreshAccessToken = async (req, res) => {
@@ -238,7 +237,7 @@ const resetforgotPassword = async (req, res) => {
         forgotPasswordTokenExpiry:{ $gt: Date.now()}
     })
     if(!user){
-        return res.status(489).json({ message: "Token is invalid or expired"})
+        return res.status(400).json({ message: "Token is invalid or expired"})
     }
     user.forgotPasswordToken=undefined;
     user.forgotPasswordTokenExpiry=undefined;
@@ -251,7 +250,7 @@ const resetforgotPassword = async (req, res) => {
 const changeCurrentPassword= async (req ,res) =>{
     const{oldPassword , newPassword}=req.body;
     const user= await User.findById(req.user?._id);
-    const isPasswordValid=user.isPasswordCorrect(oldPassword);
+    const isPasswordValid=await user.isPasswordCorrect(oldPassword);
 
     if(!isPasswordValid){
         return res.status(400).json({ message: "Invalid old password"})

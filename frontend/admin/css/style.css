@@ -45,15 +45,25 @@ body{
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 17px;
+    padding: 10px 16px;
+    border-radius: 10px;
     transition: .3s;
+    cursor: pointer;
+
 }
 
 .student-link:hover{
-    color: white;
+    color: #ffd54f;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .logo{
     flex-shrink: 0;
+}
+
+.logo h2{
+    font-size: 28px;
 }
 
 .topbar-nav{
@@ -68,6 +78,7 @@ body{
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 17px;
     cursor: pointer;
 }
 
@@ -574,63 +585,6 @@ body.modal-open{
         flex-wrap: wrap;
         gap: 15px;
     }
-}
-.topbar{
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(90deg, #6d0b17, #4b46df);
-    color: white;
-    z-index: 1000;
-}
-
-.topbar-top{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.topbar-right{
-    display: flex;
-    align-items: center;
-    gap: 25px;
-}
-
-.student-link{
-    text-decoration: none;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 17px;
-    padding: 10px 16px;
-    border-radius: 10px;
-    transition: .3s;
-    cursor: pointer;
-}
-
-.student-link:hover{
-    color: #ffd54f;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.logo{
-    flex-shrink: 0;
-}
-
-.logo h2{
-    font-size: 28px;
-}
-
-.profile{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 17px;
-    cursor: pointer;
 }
 
 .profile-container{

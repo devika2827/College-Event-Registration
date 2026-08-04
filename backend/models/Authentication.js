@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema({
 });
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")){
-        return ;
+        return next();
     }
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -60,7 +60,7 @@ userSchema.methods.isPasswordCorrect = async function(enteredPassword){
     return await bcrypt.compare(enteredPassword, this.password);
 }
 userSchema.methods.generateAccessToken = function(){
-    const payload = { _id: this._id, email: this.email, username: this.Username };
+    const payload = { _id: this._id, email: this.email, username: this.username };
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
     return accessToken;
 }
