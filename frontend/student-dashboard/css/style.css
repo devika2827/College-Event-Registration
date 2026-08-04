@@ -303,8 +303,6 @@ nav a:hover {
 .dropdown a{
     display:block;
 
-    padding:15px 18px;
-
     color:#222;
 
     text-decoration:none;
@@ -355,4 +353,14 @@ nav a:hover {
   color:#000000;
   font-weight:bold;
   font-size:15px;
+}
+
+#editProfileBtn, #logoutBtn {
+  border-radius: 0px;
+  background: none;
+  border: none;
+  color: #4b46df;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
 }
