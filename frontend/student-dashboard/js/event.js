@@ -12,7 +12,9 @@ document.getElementById("teamSize").innerHTML = eventData.teamSize;
 const rules = document.getElementById("rules");
 
 eventData.rules.forEach((rule) => {
-  rules.innerHTML += `<li>${rule}</li>`;
+  rule.split("\n").forEach((line) => {
+    rules.innerHTML += `<li>${line}</li>`;
+  });
 });
 
 document.getElementById("registerBtn").onclick = function () {

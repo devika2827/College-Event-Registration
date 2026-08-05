@@ -30,6 +30,11 @@ const createEvent = async (req, res) => {
             eventData.banner = req.file.filename;
         }
 
+        if (typeof eventData.rules === "string") {
+            eventData.rules = eventData.rules
+                .split(",")
+                .map(rule => rule.trim());
+        }
         const event = await Event.create(eventData);
         res.status(201).json(event);
 
@@ -68,7 +73,7 @@ const updateEvent = async (req, res) => {
             });
         }
 
-        if (existing.createdBy.toString() !== req.user._id) {
+        if (existing.createdBy.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Not authorized to edit this event" });
         }
 
@@ -78,11 +83,16 @@ const updateEvent = async (req, res) => {
             eventData.banner = req.file.filename;
         }
 
+        if (typeof eventData.rules === "string") {
+            eventData.rules = eventData.rules
+                .split(",")
+                .map(rule => rule.trim());
+        }
         const event = await Event.findByIdAndUpdate(
             req.params.id,
             eventData,
             {
-                new: true,
+                returnDocument: "after",
                 runValidators: true
             }
         );

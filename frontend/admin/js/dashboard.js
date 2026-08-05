@@ -4,15 +4,10 @@ async function loadDashboard(){
 
     try{
         const response = await fetch(`${API_URL}/my`, { credentials: "include" });
-
         const events = await response.json();
-
         const today = new Date();
-
         const totalEvents = events.length;
-
         const upcomingEvents = events.filter(event => new Date(event.date) >= today).length;
-
         const completedEvents = events.filter(event =>  new Date(event.date) < today ).length;
 
         const upcoming = events

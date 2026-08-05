@@ -61,9 +61,7 @@ bannerInput.addEventListener("change", function () {
     }
 });
 
-
 const form = document.getElementById("eventForm");
-
 const tableBody = document.getElementById("eventTableBody");
 
 function deleteEvent(id){
@@ -157,11 +155,9 @@ function editEvent(id){
         customVenueGroup.style.display = "none";
 
     }else{
-
         venueSelect.value = "other";
         customVenueGroup.style.display = "flex";
         document.getElementById("customVenue").value = event.venue;
-
     }
 
     document.getElementById("eventStatus").value = event.status;
@@ -204,18 +200,14 @@ confirmDeleteBtn.onclick = async () => {
     });
 
     fetchEvents();
-
     deleteModal.style.display="none";
 };
 
 cancelDeleteBtn.onclick = () => {
-
     deleteModal.style.display = "none";
-
 };
 
 window.addEventListener("click",(e)=>{
-
     if(e.target===deleteModal){
         deleteModal.style.display="none";
     }
@@ -229,7 +221,6 @@ form.addEventListener("submit", async function(e){
     const deadlineVal = document.getElementById("registrationDeadline").value;
     const teamSizeVal = document.getElementById("teamSize").value;
     const contactVal = document.getElementById("organizerContact").value;
-
     const today = new Date().toISOString().split("T")[0];
 
     if (dateVal <= today) {
