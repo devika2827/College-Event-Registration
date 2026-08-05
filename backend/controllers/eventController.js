@@ -164,6 +164,7 @@ const getRegistrationsForMyEvents = async (req, res) => {
 
 module.exports = {
     getEvents,
+    getSingleEvent,
     getMyEvents,
     createEvent,
     updateEvent,
