@@ -14,7 +14,7 @@ router.route("/refresh-token").post(refreshAccessToken);
 router.route("/forgot-password").post(forgotPassword);
 router.route("/reset-password/:ResetToken").post(resetforgotPassword);
 router.route("/change-password").post(verifyToken, changeCurrentPassword);
-router.route("/current-user").post(verifyToken, getCurrentUser);
+router.route("/current-user").get(verifyToken, getCurrentUser);
 router.route("/resend-verification-email").post(verifyToken, resendVerificationEmail);
 
 module.exports = router;

@@ -8,11 +8,18 @@ const regUser = async (req, res) => {
     const {name, email, username, password} = req.body;
 
     const existedUser = await User.findOne({
-        $or: [{email},{username}]
+        $or: [{email}]
     });
 
     if (existedUser) {
-        return res.status(400).json({ message: "User already exists" });
+        return res.status(400).json({ message: "Email already registered" });
+    }
+    const existedUser2 = await User.findOne({
+        $or: [{username}]
+    });
+
+    if (existedUser2) {
+        return res.status(400).json({ message: "Username already taken" });
     }
     let user;
     try {

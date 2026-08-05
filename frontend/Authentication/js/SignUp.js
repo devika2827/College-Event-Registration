@@ -36,6 +36,12 @@ signupForm.addEventListener("submit", async (e) => {
     const confirmPassword =
         document.getElementById("confirmPassword").value;
 
+
+    if (username.includes(" ")) {
+        alert("Username cannot contain spaces.");
+        return;
+    }
+
     if(password !== confirmPassword){
 
         alert("Passwords do not match.");

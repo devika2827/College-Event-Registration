@@ -9,6 +9,8 @@ const dropdown = document.getElementById("profileDropdown");
 profileBtn.addEventListener("click", function (e) {
     e.stopPropagation();
     dropdown.classList.toggle("active");
+    loadUser();
+
 });
 
 // Prevent closing when clicking inside dropdown
@@ -20,3 +22,38 @@ dropdown.addEventListener("click", function (e) {
 document.addEventListener("click", function () {
     dropdown.classList.remove("active");
 });
+
+// Load current user's details
+async function loadUser() {
+    try {
+        const response = await fetch(
+            "http://localhost:8000/api/v1/auth/current-user",
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(data); // For debugging
+
+        if (response.ok) {
+            document.getElementById("userName").textContent =
+                data.user.name;
+
+            document.getElementById("userUsername").textContent =
+                "@" + data.user.username;
+
+            document.getElementById("userEmail").textContent =
+                data.user.email;
+        } else {
+            console.log(data.message);
+        }
+
+    } catch (error) {
+        console.error("Error fetching user:", error);
+    }
+}
+
+// Call the function when the page loads
