@@ -36,8 +36,6 @@ async function loadUser() {
 
         const data = await response.json();
 
-        console.log(data); // For debugging
-
         if (response.ok) {
             document.getElementById("userName").textContent =
                 data.user.name;
@@ -55,5 +53,3 @@ async function loadUser() {
         console.error("Error fetching user:", error);
     }
 }
-
-// Call the function when the page loads
