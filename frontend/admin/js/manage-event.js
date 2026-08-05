@@ -136,7 +136,7 @@ function editEvent(id){
     document.getElementById("eventName").value = event.name;
     document.getElementById("eventCategory").value = event.category;
     document.getElementById("eventDate").value = event.date.split("T")[0];
-    document.getElementById("registrationDeadline").value = event.registrationDeadline || "";
+    document.getElementById("registrationDeadline").value = event.registrationDeadline.split("T")[0];
     document.getElementById("startTime").value = event.startTime || "";
     document.getElementById("teamSize").value = event.teamSize || "";
     document.getElementById("organizerName").value = event.organizerName || "";
