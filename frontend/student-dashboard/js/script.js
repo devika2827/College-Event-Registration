@@ -67,3 +67,22 @@ function viewDetails(id) {
 
   window.location.href = "event.html";
 }
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try {
+        const response = await fetch("/api/v1/auth/logout", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        if (response.ok) {
+            window.location.href = "../../Authentication/html/login.html";
+        } else {
+            const data = await response.json();
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Logout failed.");
+    }
+});

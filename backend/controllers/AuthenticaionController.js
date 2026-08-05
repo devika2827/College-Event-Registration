@@ -28,7 +28,7 @@ const regUser = async (req, res) => {
     await sendEmail({
         to: user?.email,
         subject: 'Email Verification',
-        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${unHashedToken}`)
+        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/auth/verify-email/${unHashedToken}`)
     });
     const createdUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
     if(!createdUser){
@@ -97,6 +97,7 @@ const loginUser = async (req, res) => {
         );
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: error.message });
     }
 
@@ -105,10 +106,10 @@ const LogoutUser = async (req, res) => {
     try {
         const userId = req.user._id;
         const user = await User.findById(userId);
-        user.refreshToken = undefined;
         if(!user){
             return res.status(404).json({ message: "User not found" });
         }
+        user.refreshToken = undefined;
         const options = {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -120,6 +121,7 @@ const LogoutUser = async (req, res) => {
                 .clearCookie("refreshToken", options)
                 .json({ message: "User logged out successfully" });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: error.message });
     }
 };
@@ -165,7 +167,7 @@ const resendVerificationEmail = async (req, res) => {
     await sendEmail({
         to: user.email,
         subject: 'Email Verification',
-        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${unHashedToken}`)
+        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/auth/verify-email/${unHashedToken}`)
     });
     return res.status(200).json({ message: "Verification email sent successfully" });
 
@@ -219,7 +221,7 @@ const forgotPassword = async (req, res) => {
     await sendEmail({
         to: user?.email,
         subject: 'Password Reset',
-        mailgenContent: forgotPasswordMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/users/forgot-password/${unHashedToken}`)
+        mailgenContent: forgotPasswordMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/auth/forgot-password/${unHashedToken}`)
     });
     return res.status(200).json({ message: "Password reset email sent successfully" });
 };

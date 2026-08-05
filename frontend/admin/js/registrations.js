@@ -4,14 +4,11 @@ const EVENTS_API_URL = "http://localhost:8000/api/events";
 let registrations = [];
 let events = [];
 
-const response = await fetch(`${API_URL}/registrations/mine`, { credentials: "include" });
-
-
 async function fetchRegistrations() {
 
     try {
 
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}/registrations/mine`, { credentials: "include" });
         registrations = await response.json();
         filterRegistrations();
 
@@ -170,6 +167,25 @@ function filterRegistrations() {
     displayRegistrations(filtered);
 
 }
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try {
+        const response = await fetch("/api/v1/auth/logout", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        if (response.ok) {
+            window.location.href = "../../Authentication/html/login.html";
+        } else {
+            const data = await response.json();
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Logout failed.");
+    }
+});
 
 searchInput.addEventListener("input", filterRegistrations);
 eventFilter.addEventListener("change", filterRegistrations);

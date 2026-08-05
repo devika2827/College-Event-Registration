@@ -672,30 +672,21 @@ body.modal-open{
   height: 50px;
   border-radius: 0px;
   background: none;
+  width :calc(100% - 40px);
+  margin: 25px 20px;
   color: #4b46df;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
 }
 button {
-  margin: 25px 20px;
-
-  width: calc(100% - 40px);
-
   border: none;
-
   border-radius: 30px;
-
   background: linear-gradient(90deg, #7b2f3c, #4f46e5);
-
   color: white;
-
   font-size: 16px;
-
   font-weight: bold;
-
   cursor: pointer;
-
   transition: 0.3s;
 }
 
