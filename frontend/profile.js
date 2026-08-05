@@ -1,7 +1,5 @@
 const resetPasswordbtn=document.getElementById("editProfileBtn");
 const logoutBtn=document.getElementById("logoutBtn");
-
-
 const profileBtn = document.getElementById("profileBtn");
 const dropdown = document.getElementById("profileDropdown");
 
@@ -73,4 +71,9 @@ logoutBtn.addEventListener("click", async () => {
         console.error(error);
         alert("Logout failed.");
     }
+});
+
+//Change password
+resetPasswordbtn.addEventListener("click", () => {
+    window.location.href = "../../Authentication/html/change-password.html";
 });
