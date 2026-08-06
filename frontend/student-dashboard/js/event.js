@@ -21,5 +21,5 @@ event.rules.forEach((rule) => {
 });
 
 document.getElementById("registerBtn").onclick = function () {
-  alert("Registration page will open here.");
+    window.location.href = "../../Registration/html/registration.html";
 };

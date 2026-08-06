@@ -1,47 +1,152 @@
 const mongoose = require("mongoose");
 
-const registrationSchema = new mongoose.Schema({
+/* ===============================
+   Team Leader Schema
+================================ */
 
-    fullName: {
+const leaderSchema = new mongoose.Schema({
+
+    name: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
 
-    email: {
+    college: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
 
-    phone: {
+    department: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    year: {
         type: String,
         required: true
     },
 
     rollNo: {
         type: String,
-        required: true
+        required: true,
+        trim: true
+    },
+
+    email: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    phone: {
+        type: String,
+        required: true,
+        trim: true
+    }
+
+}, { _id: false });
+
+/* ===============================
+   Team Member Schema
+================================ */
+
+const memberSchema = new mongoose.Schema({
+
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    college: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    department: {
+        type: String,
+        required: true,
+        trim: true
     },
 
     year: {
-        type: Number,
+        type: String,
         required: true
     },
 
-    teamName: {
+    rollNo: {
         type: String,
-        default: ""
+        required: true,
+        trim: true
     },
+
+    email: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    phone: {
+        type: String,
+        required: true,
+        trim: true
+    }
+
+}, { _id: false });
+
+/* ===============================
+   Registration Schema
+================================ */
+
+const registrationSchema = new mongoose.Schema({
 
     eventId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Event",
+        type: String,
         required: true
+    },
+
+    eventName: {
+    type: String,
+    required: true,
+    trim: true
     },
 
     registrationId: {
         type: String,
         required: true,
         unique: true
+    },
+
+    participationType: {
+        type: String,
+        enum: ["Solo", "Team"],
+        required: true
+    },
+
+    teamName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    teamSize: {
+        type: Number,
+        required: true,
+        min: 1
+    },
+
+    teamLeader: {
+        type: leaderSchema,
+        required: true
+    },
+
+    teamMembers: {
+        type: [memberSchema],
+        default: []
     }
 
 }, {
