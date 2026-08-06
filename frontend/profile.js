@@ -7,7 +7,6 @@ const dropdown = document.getElementById("profileDropdown");
 profileBtn.addEventListener("click", function (e) {
     e.stopPropagation();
     dropdown.classList.toggle("active");
-    loadUser();
 
 });
 
@@ -51,7 +50,7 @@ async function loadUser() {
         console.error("Error fetching user:", error);
     }
 }
-
+loadUser();
 //logout functionality
 
 logoutBtn.addEventListener("click", async () => {
