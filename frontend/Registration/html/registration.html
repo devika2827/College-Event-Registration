@@ -24,19 +24,24 @@
     <!-- ================= NAVBAR ================= -->
 
     <header class="topbar">
+
         <div class="topbar-top">
+
             <div class="logo">
                 <h2>Nexus</h2>
             </div>
+
             <div class="topbar-right">
                 <a href="../../student-dashboard/html/index.html" class="event-link" id="homeBtn">
                     <i class="fa-solid fa-calendar"></i>
                     Events
                 </a>
+
                 <div class="profile" id="profileBtn">
                     <i class="fa-solid fa-user"></i>
                     Profile
                 </div>
+
                 <div id="profileDropdown" class="dropdown">
                     <div class="user-info">
                         <p id="userName">Your Name</p>
@@ -53,8 +58,11 @@
                         Logout
                     </button>
                 </div>
+
             </div>
+
         </div>
+
     </header>
 
 
@@ -62,47 +70,28 @@
 
     <main class="registration-page">
 
-
         <!-- PAGE HEADING -->
 
         <section class="page-heading">
-
             <h1>Event Registration</h1>
-
-            <p>
-                Fill in your details to complete your registration.
-            </p>
-
+            <p> Fill in your details to complete your registration.</p>
         </section>
 
-
         <div class="registration-container">
-
 
             <!-- ================= EVENT SUMMARY ================= -->
 
             <section class="card event-summary-card">
 
-                <!-- Small event banner -->
-
                 <div class="event-banner-container">
-
-                    <img
-                        id="eventBanner"
-                        class="event-banner"
-                        src=""
-                        alt="Event Banner"
-                    >
-
+                    <img id="eventBanner" class="event-banner" src="" alt="Event Banner" >
                 </div>
-
 
                 <div class="event-summary-content">
 
                     <h2 id="eventName">
                         Loading Event...
                     </h2>
-
 
                     <div class="event-details-grid">
 
@@ -112,15 +101,11 @@
                                 Date
                             </span>
 
-                            <span
-                                class="detail-value"
-                                id="eventDate"
-                            >
+                            <span class="detail-value" id="eventDate">
                                 --
                             </span>
 
                         </div>
-
 
                         <div class="event-detail">
 
@@ -128,15 +113,11 @@
                                 Time
                             </span>
 
-                            <span
-                                class="detail-value"
-                                id="eventTime"
-                            >
+                            <span class="detail-value" id="eventTime">
                                 --
                             </span>
 
                         </div>
-
 
                         <div class="event-detail">
 
@@ -144,15 +125,11 @@
                                 Venue
                             </span>
 
-                            <span
-                                class="detail-value"
-                                id="eventVenue"
-                            >
+                            <span class="detail-value" id="eventVenue">
                                 --
                             </span>
 
                         </div>
-
 
                         <div class="event-detail">
 
@@ -160,10 +137,7 @@
                                 Category
                             </span>
 
-                            <span
-                                class="detail-value"
-                                id="eventCategory"
-                            >
+                            <span class="detail-value" id="eventCategory">
                                 --
                             </span>
 
@@ -175,29 +149,20 @@
 
             </section>
 
-
             <!-- ================= REGISTRATION FORM ================= -->
 
             <form id="registrationForm">
-
 
                 <!-- PARTICIPATION TYPE -->
 
                 <section class="card form-section">
 
                     <div class="section-heading">
-
                         <h2>Participation Type</h2>
-
-                        <p>
-                            Choose how you are participating in this event.
-                        </p>
-
+                        <p> Choose how you are participating in this event. </p>
                     </div>
 
-
                     <div class="participation-options">
-
 
                         <label class="participation-option">
 
@@ -210,17 +175,13 @@
                             >
 
                             <div>
-
                                 <strong>Solo</strong>
-
                                 <span>
                                     Register as an individual participant
                                 </span>
-
                             </div>
 
                         </label>
-
 
                         <label class="participation-option">
 
@@ -232,50 +193,36 @@
                             >
 
                             <div>
-
                                 <strong>Team</strong>
-
                                 <span>
                                     Register with multiple team members
                                 </span>
-
                             </div>
 
                         </label>
 
-
                     </div>
 
                 </section>
-
 
                 <!-- ================= TEAM INFORMATION ================= -->
 
                 <section class="card form-section">
 
                     <div class="section-heading">
-
                         <h2>Team Information</h2>
-
-                        <p>
-                            Enter your team details.
-                        </p>
-
+                        <p> Enter your team details.</p>
                     </div>
 
-
                     <div class="form-grid">
-
 
                         <!-- TEAM NAME -->
 
                         <div class="form-group">
 
                             <label for="teamName">
-
                                 Team Name
                                 <span class="required">*</span>
-
                             </label>
 
                             <input
@@ -293,51 +240,24 @@
 
                         </div>
 
-
                         <!-- TEAM SIZE -->
 
                         <div class="form-group">
 
                             <label for="teamSize">
-
                                 Team Size
                                 <span class="required">*</span>
 
                             </label>
 
-
-                            <select
-                                id="teamSize"
-                                name="teamSize"
-                                required
-                            >
-
-                                <option value="1">
-                                    1 Member
-                                </option>
-
-                                <option value="2">
-                                    2 Members
-                                </option>
-
-                                <option value="3">
-                                    3 Members
-                                </option>
-
-                                <option value="4">
-                                    4 Members
-                                </option>
-
-                                <option value="5">
-                                    5 Members
-                                </option>
-
-                                <option value="6">
-                                    6 Members
-                                </option>
-
+                            <select id="teamSize" name="teamSize" required >
+                                <option value=""> Select Team Size </option>
+                                <option value="2">2 Members</option>
+                                <option value="3">3 Members</option>
+                                <option value="4">4 Members</option>
+                                <option value="5">5 Members</option>
+                                <option value="6">6 Members</option>
                             </select>
-
 
                             <span
                                 class="error-message"
@@ -346,39 +266,28 @@
 
                         </div>
 
-
                     </div>
 
                 </section>
-
 
                 <!-- ================= TEAM LEADER ================= -->
 
                 <section class="card form-section">
 
                     <div class="section-heading">
-
                         <h2>Team Leader Information</h2>
-
-                        <p>
-                            Enter the details of the team leader.
-                        </p>
-
+                        <p> Enter the details of the team leader. </p>
                     </div>
 
-
                     <div class="form-grid">
-
 
                         <!-- NAME -->
 
                         <div class="form-group">
 
                             <label for="leaderName">
-
                                 Full Name
                                 <span class="required">*</span>
-
                             </label>
 
                             <input
@@ -396,16 +305,13 @@
 
                         </div>
 
-
                         <!-- COLLEGE -->
 
                         <div class="form-group">
 
                             <label for="leaderCollege">
-
                                 College
                                 <span class="required">*</span>
-
                             </label>
 
                             <input
@@ -423,16 +329,13 @@
 
                         </div>
 
-
                         <!-- DEPARTMENT -->
 
                         <div class="form-group">
 
                             <label for="leaderDepartment">
-
                                 Department
                                 <span class="required">*</span>
-
                             </label>
 
                             <input
@@ -450,48 +353,22 @@
 
                         </div>
 
-
                         <!-- YEAR -->
 
                         <div class="form-group">
 
                             <label for="leaderYear">
-
                                 Year
                                 <span class="required">*</span>
-
                             </label>
 
-                            <select
-                                id="leaderYear"
-                                name="leaderYear"
-                                required
-                            >
-
-                                <option value="">
-                                    Select Year
-                                </option>
-
-                                <option value="1">
-                                    1st Year
-                                </option>
-
-                                <option value="2">
-                                    2nd Year
-                                </option>
-
-                                <option value="3">
-                                    3rd Year
-                                </option>
-
-                                <option value="4">
-                                    4th Year
-                                </option>
-
-                                <option value="5">
-                                    5th Year
-                                </option>
-
+                            <select id="leaderYear" name="leaderYear" required >
+                                <option value=""> Select Year </option>
+                                <option value="1"> 1st Year </option>
+                                <option value="2"> 2nd Year </option>
+                                <option value="3"> 3rd Year </option>
+                                <option value="4"> 4th Year </option>
+                                <option value="5"> 5th Year </option>
                             </select>
 
                             <span
@@ -501,16 +378,13 @@
 
                         </div>
 
-
                         <!-- ROLL NUMBER -->
 
                         <div class="form-group">
 
                             <label for="leaderRollNo">
-
                                 Roll Number / Student ID
                                 <span class="required">*</span>
-
                             </label>
 
                             <input
@@ -528,16 +402,13 @@
 
                         </div>
 
-
                         <!-- EMAIL -->
 
                         <div class="form-group">
 
                             <label for="leaderEmail">
-
                                 Email
                                 <span class="required">*</span>
-
                             </label>
 
                             <input
@@ -555,16 +426,13 @@
 
                         </div>
 
-
                         <!-- PHONE -->
 
                         <div class="form-group full-width">
 
                             <label for="leaderPhone">
-
                                 Phone Number
                                 <span class="required">*</span>
-
                             </label>
 
                             <input
@@ -573,6 +441,8 @@
                                 name="leaderPhone"
                                 placeholder="Enter 10-digit phone number"
                                 maxlength="10"
+                                pattern="[0-9]{10}"
+                                inputmode="numeric"
                                 required
                             >
 
@@ -583,11 +453,9 @@
 
                         </div>
 
-
                     </div>
 
                 </section>
-
 
                 <!-- ================= DYNAMIC TEAM MEMBERS ================= -->
 
@@ -608,7 +476,6 @@
 
                 </div>
 
-
                 <!-- ================= DECLARATION ================= -->
 
                 <section class="card declaration-section">
@@ -619,6 +486,7 @@
                             type="checkbox"
                             id="terms"
                             name="terms"
+                            required
                         >
 
                         <span>
@@ -629,14 +497,12 @@
 
                     </label>
 
-
                     <span
                         class="error-message"
                         id="termsError"
                     ></span>
 
                 </section>
-
 
                 <!-- ================= SUBMIT ================= -->
 
@@ -652,9 +518,7 @@
 
                 </div>
 
-
             </form>
-
 
             <!-- ================= SUCCESS MESSAGE ================= -->
 
@@ -668,11 +532,7 @@
                     ✓
                 </div>
 
-
-                <h2>
-                    Registration Successful!
-                </h2>
-
+                <h2> Registration Successful! </h2>
 
                 <p>
                     Your registration for
@@ -681,7 +541,6 @@
                     </strong>
                     has been completed successfully.
                 </p>
-
 
                 <div class="registration-id-box">
 
@@ -695,9 +554,8 @@
 
                 </div>
 
-
                 <a
-                    href="../events/events.html"
+                    href="../../student-dashboard/html/event.html"
                     class="back-events-button"
                 >
                     Back to Events
@@ -705,11 +563,9 @@
 
             </section>
 
-
         </div>
 
     </main>
-
 
     <!-- ================= JAVASCRIPT ================= -->
 
