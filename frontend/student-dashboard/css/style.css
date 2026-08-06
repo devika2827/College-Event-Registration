@@ -8,7 +8,6 @@
 body {
   background: linear-gradient(135deg, #eef2ff, #f8fafc);
   color: #1f2937;
-  font-family:"Poppins",sans-serif;
 }
 
 .hero {
@@ -112,6 +111,7 @@ body {
 .logo{
   font-weight: bold;
   font-size: 48px;
+  flex-shrink: 0;
 }
 
 /* Top Bar */
@@ -157,12 +157,8 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-.logo{
-    flex-shrink: 0;
-}
-
 .logo h2{
-    font-size: 28px;
+  font-size: 28px;
 }
 
 .profile{
@@ -177,12 +173,11 @@ body {
     position:relative;
 }
 
-
 .dropdown{
     position:absolute;
     top:45px;
     right:0;
-    width:270px;
+    width:200px;
     background:white;
     border-radius:12px;
     overflow:hidden;
@@ -244,11 +239,18 @@ body {
   font-size:25px;
 }
 
-#userUsername{
+#userUsername, #userEmail{
   color:#000000;
   font-size:15px;
 }
-#userEmail{
-  color:#000000;
-  font-size:15px;
+
+#editProfileBtn, #logoutBtn {
+  border-radius: 0px;
+  background: none;
+  border: none;
+  color: #4b46df;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  height: 50px;
 }

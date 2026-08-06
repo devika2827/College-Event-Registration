@@ -1,34 +1,13 @@
 const API_URL = "http://localhost:8000/api/events";
 
-const profileBtn = document.getElementById("profileBtn");
-const dropdown = document.getElementById("profileDropdown");
-
-profileBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-});
-
-dropdown.addEventListener("click", function (e) {
-    e.stopPropagation();
-});
-
-document.addEventListener("click", function () {
-    dropdown.classList.remove("active");
-});
-
 async function loadDashboard(){
 
     try{
         const response = await fetch(`${API_URL}/my`, { credentials: "include" });
-
         const events = await response.json();
-
         const today = new Date();
-
         const totalEvents = events.length;
-
         const upcomingEvents = events.filter(event => new Date(event.date) >= today).length;
-
         const completedEvents = events.filter(event =>  new Date(event.date) < today ).length;
 
         const upcoming = events

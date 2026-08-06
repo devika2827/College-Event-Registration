@@ -61,9 +61,7 @@ bannerInput.addEventListener("change", function () {
     }
 });
 
-
 const form = document.getElementById("eventForm");
-
 const tableBody = document.getElementById("eventTableBody");
 
 function deleteEvent(id){
@@ -138,7 +136,7 @@ function editEvent(id){
     document.getElementById("eventName").value = event.name;
     document.getElementById("eventCategory").value = event.category;
     document.getElementById("eventDate").value = event.date.split("T")[0];
-    document.getElementById("registrationDeadline").value = event.registrationDeadline || "";
+    document.getElementById("registrationDeadline").value = event.registrationDeadline.split("T")[0];
     document.getElementById("startTime").value = event.startTime || "";
     document.getElementById("teamSize").value = event.teamSize || "";
     document.getElementById("organizerName").value = event.organizerName || "";
@@ -157,16 +155,14 @@ function editEvent(id){
         customVenueGroup.style.display = "none";
 
     }else{
-
         venueSelect.value = "other";
         customVenueGroup.style.display = "flex";
         document.getElementById("customVenue").value = event.venue;
-
     }
 
     document.getElementById("eventStatus").value = event.status;
     document.getElementById("eventDescription").value = event.description || "";
-    document.getElementById("eventRules").value = event.rules || "";
+    document.getElementById("eventRules").value = ( event.rules || []).join("\n");
     document.querySelector(".modal-header h2").textContent = "Edit Event";
 
     modal.style.display = "flex";
@@ -204,18 +200,14 @@ confirmDeleteBtn.onclick = async () => {
     });
 
     fetchEvents();
-
     deleteModal.style.display="none";
 };
 
 cancelDeleteBtn.onclick = () => {
-
     deleteModal.style.display = "none";
-
 };
 
 window.addEventListener("click",(e)=>{
-
     if(e.target===deleteModal){
         deleteModal.style.display="none";
     }
@@ -223,54 +215,57 @@ window.addEventListener("click",(e)=>{
 
 // Create Event
 form.addEventListener("submit", async function(e){
-
     e.preventDefault();
 
-    const newEvent = {
-
-        name: document.getElementById("eventName").value,
-        category: document.getElementById("eventCategory").value,
-        date: document.getElementById("eventDate").value,
-        registrationDeadline: document.getElementById("registrationDeadline").value,
-        venue: venueSelect.value === "other"
-                ? document.getElementById("customVenue").value
-                : venueSelect.value,
-        status: document.getElementById("eventStatus").value,
-        startTime: document.getElementById("startTime").value,
-        teamSize: document.getElementById("teamSize").value,
-        organizerName: document.getElementById("organizerName").value,
-        organizerContact: document.getElementById("organizerContact").value,
-        description: document.getElementById("eventDescription").value,
-        rules: document.getElementById("eventRules").value,
-        banner: document.getElementById("eventBanner").files[0]
-            ? document.getElementById("eventBanner").files[0].name
-            : "No Banner",
-    };
-
+    const dateVal = document.getElementById("eventDate").value;
+    const deadlineVal = document.getElementById("registrationDeadline").value;
+    const teamSizeVal = document.getElementById("teamSize").value;
+    const contactVal = document.getElementById("organizerContact").value;
     const today = new Date().toISOString().split("T")[0];
 
-    if (newEvent.date <= today) {
+    if (dateVal <= today) {
         alert("Event date must be after today.");
         return;
     }
 
-    if (
-        newEvent.registrationDeadline < today ||
-        newEvent.registrationDeadline >= newEvent.date
-    ) {
+    if (deadlineVal < today || deadlineVal >= dateVal) {
         alert("Registration deadline must be between today and the event date.");
         return;
     }
-    
-    if (newEvent.teamSize <= 0) {
+
+    if (teamSizeVal <= 0) {
         alert("Team size must be at least 1.");
         return;
     }
 
-    if (!/^\d{10}$/.test(newEvent.organizerContact)) {
+    if (!/^\d{10}$/.test(contactVal)) {
         alert("Enter a valid 10-digit contact number.");
         return;
     }
+
+    const formData = new FormData();
+
+    formData.append("name", document.getElementById("eventName").value);
+    formData.append("category", document.getElementById("eventCategory").value);
+    formData.append("date", dateVal);
+    formData.append("registrationDeadline", deadlineVal);
+    formData.append("venue", venueSelect.value === "other"
+        ? document.getElementById("customVenue").value
+        : venueSelect.value);
+    formData.append("status", document.getElementById("eventStatus").value);
+    formData.append("startTime", document.getElementById("startTime").value);
+    formData.append("teamSize", teamSizeVal);
+    formData.append("organizerName", document.getElementById("organizerName").value);
+    formData.append("organizerContact", contactVal);
+    formData.append("description", document.getElementById("eventDescription").value);
+    formData.append("rules", document.getElementById("eventRules").value
+        .split("\n"));
+
+    const bannerFile = document.getElementById("eventBanner").files[0];
+    if (bannerFile) {
+        formData.append("banner", bannerFile); // the actual File object, not the name
+    }
+
 
     let response;
 
@@ -278,9 +273,8 @@ form.addEventListener("submit", async function(e){
 
         response = await fetch(`${API_URL}/${editEventId}`,{
             method:"PUT",
-            headers:{ "Content-Type":"application/json" },
             credentials: "include",
-            body:JSON.stringify(newEvent)
+            body:formData
         });
 
     }
@@ -288,9 +282,8 @@ form.addEventListener("submit", async function(e){
 
         response = await fetch(API_URL,{
             method:"POST",
-            headers:{ "Content-Type":"application/json" },
             credentials: "include",
-            body:JSON.stringify(newEvent)
+            body:formData
         });
 
     }
@@ -343,22 +336,7 @@ function filterEvents(){
     });
     displayEvents(filtered);
 }
-
-const profileBtn = document.getElementById("profileBtn");
-const dropdown = document.getElementById("profileDropdown");
-
-profileBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-});
-
-dropdown.addEventListener("click", function (e) {
-    e.stopPropagation();
-});
-
-document.addEventListener("click", function () {
-    dropdown.classList.remove("active");
-});
+    
 
 searchInput.addEventListener("input", filterEvents);
 categoryFilter.addEventListener("change", filterEvents);

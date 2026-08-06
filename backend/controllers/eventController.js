@@ -30,6 +30,11 @@ const createEvent = async (req, res) => {
             eventData.banner = req.file.filename;
         }
 
+        if (typeof eventData.rules === "string") {
+            eventData.rules = eventData.rules
+                .split(",")
+                .map(rule => rule.trim());
+        }
         const event = await Event.create(eventData);
         res.status(201).json(event);
 
@@ -39,12 +44,27 @@ const createEvent = async (req, res) => {
 
 };
 
+const getSingleEvent = async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+
+        if (!event) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        res.json(event);
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // UPDATE event
 const updateEvent = async (req, res) => {
 
     try {
 
-        const exising = await Event.findById(req.params.id);
+        const existing = await Event.findById(req.params.id);
 
         if (!existing) {
 
@@ -53,7 +73,7 @@ const updateEvent = async (req, res) => {
             });
         }
 
-        if (existing.createdBy.toString() !== req.user._id) {
+        if (existing.createdBy.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Not authorized to edit this event" });
         }
 
@@ -63,11 +83,16 @@ const updateEvent = async (req, res) => {
             eventData.banner = req.file.filename;
         }
 
+        if (typeof eventData.rules === "string") {
+            eventData.rules = eventData.rules
+                .split(",")
+                .map(rule => rule.trim());
+        }
         const event = await Event.findByIdAndUpdate(
             req.params.id,
             eventData,
             {
-                new: true,
+                returnDocument: "after",
                 runValidators: true
             }
         );
@@ -133,7 +158,7 @@ const getRegistrationsForMyEvents = async (req, res) => {
 
         const myEventIds = await Event.find({ createdBy: req.user._id }).distinct("_id");
 
-        const registrations = await Registration.find({ event: { $in: myEventIds } })
+        const registrations = await Registration.find({ eventId: { $in: myEventIds } })
             .populate("event", "name date category")
             .sort({ createdAt: -1 });
 
@@ -149,6 +174,7 @@ const getRegistrationsForMyEvents = async (req, res) => {
 
 module.exports = {
     getEvents,
+    getSingleEvent,
     getMyEvents,
     createEvent,
     updateEvent,

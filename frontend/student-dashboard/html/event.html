@@ -8,12 +8,62 @@
 
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/details.css" />
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
   </head>
 
   <body>
-    <nav>
-      <h2>EventHub</h2>
-    </nav>
+     <header class="topbar">
+        <div class="topbar-top">
+
+            <div class="logo">
+                <h2>Nexus</h2>
+            </div>
+
+            <div class="topbar-right">
+              <a href="../../student-dashboard/html/index.html" class="student-link">
+                        <i class="fa-solid fa-calendar"></i>
+                        Events
+                    </a>
+
+                <div class="profile-container">
+                  
+                    <div class="profile" id="profileBtn">
+                        <i class="fa-solid fa-user"></i>
+                        Profile
+                    </div>
+
+                    <div id="profileDropdown" class="dropdown">
+
+                        <div class="user-info">
+                            <p id="userName">Your Name</p>
+                            <p id="userUsername">@username</p>
+                            <p id="userEmail">example@email.com</p>
+                        </div>
+
+                <hr>
+
+                <button id="editProfileBtn">
+                    <i class="fa-solid fa-key"></i>
+                    Reset Password
+                </button>
+            
+
+                <button id="logoutBtn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </header>
 
     <div class="details">
       <img id="eventImage" />
@@ -45,6 +95,11 @@
           <p id="lastDate"></p>
         </div>
 
+        <div class="info-box">
+          <h3>Team Size</h3>
+          <p id="teamSize"></p>
+        </div>
+
       </div>
 
       <h2>Description</h2>
@@ -59,5 +114,6 @@
     </div>
 
     <script src="../js/event.js"></script>
+    <script src="../../profile.js"></script>
   </body>
 </html>
