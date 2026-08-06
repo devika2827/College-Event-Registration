@@ -6,11 +6,11 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
 }
 
 body{
 
-    font-family:Segoe UI,Arial,sans-serif;
     background:#f3f6fb;
     color:#1f2937;
 
@@ -26,7 +26,6 @@ body{
     background: linear-gradient(90deg, #6d0b17, #4b46df);
     color: white;
     z-index: 1000;
-    font-family: "Poppins", sans-serif;
 }
 
 .topbar-top{
