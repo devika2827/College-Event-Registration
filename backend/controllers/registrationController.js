@@ -154,25 +154,21 @@ const deleteRegistration = async (req, res) => {
 };
 
 const getMyRegistrations = async (req, res) => {
-
     try {
 
         const registrations = await Registration.find({
-            student: req.user._id
-        }).populate("event");
+            "teamLeader.email": req.user.email
+        }).sort({ createdAt: -1 });
 
         res.status(200).json(registrations);
 
-    }
-
-    catch(error){
+    } catch (error) {
 
         res.status(500).json({
-            message:error.message
+            message: error.message
         });
 
     }
-
 };
 
 
