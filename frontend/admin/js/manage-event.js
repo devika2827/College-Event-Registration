@@ -33,16 +33,28 @@ const confirmDeleteBtn = document.getElementById("confirmDelete");
 const cancelDeleteBtn = document.getElementById("cancelDelete");
 let deleteEventId = null;
 const venueSelect = document.getElementById("eventVenue");
-venueSelect.addEventListener("change", () => {
 
-if(venueSelect.value === "other"){
-    customVenueGroup.style.display = "flex";
-}
-else{
-    customVenueGroup.style.display = "none";
-}
+venueSelect.addEventListener("change", () => {
+    if(venueSelect.value === "other"){
+        customVenueGroup.style.display = "flex";
+    }
+    else{
+        customVenueGroup.style.display = "none";
+    }
 });
     
+// Event Mode Selection
+const eventModeSelect = document.getElementById("eventMode");
+const venueGroup = document.getElementById("venueGroup");
+
+eventModeSelect.addEventListener("change", () => {
+    if (eventModeSelect.value === "Online") {
+        venueGroup.style.display = "none";
+    } else {
+        venueGroup.style.display = "flex";
+    }
+});
+
 const customVenueGroup = document.getElementById("customVenueGroup");
 const uploadBox = document.getElementById("uploadBox");
 const bannerInput = document.getElementById("eventBanner");
