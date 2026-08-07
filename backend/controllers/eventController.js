@@ -26,6 +26,10 @@ const createEvent = async (req, res) => {
     try {
         const eventData = { ...req.body, createdBy: req.user._id };
 
+        if (Number(eventData.minTeamSize) > Number(eventData.maxTeamSize)) {
+            return res.status(400).json({ message: "Minimum team size cannot exceed maximum team size." });
+        }
+
         if (req.file) {
             eventData.banner = req.file.filename;
         }
