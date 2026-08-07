@@ -18,7 +18,8 @@ function loadEvent() {
     document.getElementById("eventName").innerHTML = eventData.name;
     document.getElementById("eventDate").innerHTML = new Date(eventData.date).toLocaleDateString();
     document.getElementById("eventTime").innerHTML = eventData.startTime;
-    document.getElementById("eventVenue").innerHTML = eventData.venue;
+    document.getElementById("eventVenue").innerHTML = 
+        eventData.mode === "Online" ? "Online" : eventData.venue;
     document.getElementById("eventCategory").innerHTML = eventData.category;
 
     const maxTeamSize = Number(eventData.maxTeamSize);
@@ -369,20 +370,12 @@ function showSuccess(registration){
 }
 
 
-/* ==========================================
-INITIALIZE PAGE
-========================================== */
+/* INITIALIZE PAGE */
 
 document.addEventListener("DOMContentLoaded",()=>{
-
     loadEvent();
-
     generateMembers();
-
     if(soloRadio.checked){
-
         teamSize.disabled=true;
-
     }
-
 });
