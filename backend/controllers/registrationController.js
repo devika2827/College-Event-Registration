@@ -152,7 +152,6 @@ const deleteRegistration = async (req, res) => {
     }
 
 };
-const Registration = require("models/Registration");
 
 const getMyRegistrations = async (req, res) => {
 
