@@ -12,7 +12,8 @@ const {
 
     updateRegistration,
 
-    deleteRegistration
+    deleteRegistration,
+     getMyRegistrations
 
 } = require("../controllers/registrationController");
 
