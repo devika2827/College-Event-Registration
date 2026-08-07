@@ -33,7 +33,13 @@ const eventSchema = new mongoose.Schema({
         required:true
     },
 
-    teamSize:{
+    minTeamSize:{
+        type:Number,
+        required:true,
+        min:1
+    },
+
+    maxTeamSize:{
         type:Number,
         required:true,
         min:1
@@ -49,9 +55,21 @@ const eventSchema = new mongoose.Schema({
         required:true
     },
 
+    mode:{
+        type:String,
+        enum:["Offline","Online"],
+        default:"Offline"
+    },
+
     venue:{
         type:String,
-        required:true
+        required:function() { return this.mode !== "Online"; }
+    },
+
+    eligibility:{
+        type:String,
+        enum:["Open","College Only"],
+        default:"Open"
     },
 
     description:{
