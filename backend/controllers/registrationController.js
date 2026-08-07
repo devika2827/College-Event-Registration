@@ -153,6 +153,25 @@ const deleteRegistration = async (req, res) => {
 
 };
 
+const getMyRegistrations = async (req, res) => {
+    try {
+
+        const registrations = await Registration.find({
+            "teamLeader.email": req.user.email
+        }).sort({ createdAt: -1 });
+
+        res.status(200).json(registrations);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};
+
+
 
 module.exports = {
 
@@ -164,6 +183,8 @@ module.exports = {
 
     updateRegistration,
 
-    deleteRegistration
+    deleteRegistration,
+   
+    getMyRegistrations
 
 };
