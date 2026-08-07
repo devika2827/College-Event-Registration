@@ -1,101 +1,61 @@
-/* ==========================================
-API
-========================================== */
-
 const API_URL = "http://localhost:8000/api/registrations";
 
-
-/* ==========================================
-SELECTED EVENT
-========================================== */
+/* SELECTED EVENT */
 
 const eventData = JSON.parse(localStorage.getItem("selectedEvent"));
 
 if (!eventData) {
-
     alert("No event selected.");
-
     window.location.href = "../../student-dashboard/html/index.html";
-
 }
 
 
-/* ==========================================
-LOAD EVENT
-========================================== */
+/* LOAD EVENT */
 
 function loadEvent() {
 
     document.getElementById("eventBanner").src = `/uploads/${eventData.banner}`;
-
     document.getElementById("eventName").innerHTML = eventData.name;
+    document.getElementById("eventDate").innerHTML = new Date(eventData.date).toLocaleDateString();
+    document.getElementById("eventTime").innerHTML = eventData.startTime;
+    document.getElementById("eventVenue").innerHTML = eventData.venue;
+    document.getElementById("eventCategory").innerHTML = eventData.category;
 
-    document.getElementById("eventDate").innerHTML =
-        new Date(eventData.date).toLocaleDateString();
-
-    document.getElementById("eventTime").innerHTML =
-        eventData.startTime;
-
-    document.getElementById("eventVenue").innerHTML =
-        eventData.venue;
-
-    document.getElementById("eventCategory").innerHTML =
-        eventData.category;
-
-
-    const maxTeamSize = Number(eventData.teamSize);
+    const maxTeamSize = Number(eventData.maxTeamSize);
+    const minTeamSize = Number(eventData.minTeamSize);
 
     teamSize.innerHTML = "";
 
 
-    for(let i = 1; i <= maxTeamSize; i++){
-
+    for(let i = minTeamSize; i <= maxTeamSize; i++){
         teamSize.innerHTML += `<option value="${i}">${i}</option>`;
-
     }
 
 }
 
 
-/* ==========================================
-SOLO / TEAM
-========================================== */
+/* SOLO / TEAM */
 
 const soloRadio=document.getElementById("soloOption");
-
 const teamRadio=document.getElementById("teamOption");
-
 const teamSize=document.getElementById("teamSize");
 
-/* ==========================================
-EVENT TYPE
-========================================== */
+/* EVENT TYPE */
 
-const maxTeamSize = Number(eventData.teamSize);
+const maxTeamSize = Number(eventData.maxteamSize);
 
 if(maxTeamSize === 1){
-
     soloRadio.checked = true;
-
     teamRadio.disabled = true;
-
     teamSize.disabled = true;
-
     teamSize.value = 1;
-
 }else{
-
     teamRadio.checked = true;
-
     soloRadio.disabled = true;
-
     teamSize.disabled = false;
-
 }
 
 teamSize.addEventListener("change", generateMembers);
-
-
 
 /* ==========================================
 CREATE MEMBER CARDS
