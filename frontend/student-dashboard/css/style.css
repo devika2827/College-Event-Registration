@@ -7,7 +7,6 @@
 
 body {
   background: linear-gradient(135deg, #eef2ff, #f8fafc);
-  color: #1f2937;
 }
 
 .hero {
@@ -109,8 +108,6 @@ body {
   font-size: 20px;
 }
 .logo{
-  font-weight: bold;
-  font-size: 48px;
   flex-shrink: 0;
 }
 

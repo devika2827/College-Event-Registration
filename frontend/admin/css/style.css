@@ -659,11 +659,7 @@ body.modal-open{
   font-size:25px;
 }
 
-#userUsername{
-  color:#000000;
-  font-size:15px;
-}
-#userEmail{
+#userUsername, #userEmail{
   color:#000000;
   font-size:15px;
 }
