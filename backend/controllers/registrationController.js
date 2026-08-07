@@ -152,7 +152,29 @@ const deleteRegistration = async (req, res) => {
     }
 
 };
+const Registration = require("models/Registration");
 
+const getMyRegistrations = async (req, res) => {
+
+    try {
+
+        const registrations = await Registration.find({
+            student: req.user._id
+        }).populate("event");
+
+        res.status(200).json(registrations);
+
+    }
+
+    catch(error){
+
+        res.status(500).json({
+            message:error.message
+        });
+
+    }
+
+};
 
 module.exports = {
 
