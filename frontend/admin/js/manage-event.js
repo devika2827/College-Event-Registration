@@ -150,9 +150,18 @@ function editEvent(id){
     document.getElementById("eventDate").value = event.date.split("T")[0];
     document.getElementById("registrationDeadline").value = event.registrationDeadline.split("T")[0];
     document.getElementById("startTime").value = event.startTime || "";
-    document.getElementById("teamSize").value = event.teamSize || "";
+    document.getElementById("minTeamSize").value = event.minTeamSize || "";
+    document.getElementById("maxTeamSize").value = event.maxTeamSize || "";
+    document.getElementById("eventMode").value = event.mode || "Offline";
+    document.getElementById("eventEligibility").value = event.eligibility || "Open";
     document.getElementById("organizerName").value = event.organizerName || "";
     document.getElementById("organizerContact").value = event.organizerContact || "";
+
+    if (event.mode === "Online") {
+    venueGroup.style.display = "none";
+    } else {
+    venueGroup.style.display = "flex";
+    }
 
     if([
         "Auditorium",
