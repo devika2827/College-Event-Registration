@@ -7,7 +7,8 @@ document.getElementById("time").innerHTML = eventData.startTime;
 document.getElementById("venue").innerHTML = eventData.venue;
 document.getElementById("lastDate").innerHTML = new Date(eventData.registrationDeadline).toLocaleDateString();
 document.getElementById("description").innerHTML = eventData.description;
-document.getElementById("teamSize").innerHTML = eventData.teamSize;
+document.getElementById("teamSize").textContent = `${eventData.minTeamSize}-${eventData.maxTeamSize}`;
+document.getElementById("eventMode").value = eventData.eventMode || "";
 
 const rules = document.getElementById("rules");
 

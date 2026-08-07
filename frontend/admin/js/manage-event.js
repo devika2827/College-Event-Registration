@@ -164,12 +164,10 @@ function editEvent(id){
     }
 
     if([
-        "Auditorium",
-        "Seminar Hall",
-        "Ground",
-        "Room 301",
-        "Room 302",
-        "Basketball Court",
+        "Auditorium, IGDTUW",
+        "Seminar Hall, IGDTUW",
+        "Ground, IGDTUW",
+        "Basketball Court, IGDTUW",
     ].includes(event.venue)){
 
         venueSelect.value = event.venue;
