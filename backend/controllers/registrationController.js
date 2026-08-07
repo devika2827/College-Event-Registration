@@ -176,6 +176,8 @@ const getMyRegistrations = async (req, res) => {
 
 };
 
+
+
 module.exports = {
 
     getRegistrations,
@@ -186,6 +188,8 @@ module.exports = {
 
     updateRegistration,
 
-    deleteRegistration
+    deleteRegistration,
+   
+    getMyRegistrations
 
 };
