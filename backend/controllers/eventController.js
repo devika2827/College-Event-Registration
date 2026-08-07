@@ -36,7 +36,7 @@ const createEvent = async (req, res) => {
 
         if (typeof eventData.rules === "string") {
             eventData.rules = eventData.rules
-                .split(",")
+                .split(/\r?\n/)
                 .map(rule => rule.trim());
         }
         const event = await Event.create(eventData);
@@ -89,7 +89,7 @@ const updateEvent = async (req, res) => {
 
         if (typeof eventData.rules === "string") {
             eventData.rules = eventData.rules
-                .split(",")
+                .split(/\r?\n/)
                 .map(rule => rule.trim());
         }
         const event = await Event.findByIdAndUpdate(
