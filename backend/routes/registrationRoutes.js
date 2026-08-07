@@ -16,7 +16,7 @@ const {
 
 } = require("../controllers/registrationController");
 
-
+router.get("/my", verifyToken, getMyRegistrations);
 router.get("/", getRegistrations);
 
 router.get("/:id", getRegistration);
