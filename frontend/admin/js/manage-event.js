@@ -240,8 +240,8 @@ form.addEventListener("submit", async function(e){
 
     const dateVal = document.getElementById("eventDate").value;
     const deadlineVal = document.getElementById("registrationDeadline").value;
-    const teamSizeVal = document.getElementById("teamSize").value;
-    const contactVal = document.getElementById("organizerContact").value;
+    const minTeamSizeVal = document.getElementById("minTeamSize").value;
+    const maxTeamSizeVal = document.getElementById("maxTeamSize").value;    const contactVal = document.getElementById("organizerContact").value;
     const today = new Date().toISOString().split("T")[0];
 
     if (dateVal <= today) {
@@ -254,8 +254,13 @@ form.addEventListener("submit", async function(e){
         return;
     }
 
-    if (teamSizeVal <= 0) {
+    if (minTeamSizeVal <= 0 || maxTeamSizeVal <= 0) {
         alert("Team size must be at least 1.");
+        return;
+    }
+
+    if (Number(minTeamSizeVal) > Number(maxTeamSizeVal)) {
+        alert("Minimum team size cannot be greater than maximum team size.");
         return;
     }
 
@@ -270,12 +275,17 @@ form.addEventListener("submit", async function(e){
     formData.append("category", document.getElementById("eventCategory").value);
     formData.append("date", dateVal);
     formData.append("registrationDeadline", deadlineVal);
-    formData.append("venue", venueSelect.value === "other"
-        ? document.getElementById("customVenue").value
-        : venueSelect.value);
+    formData.append("mode", eventModeSelect.value);
+    formData.append("eligibility", document.getElementById("eventEligibility").value);
+    formData.append("minTeamSize", minTeamSizeVal);
+    formData.append("maxTeamSize", maxTeamSizeVal);  
+    if (eventModeSelect.value === "Offline") {
+        formData.append("venue", venueSelect.value === "other"
+                                    ? document.getElementById("customVenue").value
+                                    : venueSelect.value);
+    }
     formData.append("status", document.getElementById("eventStatus").value);
-    formData.append("startTime", document.getElementById("startTime").value);
-    formData.append("teamSize", teamSizeVal);
+    formData.append("startTime", document.getElementById("startTime").value);  
     formData.append("organizerName", document.getElementById("organizerName").value);
     formData.append("organizerContact", contactVal);
     formData.append("description", document.getElementById("eventDescription").value);
@@ -318,6 +328,7 @@ form.addEventListener("submit", async function(e){
     await fetchEvents();
 
     form.reset();
+    venueGroup.style.display = "flex";
     editEventId = null;
     document.querySelector(".modal-header h2").textContent = "Create Event";
     preview.style.display = "none";
