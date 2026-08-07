@@ -287,9 +287,7 @@ form.addEventListener("submit", async function(e){
     formData.append("organizerName", document.getElementById("organizerName").value);
     formData.append("organizerContact", contactVal);
     formData.append("description", document.getElementById("eventDescription").value);
-    formData.append("rules", document.getElementById("eventRules").value
-        .split("\n"));
-
+    formData.append("rules", document.getElementById("eventRules").value)
     const bannerFile = document.getElementById("eventBanner").files[0];
     if (bannerFile) {
         formData.append("banner", bannerFile); // the actual File object, not the name
