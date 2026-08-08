@@ -108,7 +108,7 @@ function displayEvents(filteredEvents = events) {
             <td>${event.name}</td>
             <td>${event.category}</td>
             <td>${new Date(event.date).toLocaleDateString("en-GB")}</td>
-            <td>${event.venue}</td>
+            <td>${event.mode === "Online" ? "-" : event.venue}</td>
 
             <td>
                 <span class="${isClosed ? "closed badge" : "open badge"}">
