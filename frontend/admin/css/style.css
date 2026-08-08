@@ -227,7 +227,7 @@ body{
 .events-container th,
 .events-container td{
     padding:18px;
-    text-align:left;
+    text-align:center;
     border-bottom:1px solid #eee;
 }
 

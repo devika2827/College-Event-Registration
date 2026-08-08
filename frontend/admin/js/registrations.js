@@ -73,7 +73,8 @@ function displayRegistrations(filtered = registrations) {
             <tr>
 
                 <td>${reg.eventName || "Deleted Event"}</td>
-                <td>${reg.teamName}</td>
+                <td>${reg.teamName || "-"}</td>
+                <td>${reg.teamLeader.name}</td>
                 <td>${reg.teamLeader.email}</td>
                 <td>${reg.teamLeader.phone}</td>
 
@@ -87,11 +88,6 @@ function displayRegistrations(filtered = registrations) {
 
                 <td>${new Date(reg.createdAt).toLocaleDateString("en-GB")}</td>
 
-                <td>
-                    <button class="delete-btn" onclick="deleteRegistration('${reg._id}')">
-                        <p>Delete</p>
-                    </button>
-                </td>
 
             </tr>
 
