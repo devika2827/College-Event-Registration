@@ -1,8 +1,6 @@
 const Registration = require("../models/Registration");
 
-/* ======================================
-   GET ALL REGISTRATIONS
-====================================== */
+/* GET ALL REGISTRATIONS */
 
 const getRegistrations = async (req, res) => {
 
@@ -25,9 +23,7 @@ const getRegistrations = async (req, res) => {
 };
 
 
-/* ======================================
-   CREATE REGISTRATION
-====================================== */
+/* CREATE REGISTRATION */
 
 const createRegistration = async (req, res) => {
 
@@ -47,10 +43,7 @@ const createRegistration = async (req, res) => {
 
 };
 
-
-/* ======================================
-   GET REGISTRATION BY ID
-====================================== */
+/* GET REGISTRATION BY ID */
 
 const getRegistration = async (req, res) => {
 
@@ -78,10 +71,7 @@ const getRegistration = async (req, res) => {
 
 };
 
-
-/* ======================================
-   UPDATE REGISTRATION
-====================================== */
+/* UPDATE REGISTRATION */
 
 const updateRegistration = async (req, res) => {
 
@@ -121,9 +111,7 @@ const updateRegistration = async (req, res) => {
 };
 
 
-/* ======================================
-   DELETE REGISTRATION
-====================================== */
+/* DELETE REGISTRATION */
 
 const deleteRegistration = async (req, res) => {
 
@@ -153,6 +141,8 @@ const deleteRegistration = async (req, res) => {
 
 };
 
+/* GET REGISTRATIONS FOR STUDENT DASHBOARD */
+
 const getMyRegistrations = async (req, res) => {
     try {
 
@@ -171,20 +161,33 @@ const getMyRegistrations = async (req, res) => {
     }
 };
 
+/* GET REGGISTRATIONS FOR ADMIN DASHBOARD */
+const Event = require("../models/Event");
+
+const getRegistrationsForMyEvents = async (req, res) => {
+    try {
+        const myEventIds = await Event.find({ createdBy: req.user._id }).distinct("_id");
+
+        const registrations = await Registration.find({
+            eventId: { $in: myEventIds }
+        })
+        .populate("eventId", "name date category")
+        .sort({ createdAt: -1 });
+
+        res.status(200).json(registrations);
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
 module.exports = {
-
     getRegistrations,
-
     getRegistration,
-
     createRegistration,
-
     updateRegistration,
-
     deleteRegistration,
-   
-    getMyRegistrations
-
+    getMyRegistrations,
+    getRegistrationsForMyEvents
 };

@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:8000/api/events";
 const EVENTS_API_URL = "http://localhost:8000/api/events";
+const REGISTRATIONS_API_URL = "http://localhost:8000/api/registrations";
 
 let registrations = [];
 let events = [];
@@ -8,7 +8,7 @@ async function fetchRegistrations() {
 
     try {
 
-        const response = await fetch(`${API_URL}/registrations/mine`, { credentials: "include" });
+        const response = await fetch(`${REGISTRATIONS_API_URL}/mine-as-host`, { credentials: "include" });
         registrations = await response.json();
         filterRegistrations();
 
@@ -72,14 +72,14 @@ function displayRegistrations(filtered = registrations) {
 
             <tr>
 
-                <td>${reg.leaderName}</td>
-                <td>${reg.leaderEmail}</td>
-                <td>${reg.leaderContact}</td>
-                <td>${reg.event ? reg.event.name : "Deleted Event"}</td>
+                <td>${reg.eventName || "Deleted Event"}</td>
+                <td>${reg.teamName}</td>
+                <td>${reg.teamLeader.email}</td>
+                <td>${reg.teamLeader.phone}</td>
 
                 <td>
-                    ${totalSize}
-                    ${memberCount > 0
+                    ${reg.teamSize}
+                    ${reg.teamMembers && reg.teamMembers.length > 0
                         ? `<button class="edit-btn" onclick="viewTeam('${reg._id}')"><p>View Team</p></button>`
                         : ""
                     }
@@ -88,10 +88,7 @@ function displayRegistrations(filtered = registrations) {
                 <td>${new Date(reg.createdAt).toLocaleDateString("en-GB")}</td>
 
                 <td>
-                    <button
-                        class="delete-btn"
-                        onclick="deleteRegistration('${reg._id}')"
-                    >
+                    <button class="delete-btn" onclick="deleteRegistration('${reg._id}')">
                         <p>Delete</p>
                     </button>
                 </td>
@@ -109,11 +106,11 @@ function viewTeam(id) {
     const reg = registrations.find(r => r._id === id);
 
     const membersList = reg.teamMembers.map(m =>
-        `<li>${m.name}${m.contact ? " — " + m.contact : ""}</li>`
+        `<li>${m.name}${m.phone ? " — " + m.phone : ""}</li>`
     ).join("");
 
     teamModalBody.innerHTML = `
-        <p><strong>Leader:</strong> ${reg.leaderName} (${reg.leaderContact})</p>
+        <p><strong>Leader:</strong> ${reg.teamLeader.name} (${reg.teamLeader.phone})</p>
         <br>
         <p><strong>Members:</strong></p>
         <ul>${membersList}</ul>
@@ -137,7 +134,7 @@ async function deleteRegistration(id) {
 
     if (!confirm("Delete this registration?")) return;
 
-    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    await fetch(`${REGISTRATIONS_API_URL}/${id}`, { method: "DELETE" , credentials: "include"});
 
     fetchRegistrations();
 
@@ -154,11 +151,10 @@ function filterRegistrations() {
     const filtered = registrations.filter(reg => {
 
         const matchesSearch =
-            reg.leaderName.toLowerCase().includes(search) ||
-            reg.leaderEmail.toLowerCase().includes(search);
+            reg.teamLeader.name.toLowerCase().includes(search) ||
+            reg.teamLeader.email.toLowerCase().includes(search);
 
-        const matchesEvent =
-            !eventId || (reg.event && reg.event._id === eventId);
+        const matchesEvent = !eventId || reg.eventId === eventId;
 
         return matchesSearch && matchesEvent;
 
