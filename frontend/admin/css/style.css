@@ -28,8 +28,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    padding: 16px 40px;
+    padding: 25px 40px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -63,15 +62,16 @@ body{
 }
 
 .logo h2{
-    font-size: 28px;
+    font-size: 36px;
 }
 
 .topbar-nav{
     display: flex;
     justify-content: center;
     gap: 35px;
+    font-size: 17px;
     flex-wrap: wrap;
-    padding: 14px 40px;
+    padding: 25px 40px;
 }
 
 .profile{
@@ -79,7 +79,14 @@ body{
     align-items: center;
     gap: 8px;
     font-size: 17px;
+    padding: 10px 16px;
+    border-radius: 10px;
     cursor: pointer;
+}
+
+.profile:hover{
+    color: #ffd54f;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .topbar nav a{
@@ -117,13 +124,6 @@ body{
     padding-right:35px;
 }
 
-.recent-events{
-    background:white;
-    padding:30px;
-    border-radius:18px;
-    box-shadow:0 8px 20px rgba(0,0,0,.06);
-}
-
 .section-title{
     display:flex;
     justify-content:space-between;
@@ -138,18 +138,6 @@ body{
     padding:10px 18px;
     border-radius:10px;
     cursor:pointer;
-}
-
-.recent-events table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-.recent-events th,
-.recent-events td{
-    padding:18px;
-    text-align:left;
-    border-bottom:1px solid #eee;
 }
 
 .badge{
@@ -229,6 +217,16 @@ body{
     padding:18px;
     text-align:center;
     border-bottom:1px solid #eee;
+    border-right: 1px solid #eee;
+}
+
+.events-container th:last-child,
+.events-container td:last-child{
+    border-right:none;
+}
+
+.events-container tbody tr:last-child td{
+    border-bottom:none;
 }
 
 .table-wrapper{
@@ -323,8 +321,8 @@ body{
     background:#f59e0b;
     color:white;
     border:none;
-    padding:10px 12px;
-    border-radius:8px;
+    padding:8px 14px;
+    border-radius:20px;
     cursor:pointer;
     margin-right:8px;
 }
@@ -334,7 +332,7 @@ body{
     color:white;
     border:none;
     padding:10px 12px;
-    border-radius:8px;
+    border-radius:20px;
     cursor:pointer;
 }
 
@@ -706,4 +704,10 @@ button {
 button:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+}
+
+#teamModalBody{
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 8px;
 }

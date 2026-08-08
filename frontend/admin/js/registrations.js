@@ -43,7 +43,7 @@ async function fetchEventsForFilter() {
 
 const tableBody = document.getElementById("registrationTableBody");
 const teamModal = document.getElementById("teamModal");
-const closeTeamModalBtn = document.getElementById("closeTeamModal");
+const closeModalBtn = document.getElementById("closeModal");
 const teamModalBody = document.getElementById("teamModalBody");
 
 function displayRegistrations(filtered = registrations) {
@@ -75,19 +75,12 @@ function displayRegistrations(filtered = registrations) {
                 <td>${reg.eventName || "Deleted Event"}</td>
                 <td>${reg.teamName || "-"}</td>
                 <td>${reg.teamLeader.name}</td>
-                <td>${reg.teamLeader.email}</td>
-                <td>${reg.teamLeader.phone}</td>
-
-                <td>
-                    ${reg.teamSize}
-                    ${reg.teamMembers && reg.teamMembers.length > 0
-                        ? `<button class="edit-btn" onclick="viewTeam('${reg._id}')"><p>View Team</p></button>`
-                        : ""
-                    }
-                </td>
-
+                <td>${reg.registrationId}</td>
+                <td>${reg.teamSize}</td>
                 <td>${new Date(reg.createdAt).toLocaleDateString("en-GB")}</td>
-
+                <td>
+                    <button class="edit-btn" onclick="viewTeam('${reg._id}')">View</button>
+                </td>
 
             </tr>
 
@@ -101,22 +94,48 @@ function viewTeam(id) {
 
     const reg = registrations.find(r => r._id === id);
 
-    const membersList = reg.teamMembers.map(m =>
-        `<li>${m.name}${m.phone ? " — " + m.phone : ""}</li>`
-    ).join("");
+    const isSolo = reg.participationType === "Solo";
+
+    function renderPerson(person) {
+        return `
+            <p><strong>Name:</strong> ${person.name}</p>
+            <p><strong>College:</strong> ${person.college}</p>
+            <p><strong>Department:</strong> ${person.department}</p>
+            <p><strong>Year:</strong> ${person.year}</p>
+            <p><strong>Roll No:</strong> ${person.rollNo}</p>
+            <p><strong>Email:</strong> ${person.email}</p>
+            <p><strong>Phone:</strong> ${person.phone}</p>
+        `;
+    }
+
+    const leaderBlock = `
+        <p style="margin-bottom:10px;"><strong style="text-decoration: underline;">${isSolo ? "Participant" : "Team Leader"}</strong></p>
+        ${renderPerson(reg.teamLeader)}
+    `;
+
+    const membersBlock = (!isSolo && reg.teamMembers && reg.teamMembers.length > 0)
+        ? `
+            <br>
+            <p style="margin-bottom:10px;"><strong style="text-decoration: underline;" >Team Members</strong></p>
+            ${reg.teamMembers.map(m => `
+                <div style="margin-bottom:14px;">
+                    ${renderPerson(m)}
+                </div>
+            `).join("")}
+        `
+        : "";
 
     teamModalBody.innerHTML = `
-        <p><strong>Leader:</strong> ${reg.teamLeader.name} (${reg.teamLeader.phone})</p>
-        <br>
-        <p><strong>Members:</strong></p>
-        <ul>${membersList}</ul>
+        ${leaderBlock}
+        ${membersBlock}
     `;
+
 
     teamModal.style.display = "flex";
 
 }
 
-closeTeamModalBtn.onclick = () => {
+closeModalBtn.onclick = () => {
     teamModal.style.display = "none";
 };
 
@@ -146,18 +165,16 @@ function filterRegistrations() {
 
     const filtered = registrations.filter(reg => {
 
-        const matchesSearch =
+        const matchesSearch = 
             reg.teamLeader.name.toLowerCase().includes(search) ||
-            reg.teamLeader.email.toLowerCase().includes(search);
+            reg.registrationId.toLowerCase().includes(search);
 
         const matchesEvent = !eventId || reg.eventId === eventId;
 
         return matchesSearch && matchesEvent;
-
     });
 
     displayRegistrations(filtered);
-
 }
 
 
