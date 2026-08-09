@@ -5,6 +5,11 @@ const mongoose = require("mongoose");
 ================================ */
 
 const leaderSchema = new mongoose.Schema({
+    registeredBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
 
     name: {
         type: String,
@@ -54,6 +59,11 @@ const leaderSchema = new mongoose.Schema({
 ================================ */
 
 const memberSchema = new mongoose.Schema({
+    registeredBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
 
     name: {
         type: String,

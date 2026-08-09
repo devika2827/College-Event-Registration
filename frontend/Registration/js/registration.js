@@ -299,6 +299,7 @@ async function submitRegistration(e){
         try {
             const response = await fetch(`${API_URL}/${joinRegIdInput.value.trim()}/join`, {
                 method: "PATCH",
+                credentials: "include",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ eventId: eventData._id, member })
             });
@@ -337,6 +338,7 @@ async function submitRegistration(e){
     try{
         const response=await fetch(API_URL,{
             method:"POST",
+            credentials: "include",
             headers:{
                 "Content-Type":"application/json"
             },

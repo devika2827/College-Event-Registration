@@ -1,25 +1,78 @@
 <!doctype html>
 <html>
-  <head>
-    <title>My Registrations</title>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Registrations | Nexus</title>
 
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/registrations.css" />
-  </head>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/registrations.css" />
 
-  <body>
-    <nav>
-      <h2>My Registrations</h2>
-    </nav>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <h2>Upcoming Events</h2>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
 
-    <div id="upcoming" class="cards"></div>
+<body>
 
-    <h2>Past Events</h2>
+    <header class="topbar">
+        <div class="topbar-top">
 
-    <div id="past" class="cards"></div>
+            <div class="logo">
+                <h2>Nexus</h2>
+            </div>
 
-    <script src="js/registrations.js"></script>
-  </body>
-</html>
+            <div class="topbar-right">
+
+                <a href="../../admin/html/dashboard.html" class="student-link" id="homeBtn">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    Host
+                </a>
+
+                <div class="profile" id="profileBtn">
+                    <i class="fa-solid fa-user"></i>
+                    Profile
+                </div>
+
+                <div id="profileDropdown" class="dropdown">
+                    <div class="user-info">
+                        <p id="userName">Your Name</p>
+                        <p id="userUsername">@username</p>
+                        <p id="userEmail">example@email.com</p>
+                    </div>
+                    <hr>
+                    <button id="editProfileBtn">
+                        <i class="fa-solid fa-key"></i>
+                        Reset Password
+                    </button>
+                    <button id="logoutBtn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>My Registrations</h1>
+        <p>Track the events you've registered for.</p>
+    </section>
+
+    <section class="registrations-section">
+
+        <h2 class="section-label">Upcoming Events</h2>
+        <div id="upcoming" class="cards"></div>
+
+        <h2 class="section-label">Past Events</h2>
+        <div id="past" class="cards"></div>
+
+    </section>
+
+    <script src="../js/registrations.js"></script>
+    <script src="../../profile.js"></script>
+</body>

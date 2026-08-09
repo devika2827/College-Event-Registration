@@ -49,7 +49,11 @@ const createRegistration = async (req, res) => {
         const registrationId = await generateUniqueRegistrationId();
         const registration = await Registration.create({
             ...req.body,
-            registrationId
+            registrationId,
+            teamLeader: {
+                ...req.body.teamLeader,
+                registeredBy: req.user._id
+            }
         });
         res.status(201).json(registration);
 
@@ -165,8 +169,13 @@ const getMyRegistrations = async (req, res) => {
     try {
 
         const registrations = await Registration.find({
-            "teamLeader.email": req.user.email
-        }).sort({ createdAt: -1 });
+            $or: [
+                { "teamLeader.registereBy": req.user._id },
+                { "teamMembers.registeredBy": req.user._id }
+            ]
+        })
+        .populate("eventId", "name date category venue banner mode")
+        .sort({ createdAt: -1 });
 
         res.status(200).json(registrations);
 
@@ -179,7 +188,7 @@ const getMyRegistrations = async (req, res) => {
     }
 };
 
-/* GET REGGISTRATIONS FOR ADMIN DASHBOARD */
+/* GET REGISTRATIONS FOR ADMIN DASHBOARD */
 const Event = require("../models/Event");
 
 const getRegistrationsForMyEvents = async (req, res) => {
@@ -254,7 +263,10 @@ const joinTeam = async (req, res) => {
             return res.status(400).json({ message: "This email has already joined this team." });
         }
 
-        registration.teamMembers.push(member);
+        registration.teamMembers.push({
+            ...member,
+            registeredBy: req.user._id
+        });
         await registration.save();
 
         res.status(200).json(registration);
