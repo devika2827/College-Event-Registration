@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/registrations.css" />
+    <link rel="stylesheet" href="../css/details.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,45 +18,51 @@
 
 <body>
 
-    <header class="topbar">
-        <div class="topbar-top">
+    <header class="topbar-top">
+      
+      <div class="logo">
+        <h2>Nexus</h2>
+      </div>
 
-            <div class="logo">
-                <h2>Nexus</h2>
+      <div class="topbar-right">
+
+        <a href="../../admin/html/dashboard.html" class="student-link" id="homeBtn">
+          <i class="fa-solid fa-bullhorn"></i>
+          Host
+        </a>
+
+        <div class="profile-container">
+
+          <div class="profile" id="profileBtn">
+            <i class="fa-solid fa-user"></i>
+            Profile
+          </div>
+
+          <div id="profileDropdown" class="dropdown">
+
+            <div class="user-info">
+              <p id="userName">Your Name</p>
+              <p id="userUsername">@username</p>
+              <p id="userEmail">example@email.com</p>
             </div>
 
-            <div class="topbar-right">
+        <hr>
 
-                <a href="../../admin/html/dashboard.html" class="student-link" id="homeBtn">
-                    <i class="fa-solid fa-bullhorn"></i>
-                    Host
-                </a>
+        <button id="editProfileBtn">
+          <i class="fa-solid fa-key"></i>
+          Reset Password
+        </button>
 
-                <div class="profile" id="profileBtn">
-                    <i class="fa-solid fa-user"></i>
-                    Profile
-                </div>
+        <button id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </button>
 
-                <div id="profileDropdown" class="dropdown">
-                    <div class="user-info">
-                        <p id="userName">Your Name</p>
-                        <p id="userUsername">@username</p>
-                        <p id="userEmail">example@email.com</p>
-                    </div>
-                    <hr>
-                    <button id="editProfileBtn">
-                        <i class="fa-solid fa-key"></i>
-                        Reset Password
-                    </button>
-                    <button id="logoutBtn">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Logout
-                    </button>
-                </div>
-
-            </div>
+          </div>
 
         </div>
+
+      </div>
     </header>
 
     <section class="hero">

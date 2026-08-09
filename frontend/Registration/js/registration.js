@@ -9,23 +9,19 @@ if (!eventData) {
     window.location.href = "../../student-dashboard/html/index.html";
 }
 
+/* SOLO / TEAM */
 
-/* LOAD EVENT */
+const soloRadio=document.getElementById("soloOption");
+const teamRadio=document.getElementById("teamOption");
+const teamSize=document.getElementById("teamSize");
 
-function loadEvent() {
-
-    document.getElementById("eventBanner").src = `/uploads/${eventData.banner}`;
-    document.getElementById("eventName").innerHTML = eventData.name;
-    document.getElementById("eventDate").innerHTML = new Date(eventData.date).toLocaleDateString();
-    document.getElementById("eventTime").innerHTML = eventData.startTime;
-    document.getElementById("eventVenue").innerHTML = 
-        eventData.mode === "Online" ? "Online" : eventData.venue;
-    document.getElementById("eventCategory").innerHTML = eventData.category;
+function buildTeamSizeOptions() {
 
     const maxTeamSize = Number(eventData.maxTeamSize);
     const minTeamSize = Number(eventData.minTeamSize);
 
     teamSize.innerHTML = "";
+    teamSize.innerHTML += `<option value="1">1</option>`;
 
     const startSize = Math.max(2, minTeamSize);
     for(let i = startSize; i <= maxTeamSize; i++){
@@ -34,12 +30,7 @@ function loadEvent() {
 
 }
 
-
-/* SOLO / TEAM */
-
-const soloRadio=document.getElementById("soloOption");
-const teamRadio=document.getElementById("teamOption");
-const teamSize=document.getElementById("teamSize");
+buildTeamSizeOptions();   
 
 /* EVENT TYPE */
 
@@ -369,13 +360,6 @@ function showSuccess(registration){
     registrationForm.style.display="none";
 
     document.getElementById("successSection").hidden=false;
-    document.getElementById("successEventName").innerHTML = document.getElementById("eventName").innerHTML;
+    document.getElementById("successEventName").innerHTML = eventData.name;
     document.getElementById("registrationId").innerHTML= registration.registrationId;
 }
-
-
-/* INITIALIZE PAGE */
-
-document.addEventListener("DOMContentLoaded",()=>{
-    loadEvent();
-});
