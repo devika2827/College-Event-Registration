@@ -316,11 +316,12 @@ async function submitRegistration(e){
     if(!validateForm()) return;
 
     const eventId = eventData._id;
+    const enteredTeamName = document.getElementById("teamName").value.trim();
     const registration = {
         eventId: eventData._id,
         eventName: eventData.name,
         participationType:  Number(teamSize.value) === 1 ? "Solo" : "Team",
-        teamName: document.getElementById("teamName").value.trim(),
+        teamName: enteredTeamName === "" ? "-" : enteredTeamName,
         teamSize: Number(teamSize.value),
         teamLeader: getTeamLeader(),
         teamMembers: []
