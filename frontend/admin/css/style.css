@@ -115,7 +115,7 @@ body{
 
 .content{
     width:100%;
-    padding:100px 35px 35px;
+    padding:60px 35px 35px;
 }
 
 .manage-event{
@@ -576,12 +576,16 @@ body.modal-open{
         gap: 15px;
     }
 
+    .topbar-top {
+        padding: 8px;
+    }
     .topbar nav {
         width: 100%;
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
+        flex-wrap:nowrap;
         gap: 15px;
+        padding-bottom: 1px;
     }
 }
 

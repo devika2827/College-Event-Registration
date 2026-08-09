@@ -27,8 +27,8 @@ function loadEvent() {
 
     teamSize.innerHTML = "";
 
-
-    for(let i = minTeamSize; i <= maxTeamSize; i++){
+    const startSize = Math.max(2, minTeamSize);
+    for(let i = startSize; i <= maxTeamSize; i++){
         teamSize.innerHTML += `<option value="${i}">${i}</option>`;
     }
 
@@ -43,17 +43,68 @@ const teamSize=document.getElementById("teamSize");
 
 /* EVENT TYPE */
 
-const maxTeamSize = Number(eventData.maxteamSize);
+const maxTeamSize = Number(eventData.maxTeamSize);
+const minTeamSize = Number(eventData.minTeamSize);
 
-if(maxTeamSize === 1){
+const participationSection = document.getElementById("participationSection");
+const teamInfoSection = document.getElementById("teamInfoSection");
+const leaderHeading = document.getElementById("leaderSectionHeading");
+const leaderSubheading = document.getElementById("leaderSectionSubheading");
+const teamNameInput = document.getElementById("teamName");
+
+function showTeamFields(){
+    teamInfoSection.style.display = "";
+    leaderHeading.textContent = "Team Leader Information";
+    leaderSubheading.textContent = "Enter the details of the team leader.";
+    teamSize.disabled = false;
+    teamNameInput.required = true;
+    teamSize.required = true;
+    if(!teamSize.value || Number(teamSize.value) < 2){
+        teamSize.value = String(Math.max(2, minTeamSize));
+    }
+    generateMembers();
+}
+
+function showSoloFields(){
+    teamInfoSection.style.display = "none";
+    leaderHeading.textContent = "Your Information";
+    leaderSubheading.textContent = "Enter your details.";
+    teamSize.disabled = true;
+    teamNameInput.required = false;
+    teamSize.required = false;
+    teamSize.value = "1";
+    generateMembers();
+}
+
+if(minTeamSize === 1 && maxTeamSize === 1){
+
+    /* SOLO ONLY — hide participation choice and team fields entirely */
+    participationSection.style.display = "none";
     soloRadio.checked = true;
     teamRadio.disabled = true;
-    teamSize.disabled = true;
-    teamSize.value = 1;
+    showSoloFields();
+
+}else if(minTeamSize === 1 && maxTeamSize > 1){
+
+    /* FLEXIBLE — let the student pick */
+    participationSection.style.display = "";
+    soloRadio.disabled = false;
+    teamRadio.disabled = false;
+    soloRadio.checked = true;
+    teamRadio.checked = false;
+    showSoloFields();
+
+    soloRadio.addEventListener("change", () => { if(soloRadio.checked) showSoloFields(); });
+    teamRadio.addEventListener("change", () => { if(teamRadio.checked) showTeamFields(); });
+
 }else{
+
+    /* TEAM ONLY — no solo mention anywhere */
+    participationSection.style.display = "none";
     teamRadio.checked = true;
     soloRadio.disabled = true;
-    teamSize.disabled = false;
+    showTeamFields();
+
 }
 
 teamSize.addEventListener("change", generateMembers);
@@ -299,10 +350,10 @@ function validateForm(){
 
     }
 
-    if (maxTeamSize > 1 && document.getElementById("teamName").value.trim() === "") {
-        alert("Please enter Team Name.");
-        return false;
-}
+        if (!soloRadio.checked && document.getElementById("teamName").value.trim() === "") {
+            alert("Please enter Team Name.");
+            return false;
+        }
 
     return true;
 
@@ -374,8 +425,4 @@ function showSuccess(registration){
 
 document.addEventListener("DOMContentLoaded",()=>{
     loadEvent();
-    generateMembers();
-    if(soloRadio.checked){
-        teamSize.disabled=true;
-    }
 });
