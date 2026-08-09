@@ -343,7 +343,7 @@ async function submitRegistration(e){
             throw new Error("Registration Failed");
         }
         const savedRegistration = await response.json();
-        showSuccess(registration);
+        showSuccess(savedRegistration);
 
     }
 
