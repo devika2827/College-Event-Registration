@@ -52,6 +52,80 @@ const leaderHeading = document.getElementById("leaderSectionHeading");
 const leaderSubheading = document.getElementById("leaderSectionSubheading");
 const teamNameInput = document.getElementById("teamName");
 
+const teamModeOptions = document.getElementById("teamModeOptions");
+const createTeamOption = document.getElementById("createTeamOption");
+const joinTeamOption = document.getElementById("joinTeamOption");
+const createTeamFields = document.getElementById("createTeamFields");
+const joinTeamFields = document.getElementById("joinTeamFields");
+const joinRegIdInput = document.getElementById("joinRegId");
+const findTeamBtn = document.getElementById("findTeamBtn");
+const teamFoundInfo = document.getElementById("teamFoundInfo");
+
+let joinedTeamData = null;   
+
+function showCreateMode(){
+    createTeamFields.style.display = "";
+    joinTeamFields.style.display = "none";
+    teamFoundInfo.style.display = "none";
+    joinedTeamData = null;
+    leaderHeading.textContent = "Team Leader Information";
+    leaderSubheading.textContent = "Enter the details of the team leader.";
+    teamNameInput.required = true;
+    teamSize.required = true;
+}
+
+function showJoinMode(){
+    createTeamFields.style.display = "none";
+    joinTeamFields.style.display = "";
+    leaderHeading.textContent = "Your Information";
+    leaderSubheading.textContent = "Enter your own details to join the team.";
+    teamNameInput.required = false;
+    teamSize.required = false;
+}
+
+createTeamOption.addEventListener("change", () => { if(createTeamOption.checked) showCreateMode(); });
+joinTeamOption.addEventListener("change", () => { if(joinTeamOption.checked) showJoinMode(); });
+
+findTeamBtn.addEventListener("click", async () => {
+
+    const regId = joinRegIdInput.value.trim();
+    document.getElementById("joinRegIdError").textContent = "";
+    teamFoundInfo.style.display = "none";
+    joinedTeamData = null;
+
+    if (!regId) {
+        document.getElementById("joinRegIdError").textContent = "Please enter a Registration ID.";
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/lookup/${regId}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+            document.getElementById("joinRegIdError").textContent = data.message || "Team not found.";
+            return;
+        }
+
+        if (data.eventId !== eventData._id) {
+            document.getElementById("joinRegIdError").textContent = "This Registration ID belongs to a different event.";
+            return;
+        }
+
+        joinedTeamData = data;
+
+        document.getElementById("foundTeamName").textContent = data.teamName;
+        document.getElementById("foundLeaderName").textContent = data.leaderName;
+        document.getElementById("foundTeamSize").textContent = `${data.currentSize} / ${maxTeamSize}`;
+        teamFoundInfo.style.display = "block";
+
+    } catch (error) {
+        console.log(error);
+        document.getElementById("joinRegIdError").textContent = "Something went wrong. Please try again.";
+    }
+
+});
+
 function showTeamFields(){
     teamInfoSection.style.display = "";
     leaderHeading.textContent = "Team Leader Information";
@@ -62,7 +136,8 @@ function showTeamFields(){
     if(!teamSize.value || Number(teamSize.value) < 2){
         teamSize.value = String(Math.max(2, minTeamSize));
     }
-    generateMembers();
+    createTeamOption.checked = true;
+    showCreateMode();
 }
 
 function showSoloFields(){
@@ -73,7 +148,6 @@ function showSoloFields(){
     teamNameInput.required = false;
     teamSize.required = false;
     teamSize.value = "1";
-    generateMembers();
 }
 
 if(minTeamSize === 1 && maxTeamSize === 1){
@@ -107,112 +181,6 @@ if(minTeamSize === 1 && maxTeamSize === 1){
 
 }
 
-teamSize.addEventListener("change", generateMembers);
-
-/* CREATE MEMBER CARDS */
-
-function generateMembers(){
-
-    const container=document.getElementById("teamMembersContainer");
-
-    container.innerHTML="";
-
-    const size=parseInt(teamSize.value);
-
-    if(size===1) return;
-
-    for(let i=2;i<=size;i++){
-        const card=document.createElement("section");
-        card.className="card member-card";
-        card.innerHTML=`
-
-            <h2>Team Member ${i}</h2>
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>Full Name</label>
-
-                    <input
-                    type="text"
-                    id="member${i}Name">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>College</label>
-
-                    <input
-                    type="text"
-                    id="member${i}College">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Department</label>
-
-                    <input
-                    type="text"
-                    id="member${i}Department">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Year</label>
-
-                    <select id="member${i}Year">
-                        <option value="">Select</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Roll Number</label>
-
-                    <input
-                    type="text"
-                    id="member${i}Roll">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Email</label>
-
-                    <input
-                    type="email"
-                    id="member${i}Email">
-
-                </div>
-
-                <div class="form-group full-width">
-
-                    <label>Phone</label>
-
-                    <input
-                    type="tel"
-                    maxlength="10"
-                    id="member${i}Phone">
-
-                </div>
-
-            </div>
-
-        `;
-
-        container.appendChild(card);
-    }
-}
-
 /* VALIDATION FUNCTIONS */
 
 function isValidEmail(email){
@@ -221,11 +189,6 @@ function isValidEmail(email){
 
 function isValidPhone(phone){
     return /^[6-9]\d{9}$/.test(phone);
-}
-
-function generateRegistrationId(){
-    const random=Math.floor(Math.random()*9000)+1000;
-    return "EH"+random;
 }
 
 
@@ -242,33 +205,6 @@ function getTeamLeader(){
         email:document.getElementById("leaderEmail").value.trim(),
         phone:document.getElementById("leaderPhone").value.trim()
     };
-
-}
-
-/* GET TEAM MEMBERS */
-
-function getMembers(){
-
-    const members=[];
-    const size=parseInt(teamSize.value);
-
-    if(size===1){
-        return members;
-    }
-
-    for(let i=2;i<=size;i++){
-        members.push({
-            name:document.getElementById(`member${i}Name`).value.trim(),
-            college:document.getElementById(`member${i}College`).value.trim(),
-            department:document.getElementById(`member${i}Department`).value.trim(),
-            year:document.getElementById(`member${i}Year`).value,
-            rollNo:document.getElementById(`member${i}Roll`).value.trim(),
-            email:document.getElementById(`member${i}Email`).value.trim(),
-            phone:document.getElementById(`member${i}Phone`).value.trim()
-        });
-    }
-
-    return members;
 
 }
 
@@ -318,46 +254,16 @@ function validateForm(){
         return false;
     }
 
-    /* TEAM MEMBER VALIDATION */
 
-    const members = getMembers();
-
-    for (const member of members) {
-
-        if (
-            member.name === "" ||
-            member.college === "" ||
-            member.department === "" ||
-            member.year === "" ||
-            member.rollNo === "" ||
-            member.email === "" ||
-            member.phone === ""
-        ) {
-            alert("Please complete all Team Member details.");
-            return false;
-        }
-
-        if (!isValidEmail(member.email)) {
-            alert("Please enter a valid Team Member email.");
-            return false;
-        }
-
-        if (!isValidPhone(member.phone)) {
-            alert("Please enter a valid Team Member phone number.");
-            return false;
-
-        }
-
-    }
-
-        if (!soloRadio.checked && document.getElementById("teamName").value.trim() === "") {
+    if (!soloRadio.checked && document.getElementById("teamName").value.trim() === "") {
             alert("Please enter Team Name.");
             return false;
-        }
+    }
 
     return true;
-
 }
+
+
 
 /* SUBMIT FORM */
 
@@ -369,6 +275,52 @@ async function submitRegistration(e){
 
     e.preventDefault();
 
+    const isJoining = joinTeamOption.checked;
+
+    if (isJoining) {
+
+        if (!joinedTeamData) {
+            alert("Please find and confirm your team first using the Registration ID.");
+            return;
+        }
+
+        const member = getTeamLeader();   // same fields, reused for the joining person
+
+        if (member.name === "" || !isValidEmail(member.email) || !isValidPhone(member.phone)) {
+            alert("Please fill in your details correctly.");
+            return;
+        }
+
+        if(!document.getElementById("terms").checked){
+            alert("Please accept Event Rules.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/${joinRegIdInput.value.trim()}/join`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ eventId: eventData._id, member })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.message || "Unable to join team.");
+                return;
+            }
+
+            showSuccess({ registrationId: joinRegIdInput.value.trim() });
+
+        } catch (error) {
+            console.log(error);
+            alert("Unable to join team.\nPlease try again.");
+        }
+
+        return;
+    }
+
+
     if(!validateForm()) return;
 
     const eventId = eventData._id;
@@ -378,9 +330,8 @@ async function submitRegistration(e){
         participationType:  Number(teamSize.value) === 1 ? "Solo" : "Team",
         teamName: document.getElementById("teamName").value.trim(),
         teamSize: Number(teamSize.value),
-        registrationId: generateRegistrationId(),
         teamLeader: getTeamLeader(),
-        teamMembers: getMembers()
+        teamMembers: []
     };
 
     try{
@@ -397,7 +348,7 @@ async function submitRegistration(e){
         if(!response.ok){
             throw new Error("Registration Failed");
         }
-
+        const savedRegistration = await response.json();
         showSuccess(registration);
 
     }

@@ -64,10 +64,17 @@
         </div>
 
 
-    <nav class="navbar-right">
-        <a href="../../student-dashboard/html/index.html">Dashboard</a>
-        <a href="../../student-dashboard/html/event.html">Events</a>
-    </nav>   
+        <nav class="topbar-nav">
+            <a href="../../student-dashboard/html/index.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="../../student-dashboard/html/event.html">
+                <i class="fa-solid fa-calendar-days"></i>
+                Events
+            </a>
+        </nav>   
 
 
 
@@ -86,76 +93,6 @@
         </section>
 
         <div class="registration-container">
-
-            <!-- ================= EVENT SUMMARY ================= -->
-
-            <section class="card event-summary-card">
-
-                <div class="event-banner-container">
-                    <img id="eventBanner" class="event-banner" src="" alt="Event Banner" >
-                </div>
-
-                <div class="event-summary-content">
-
-                    <h2 id="eventName">
-                        Loading Event...
-                    </h2>
-
-                    <div class="event-details-grid">
-
-                        <div class="event-detail">
-
-                            <span class="detail-label">
-                                Date
-                            </span>
-
-                            <span class="detail-value" id="eventDate">
-                                --
-                            </span>
-
-                        </div>
-
-                        <div class="event-detail">
-
-                            <span class="detail-label">
-                                Time
-                            </span>
-
-                            <span class="detail-value" id="eventTime">
-                                --
-                            </span>
-
-                        </div>
-
-                        <div class="event-detail">
-
-                            <span class="detail-label">
-                                Venue
-                            </span>
-
-                            <span class="detail-value" id="eventVenue">
-                                --
-                            </span>
-
-                        </div>
-
-                        <div class="event-detail">
-
-                            <span class="detail-label">
-                                Category
-                            </span>
-
-                            <span class="detail-value" id="eventCategory">
-                                --
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
 
             <!-- ================= REGISTRATION FORM ================= -->
 
@@ -222,7 +159,27 @@
                         <p> Enter your team details.</p>
                     </div>
 
-                    <div class="form-grid">
+                        <div class="participation-options" id="teamModeOptions">
+
+                            <label class="participation-option">
+                                <input type="radio" name="teamMode" value="create" id="createTeamOption" checked>
+                                <div>
+                                    <strong>Create New Team</strong>
+                                    <span>Start a new team and get a Registration ID to share.</span>
+                                </div>
+                            </label>
+
+                            <label class="participation-option">
+                                <input type="radio" name="teamMode" value="join" id="joinTeamOption">
+                                <div>
+                                    <strong>Join Existing Team</strong>
+                                    <span>Enter your team leader's Registration ID.</span>
+                                </div>
+                            </label>
+
+                        </div>
+
+                    <div class="form-grid" id="createTeamFields">
 
                         <!-- TEAM NAME -->
 
@@ -272,6 +229,34 @@
                                 id="teamSizeError"
                             ></span>
 
+                        </div>
+
+                    </div>
+
+                    <!-- JOIN TEAM FIELDS -->
+
+                    <div class="form-grid" id="joinTeamFields" style="display:none;">
+
+                        <div class="form-group full-width">
+
+                            <label for="joinRegId">
+                                Team Registration ID
+                                <span class="required">*</span>
+                            </label>
+
+                            <div style="display:flex; gap:10px;">
+                                <input type="text" id="joinRegId" placeholder="e.g. EH3849" style="flex:1;">
+                                <button type="button" id="findTeamBtn" class="edit-btn">Find</button>
+                            </div>
+
+                            <span class="error-message" id="joinRegIdError"></span>
+
+                        </div>
+
+                        <div class="form-group full-width" id="teamFoundInfo" style="display:none;">
+                            <p><strong>Team:</strong> <span id="foundTeamName"></span></p>
+                            <p><strong>Led by:</strong> <span id="foundLeaderName"></span></p>
+                            <p><strong>Members joined:</strong> <span id="foundTeamSize"></span></p>
                         </div>
 
                     </div>
