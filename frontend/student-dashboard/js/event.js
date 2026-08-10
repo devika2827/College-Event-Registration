@@ -19,6 +19,42 @@ eventData.rules.forEach((rule) => {
   });
 });
 
+/* CHECK IF ALREADY REGISTERED */
+
+async function checkRegistrationStatus() {
+
+    try {
+
+        const response = await fetch("http://localhost:8000/api/registrations/my", {
+            credentials: "include"
+        });
+
+        if (!response.ok) return;
+
+        const myRegistrations = await response.json();
+
+        const existing = myRegistrations.find(reg =>
+            reg.eventId && reg.eventId._id === eventData._id
+        );
+
+        const registerBtn = document.getElementById("registerBtn");
+
+        if (existing) {
+            registerBtn.textContent = "Already Registered — View My Registrations";
+            registerBtn.classList.add("already-registered");
+            registerBtn.onclick = function () {
+                window.location.href = "../../student-dashboard/html/registrations.html";
+            };
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+checkRegistrationStatus();
+
 document.getElementById("registerBtn").onclick = function () {
     window.location.href = "../../Registration/html/registration.html";
 };

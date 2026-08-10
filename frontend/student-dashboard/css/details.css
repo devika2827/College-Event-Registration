@@ -169,6 +169,7 @@ button:hover {
 .dropdown a:hover{
     background:#f5f5f5;
 }
+
 #host{
   background:none;
   color:white;
@@ -177,3 +178,11 @@ button:hover {
   font-weight:600;
 }
 
+#registerBtn.already-registered {
+    background: linear-gradient(90deg, #6b7280, #4b5563);
+}
+
+#registerBtn.already-registered:hover {
+    transform: none;
+    box-shadow: none;
+}

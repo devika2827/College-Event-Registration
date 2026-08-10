@@ -24,33 +24,6 @@ body{
     z-index: 1000;
 }
 
-.topbar-nav{
-    display: flex;
-    justify-content: center;
-    gap: 35px;
-    font-size: 17px;
-    flex-wrap: wrap;
-    padding: 25px 40px;
-    color: white;
-}
-
-.topbar nav a{
-    text-decoration:none;
-    color:#ffffff;
-    padding:14px 18px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    transition:.3s;
-}
-
-
-.topbar-nav a:hover{
-    background:#334155;
-    color:white;
-}
-
 .topbar-top{
     display: flex;
     align-items: center;
