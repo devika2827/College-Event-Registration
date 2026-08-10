@@ -70,11 +70,6 @@ function buildCard(reg, event, isUpcoming) {
     return `
         <div class="card">
 
-            ${event
-                ? `<img src="/uploads/${event.banner}">`
-                : `<div class="banner-fallback">Event Deleted</div>`
-            }
-
             <h2>${reg.eventName}</h2>
 
             ${event ? `
@@ -83,16 +78,49 @@ function buildCard(reg, event, isUpcoming) {
                 <p><i class="fa-solid fa-calendar"></i> ${new Date(event.date).toLocaleDateString("en-GB")}</p>
             ` : ""}
 
-            <p class="reg-id">Registration ID: <strong>${reg.registrationId}</strong></p>
-
             <p>${reg.participationType === "Solo" ? "Solo Entry" : `Team: ${reg.teamName} (${1 + reg.teamMembers.length} members)`}</p>
+            <p class="reg-id">Registration ID: <strong>${reg.registrationId}</strong></p>
 
             <span class="status ${event ? (isUpcoming ? "upcoming" : "past") : "past"}">
                 ${event ? (isUpcoming ? "Upcoming" : "Completed") : "Event Deleted"}
             </span>
+            <button class="withdraw-btn" onclick="withdrawRegistration('${reg.registrationId}')">
+                ${reg.participationType === "Team" ? "Leave / Cancel" : "Withdraw"}
+            </button>
+
 
         </div>
     `;
+
+}
+
+async function withdrawRegistration(registrationId) {
+
+    if (!confirm("Are you sure you want to withdraw from this registration? This cannot be undone.")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`http://localhost:8000/api/registrations/${registrationId}/leave`, {
+            method: "DELETE",
+            credentials: "include"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Unable to withdraw.");
+            return;
+        }
+
+        alert(data.message);
+        loadRegistrations();
+
+    } catch (error) {
+        console.log(error);
+        alert("Something went wrong. Please try again.");
+    }
 
 }
 

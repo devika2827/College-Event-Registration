@@ -58,6 +58,13 @@ const withdrawFromRegistration = async (req, res) => {
         const isLeader = registration.teamLeader.registeredBy.toString() === userId;
 
         if (isLeader) {
+
+            if (registration.teamMembers.length > 0) {
+                return res.status(400).json({
+                    message: "You can't leave as team leader while other members are still on the team. Please have them leave first, or cancel individually."
+                });
+            }
+
             // Leader backing out cancels the whole registration
             await Registration.findByIdAndDelete(registration._id);
             return res.status(200).json({ message: "Registration cancelled." });

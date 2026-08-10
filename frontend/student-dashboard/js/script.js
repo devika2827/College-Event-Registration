@@ -4,7 +4,7 @@ const cards = document.getElementById("cards");
 
 async function loadEvents() {
   try {
-    const res = await fetch("/api/events"); // match your server's port/base path
+    const res = await fetch("/api/events"); 
     events = await res.json();
     displayEvents(events);
   } catch (err) {
