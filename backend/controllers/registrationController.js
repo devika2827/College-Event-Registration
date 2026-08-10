@@ -17,29 +17,6 @@ async function generateUniqueRegistrationId(){
     return id;
 }
 
-/* GET ALL REGISTRATIONS */
-
-const getRegistrations = async (req, res) => {
-
-    try {
-
-        const registrations = await Registration.find().sort({
-            createdAt: -1
-        });
-
-        res.status(200).json(registrations);
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
-
-};
-
-
 /* CREATE REGISTRATION */
 
 const createRegistration = async (req, res) => {
@@ -65,73 +42,44 @@ const createRegistration = async (req, res) => {
 
 };
 
-/* GET REGISTRATION BY ID */
+/* WITHDRAW / LEAVE REGISTRATION (self-service) */
 
-const getRegistration = async (req, res) => {
-
+const withdrawFromRegistration = async (req, res) => {
     try {
+        const { registrationId } = req.params;
+        const userId = req.user._id.toString();
 
-        const registration = await Registration.findById(req.params.id);
+        const registration = await Registration.findOne({ registrationId });
 
         if (!registration) {
-
-            return res.status(404).json({
-                message: "Registration not found"
-            });
-
+            return res.status(404).json({ message: "Registration not found." });
         }
 
-        res.status(200).json(registration);
+        const isLeader = registration.teamLeader.registeredBy.toString() === userId;
 
-    } catch (error) {
+        if (isLeader) {
+            // Leader backing out cancels the whole registration
+            await Registration.findByIdAndDelete(registration._id);
+            return res.status(200).json({ message: "Registration cancelled." });
+        }
 
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
-
-};
-
-/* UPDATE REGISTRATION */
-
-const updateRegistration = async (req, res) => {
-
-    try {
-
-        const registration = await Registration.findByIdAndUpdate(
-
-            req.params.id,
-
-            req.body,
-
-            {
-                new: true,
-                runValidators: true
-            }
-
+        const memberIndex = registration.teamMembers.findIndex(
+            m => m.registeredBy && m.registeredBy.toString() === userId
         );
 
-        if (!registration) {
-
-            return res.status(404).json({
-                message: "Registration not found"
-            });
-
+        if (memberIndex === -1) {
+            return res.status(403).json({ message: "You are not part of this registration." });
         }
 
-        res.status(200).json(registration);
+        registration.teamMembers.splice(memberIndex, 1);
+        await registration.save();
+
+        res.status(200).json({ message: "You have left the team." });
 
     } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
+        res.status(500).json({ message: error.message });
     }
-
 };
-
 
 /* DELETE REGISTRATION */
 
@@ -170,7 +118,7 @@ const getMyRegistrations = async (req, res) => {
 
         const registrations = await Registration.find({
             $or: [
-                { "teamLeader.registereBy": req.user._id },
+                { "teamLeader.registeredBy": req.user._id },
                 { "teamMembers.registeredBy": req.user._id }
             ]
         })
@@ -251,7 +199,7 @@ const joinTeam = async (req, res) => {
 
         const currentSize = 1 + registration.teamMembers.length;
 
-        if (currentSize >= registration.maxTeamSize) {
+        if (currentSize >= registration.teamSize) {
             return res.status(400).json({ message: "This team is already full." });
         }
 
@@ -277,13 +225,11 @@ const joinTeam = async (req, res) => {
 };
 
 module.exports = {
-    getRegistrations,
-    getRegistration,
     createRegistration,
-    updateRegistration,
     deleteRegistration,
     getMyRegistrations,
     getRegistrationsForMyEvents,
     lookupTeam,
-    joinTeam
+    joinTeam,
+    withdrawFromRegistration
 };
