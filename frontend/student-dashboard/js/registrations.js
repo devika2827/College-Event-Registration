@@ -5,7 +5,7 @@ async function loadRegistrations() {
 
     try {
 
-        const response = await fetch("http://localhost:8000/api/registrations/my", {
+        const response = await fetch("/api/registrations/my", {
             credentials: "include",
         });
 

@@ -21,7 +21,7 @@ form.addEventListener("submit", async (e) => {
     try {
 
         const response = await fetch(
-            "http://localhost:8000/api/v1/auth/change-password",
+            "/api/v1/auth/change-password",
             {
                 method: "POST",
                 credentials: "include",

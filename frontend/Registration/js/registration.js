@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/api/registrations";
+const API_URL = "/api/registrations";
 
 /* SELECTED EVENT */
 

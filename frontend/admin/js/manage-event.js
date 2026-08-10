@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/api/events";
+const API_URL = "/api/events";
 
 let events = []
 
