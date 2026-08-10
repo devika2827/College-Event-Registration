@@ -94,16 +94,23 @@ const deleteRegistration = async (req, res) => {
 
     try {
 
-        const registration = await Registration.findByIdAndDelete(req.params.id);
+        const registration = await Registration.findById(req.params.id).populate("eventId");
 
         if (!registration) {
-
             return res.status(404).json({
                 message: "Registration not found"
             });
 
         }
 
+        if (!registration.eventId || !registration.eventId.createdBy || registration.eventId.createdBy.toString() !== req.user._id.toString()) {
+            return res.status(403).json({
+                message: "You are not authorized to delete this registration."
+            });
+        }
+
+        await Registration.findByIdAndDelete(req.params.id);
+        
         res.status(200).json({
             message: "Registration deleted successfully"
         });

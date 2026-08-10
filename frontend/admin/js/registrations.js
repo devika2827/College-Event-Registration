@@ -81,6 +81,11 @@ function displayRegistrations(filtered = registrations) {
                 <td>
                     <button class="edit-btn" onclick="viewTeam('${reg._id}')">View</button>
                 </td>
+                <td>
+                    <button class="delete-btn" onclick="deleteRegistration('${reg._id}')">
+                        <p>Delete</p>
+                    </button>
+                </td>
 
             </tr>
 

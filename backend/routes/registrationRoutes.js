@@ -12,7 +12,7 @@ router.get("/mine-as-host", verifyToken, getRegistrationsForMyEvents);
 router.post("/", verifyToken, createRegistration);
 router.patch("/:registrationId/join", verifyToken, joinTeam);
 router.delete("/:registrationId/leave", verifyToken, withdrawFromRegistration);
-router.delete("/:id", deleteRegistration);
+router.delete("/:id", verifyToken, deleteRegistration);
 router.get("/lookup/:registrationId", lookupTeam);
 
 module.exports = router;
