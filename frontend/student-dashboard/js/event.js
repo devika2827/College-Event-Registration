@@ -9,6 +9,7 @@ document.getElementById("lastDate").innerHTML = new Date(eventData.registrationD
 document.getElementById("description").innerHTML = eventData.description;
 document.getElementById("teamSize").textContent = `${eventData.minTeamSize}-${eventData.maxTeamSize}`;
 document.getElementById("eventMode").textContent = eventData.mode || "";
+document.getElementById("organizer").textContent = `Organized by: ${eventData.organizerName}`;
 
 const rules = document.getElementById("rules");
 
