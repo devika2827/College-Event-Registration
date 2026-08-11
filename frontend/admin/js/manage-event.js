@@ -290,9 +290,8 @@ form.addEventListener("submit", async function(e){
     formData.append("rules", document.getElementById("eventRules").value)
     const bannerFile = document.getElementById("eventBanner").files[0];
     if (bannerFile) {
-        formData.append("banner", bannerFile); // the actual File object, not the name
+        formData.append("banner", bannerFile);
     }
-
 
     let response;
 
@@ -347,7 +346,6 @@ function filterEvents(){
         const computedStatus = isClosed ? "Closed" : "Open";
 
         const matchesSearch =
-
             event.name.toLowerCase().includes(search) ||
             event.category.toLowerCase().includes(search) ||
             event.venue.toLowerCase().includes(search);
@@ -365,7 +363,6 @@ function filterEvents(){
     displayEvents(filtered);
 }
     
-
 searchInput.addEventListener("input", filterEvents);
 categoryFilter.addEventListener("change", filterEvents);
 statusFilter.addEventListener("change", filterEvents);

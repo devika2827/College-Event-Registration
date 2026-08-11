@@ -13,12 +13,10 @@ async function loadDashboard(){
         const totalRegistrations = registrations.length;
         const upcomingEvents = events.filter(event => new Date(event.date) >= today).length;
         const completedEvents = events.filter(event =>  new Date(event.date) < today ).length;
-
         const upcoming = events
             .filter(event => new Date(event.date) >= today)
             .sort((a, b) => new Date(a.date) - new Date(b.date))
             .slice(0, 5);
-
         const table = document.getElementById("upcomingEventsTable");
 
         table.innerHTML = "";
@@ -37,10 +35,7 @@ async function loadDashboard(){
         upcoming.forEach(event => {
 
             const eventDate = new Date(event.date);
-
-            const daysLeft = Math.ceil(
-                (eventDate - today) / (1000 * 60 * 60 * 24));
-
+            const daysLeft = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
             const isClosed = event.status === "Closed" || new Date(event.registrationDeadline) < today;
             const displayStatus = isClosed ? "Closed" : "Open";
             

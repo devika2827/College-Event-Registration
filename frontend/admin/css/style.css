@@ -38,6 +38,37 @@ body{
     gap: 25px;
 }
 
+.topbar-nav{
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    font-size: 17px;
+    flex-wrap: wrap;
+    padding: 25px 40px;
+}
+
+.topbar-nav a:hover{
+    background:#334155;
+    color:white;
+}
+
+
+.topbar nav .active{
+    background:#2563eb;
+    color:white;
+}
+
+.topbar nav a{
+    text-decoration:none;
+    color:#cbd5e1;
+    padding:14px 18px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:.3s;
+}
+
 .student-link{
     text-decoration: none;
     color: #ffffff;
@@ -65,15 +96,6 @@ body{
     font-size: 36px;
 }
 
-.topbar-nav{
-    display: flex;
-    justify-content: center;
-    gap: 35px;
-    font-size: 17px;
-    flex-wrap: wrap;
-    padding: 25px 40px;
-}
-
 .profile{
     display: flex;
     align-items: center;
@@ -87,28 +109,6 @@ body{
 .profile:hover{
     color: #ffd54f;
     background: rgba(255, 255, 255, 0.2);
-}
-
-.topbar nav a{
-    text-decoration:none;
-    color:#cbd5e1;
-    padding:14px 18px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    transition:.3s;
-}
-
-.topbar-nav a:hover{
-    background:#334155;
-    color:white;
-}
-
-
-.topbar nav .active{
-    background:#2563eb;
-    color:white;
 }
 
 /* Main */
@@ -327,6 +327,10 @@ body{
     margin-right:8px;
 }
 
+.edit-btn:hover{
+    background:#d97706;
+}
+
 .delete-btn{
     background:#ef4444;
     color:white;
@@ -334,10 +338,6 @@ body{
     padding:10px 12px;
     border-radius:20px;
     cursor:pointer;
-}
-
-.edit-btn:hover{
-    background:#d97706;
 }
 
 .delete-btn:hover{
@@ -610,13 +610,13 @@ body.modal-open{
     display:block;
 }
 
-/* ===== User Info ===== */
+/* User Info */
 
 .user-info{
     padding:18px;
 }
 
-/* ===== Dropdown Links ===== */
+/* Dropdown Links */
 
 .dropdown a{
     display:block;
@@ -629,29 +629,6 @@ body.modal-open{
 .dropdown a:hover{
     background:#f4f4f4;
     color:#4b46df;
-}
-
-/* ===== Responsive ===== */
-
-@media(max-width:768px){
-
-    .navbar{
-        padding:18px 25px;
-    }
-
-    .logo a{
-        font-size:26px;
-    }
-
-    .nav-links{
-        gap:15px;
-    }
-
-    .nav-links a,
-    #profileBtn{
-        font-size:17px;
-    }
-
 }
 
 #userName{

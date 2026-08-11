@@ -98,7 +98,6 @@ function displayRegistrations(filtered = registrations) {
 function viewTeam(id) {
 
     const reg = registrations.find(r => r._id === id);
-
     const isSolo = reg.participationType === "Solo";
 
     function renderPerson(person) {
@@ -135,9 +134,7 @@ function viewTeam(id) {
         ${membersBlock}
     `;
 
-
     teamModal.style.display = "flex";
-
 }
 
 closeModalBtn.onclick = () => {
@@ -155,7 +152,6 @@ async function deleteRegistration(id) {
     if (!confirm("Delete this registration?")) return;
 
     await fetch(`${REGISTRATIONS_API_URL}/${id}`, { method: "DELETE" , credentials: "include"});
-
     fetchRegistrations();
 
 }
@@ -181,7 +177,6 @@ function filterRegistrations() {
 
     displayRegistrations(filtered);
 }
-
 
 searchInput.addEventListener("input", filterRegistrations);
 eventFilter.addEventListener("change", filterRegistrations);
