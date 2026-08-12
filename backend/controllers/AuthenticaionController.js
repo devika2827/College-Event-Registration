@@ -87,8 +87,8 @@ const loginUser = async (req, res) => {
 
         const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", 
-            sameSite: "lax",
+            secure: true, 
+            sameSite: "none",
         };
 
         return res.status(200)
@@ -119,8 +119,8 @@ const LogoutUser = async (req, res) => {
         user.refreshToken = undefined;
         const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
         };
         await user.save({ validateBeforeSave: false });
         return res.status(200)
@@ -195,8 +195,8 @@ const refreshAccessToken = async (req, res) => {
         }
         const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
 
         };
         const { accessToken, refreshToken: newrefreshToken } = await generateAccessAndRefreshTokens(user._id);
