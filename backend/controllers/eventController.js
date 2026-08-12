@@ -30,10 +30,6 @@ const createEvent = async (req, res) => {
             return res.status(400).json({ message: "Minimum team size cannot exceed maximum team size." });
         }
 
-        if (req.file) {
-            eventData.banner = req.file.filename;
-        }
-
         if (typeof eventData.rules === "string") {
             eventData.rules = eventData.rules
                 .split("\n")
@@ -82,10 +78,6 @@ const updateEvent = async (req, res) => {
         }
 
         const eventData = { ...req.body };
-
-        if (req.file) {
-            eventData.banner = req.file.filename;
-        }
 
         if (typeof eventData.rules === "string") {
             eventData.rules = eventData.rules
