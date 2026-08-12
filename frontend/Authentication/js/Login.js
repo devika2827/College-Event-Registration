@@ -49,8 +49,6 @@ loginForm.addEventListener("submit", async (e) => {
         if (response.ok) {
              window.location.href = "../../student-dashboard/html/index.html";
 
-            // Redirect after successful login if needed
-            // window.location.href = "../Dashboard/dashboard.html";
         } else {
             alert(data.message || "Login failed");
         }

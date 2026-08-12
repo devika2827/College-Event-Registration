@@ -16,7 +16,7 @@ const authRoutes = require("./routes/AuthenticationRoutes");
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:8000", 
+    origin: "https://nexus-college-event-registration.onrender.com", 
     credentials: true,
 }));
 app.use(express.json());
