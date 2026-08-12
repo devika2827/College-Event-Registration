@@ -62,7 +62,7 @@ signupForm.addEventListener("submit", async (e) => {
     try{
 
         const response = await fetch(
-            "/api/v1/auth/register",
+            "https://college-event-registration-n942.onrender.com/api/v1/auth/register",
             {
 
                 method:"POST",

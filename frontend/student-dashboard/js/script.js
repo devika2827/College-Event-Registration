@@ -4,7 +4,7 @@ const cards = document.getElementById("cards");
 
 async function loadEvents() {
   try {
-    const res = await fetch("/api/events"); 
+    const res = await fetch("https://college-event-registration-n942.onrender.com/api/events"); 
     events = await res.json();
     displayEvents(events);
   } catch (err) {

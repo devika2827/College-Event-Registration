@@ -35,7 +35,7 @@ loginForm.addEventListener("submit", async (e) => {
     }
 
     try {
-        const response = await fetch("/api/v1/auth/login", {
+        const response = await fetch("https://college-event-registration-n942.onrender.com/api/v1/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

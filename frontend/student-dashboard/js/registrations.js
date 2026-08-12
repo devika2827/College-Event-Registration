@@ -5,7 +5,7 @@ async function loadRegistrations() {
 
     try {
 
-        const response = await fetch("/api/registrations/my", {
+        const response = await fetch("https://college-event-registration-n942.onrender.com/api/registrations/my", {
             credentials: "include",
         });
 

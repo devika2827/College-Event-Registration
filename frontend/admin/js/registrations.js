@@ -1,5 +1,5 @@
-const EVENTS_API_URL = "/api/events";
-const REGISTRATIONS_API_URL = "/api/registrations";
+const EVENTS_API_URL = "https://college-event-registration-n942.onrender.com/api/events";
+const REGISTRATIONS_API_URL = "https://college-event-registration-n942.onrender.com/api/registrations";
 
 let registrations = [];
 let events = [];

@@ -21,7 +21,7 @@ form.addEventListener("submit", async (e) => {
     try {
 
         const response = await fetch(
-            "/api/v1/auth/change-password",
+            "https://college-event-registration-n942.onrender.com/api/v1/auth/change-password",
             {
                 method: "POST",
                 credentials: "include",

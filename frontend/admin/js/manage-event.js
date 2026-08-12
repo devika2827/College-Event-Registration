@@ -1,4 +1,4 @@
-const API_URL = "/api/events";
+const API_URL = "https://college-event-registration-n942.onrender.com/api/events";
 
 let events = []
 

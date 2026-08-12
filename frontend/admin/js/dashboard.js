@@ -1,5 +1,5 @@
-const API_URL = "/api/events";
-const REGISTRATIONS_API_URL = "/api/registrations";
+const API_URL = "https://college-event-registration-n942.onrender.com/api/events";
+const REGISTRATIONS_API_URL = "https://college-event-registration-n942.onrender.com/api/registrations";
 
 async function loadDashboard(){
 
