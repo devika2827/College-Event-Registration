@@ -102,7 +102,7 @@ async function withdrawRegistration(registrationId) {
 
     try {
 
-        const response = await fetch(`http://localhost:8000/api/registrations/${registrationId}/leave`, {
+        const response = await fetch(`https://college-event-registration-n942.onrender.com/api/registrations/${registrationId}/leave`, {
             method: "DELETE",
             credentials: "include"
         });

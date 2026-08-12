@@ -24,7 +24,7 @@ document.addEventListener("click", function () {
 async function loadUser() {
     try {
         const response = await fetch(
-            "http://localhost:8000/api/v1/auth/current-user",
+            "https://college-event-registration-n942.onrender.com/api/v1/auth/current-user",
             {
                 method: "GET",
                 credentials: "include"
@@ -55,7 +55,7 @@ loadUser();
 
 logoutBtn.addEventListener("click", async () => {
     try {
-        const response = await fetch("/api/v1/auth/logout", {
+        const response = await fetch("https://college-event-registration-n942.onrender.com/api/v1/auth/logout", {
             method: "POST",
             credentials: "include"
         });
