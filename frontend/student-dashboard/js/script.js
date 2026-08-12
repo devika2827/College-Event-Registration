@@ -17,7 +17,7 @@ function displayEvents(list) {
   list.forEach((event) => {
     cards.innerHTML += `
       <div class="card">
-        <img src="/uploads/${event.banner}">
+        <img src="${event.banner}">
         <h2>${event.name}</h2>
         <p class="info"><i class="fa-solid fa-calendar"></i> ${new Date(event.date).toLocaleDateString()}</p>
         <p class="info"><i class="fa-solid fa-location-dot"></i> ${event.mode === "Online" ? "Online" : event.venue }</p>

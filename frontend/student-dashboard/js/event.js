@@ -1,6 +1,6 @@
 const eventData = JSON.parse(localStorage.getItem("selectedEvent"));
 
-document.getElementById("eventImage").src = `https://college-event-registration-n942.onrender.com/uploads/${eventData.banner}`;
+document.getElementById("eventImage").src = `${eventData.banner}`;
 document.getElementById("title").innerHTML = eventData.name;
 document.getElementById("date").innerHTML = new Date(eventData.date).toLocaleDateString();
 document.getElementById("time").innerHTML = eventData.startTime;

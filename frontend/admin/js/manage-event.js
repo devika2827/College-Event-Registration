@@ -1,5 +1,31 @@
 const API_URL = "https://college-event-registration-n942.onrender.com/api/events";
 
+const CLOUDINARY_CLOUD_NAME = "myshnxzh";
+const CLOUDINARY_UPLOAD_PRESET = "events";
+
+async function uploadToCloudinary(file) {
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+            method: "POST",
+            body: formData
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to upload image to Cloudinary");
+    }
+
+    const data = await response.json();
+
+    return data.secure_url;
+}
+
 let events = []
 
 let editEventId = null;
@@ -267,49 +293,69 @@ form.addEventListener("submit", async function(e){
         return;
     }
 
-    const formData = new FormData();
+    let bannerUrl = "";
 
-    formData.append("name", document.getElementById("eventName").value);
-    formData.append("category", document.getElementById("eventCategory").value);
-    formData.append("date", dateVal);
-    formData.append("registrationDeadline", deadlineVal);
-    formData.append("mode", eventModeSelect.value);
-    formData.append("eligibility", document.getElementById("eventEligibility").value);
-    formData.append("minTeamSize", minTeamSizeVal);
-    formData.append("maxTeamSize", maxTeamSizeVal);  
-    if (eventModeSelect.value === "Offline") {
-        formData.append("venue", venueSelect.value === "other"
-                                    ? document.getElementById("customVenue").value
-                                    : venueSelect.value);
-    }
-    formData.append("status", document.getElementById("eventStatus").value);
-    formData.append("startTime", document.getElementById("startTime").value);  
-    formData.append("organizerName", document.getElementById("organizerName").value);
-    formData.append("organizerContact", contactVal);
-    formData.append("description", document.getElementById("eventDescription").value);
-    formData.append("rules", document.getElementById("eventRules").value)
     const bannerFile = document.getElementById("eventBanner").files[0];
+
     if (bannerFile) {
-        formData.append("banner", bannerFile);
+        try {
+            bannerUrl = await uploadToCloudinary(bannerFile);
+        } catch (error) {
+            console.error(error);
+            alert("Failed to upload banner. Please try again.");
+            return;
+        }
+    }
+
+    const eventData = {
+        name: document.getElementById("eventName").value,
+        category: document.getElementById("eventCategory").value,
+        date: dateVal,
+        registrationDeadline: deadlineVal,
+        mode: eventModeSelect.value,
+        eligibility: document.getElementById("eventEligibility").value,
+        minTeamSize: minTeamSizeVal,
+        maxTeamSize: maxTeamSizeVal,
+        status: document.getElementById("eventStatus").value,
+        startTime: document.getElementById("startTime").value,
+        organizerName: document.getElementById("organizerName").value,
+        organizerContact: contactVal,
+        description: document.getElementById("eventDescription").value,
+        rules: document.getElementById("eventRules").value
+    };
+
+    if (eventModeSelect.value === "Offline") {
+        eventData.venue = venueSelect.value === "other"
+            ? document.getElementById("customVenue").value
+            : venueSelect.value;
+    }
+
+    if (bannerUrl) {
+        eventData.banner = bannerUrl;
     }
 
     let response;
 
-    if(editEventId){
+    if (editEventId) {
 
-        response = await fetch(`${API_URL}/${editEventId}`,{
-            method:"PUT",
+        response = await fetch(`${API_URL}/${editEventId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
             credentials: "include",
-            body:formData
+            body: JSON.stringify(eventData)
         });
 
-    }
-    else{
+    } else {
 
-        response = await fetch(API_URL,{
-            method:"POST",
+        response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
             credentials: "include",
-            body:formData
+            body: JSON.stringify(eventData)
         });
 
     }
@@ -348,7 +394,7 @@ function filterEvents(){
         const matchesSearch =
             event.name.toLowerCase().includes(search) ||
             event.category.toLowerCase().includes(search) ||
-            event.venue.toLowerCase().includes(search);
+            (event.venue || "").toLowerCase().includes(search);
 
         const matchesCategory =
             !category || event.category === category;
