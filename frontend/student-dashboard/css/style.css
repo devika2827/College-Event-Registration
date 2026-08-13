@@ -215,8 +215,7 @@ body {
         gap:15px;
     }
 
-    .nav-links a,
-    #profileBtn{
+    .nav-links a{
         font-size:17px;
     }
 
