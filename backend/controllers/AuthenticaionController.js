@@ -35,7 +35,7 @@ const regUser = async (req, res) => {
     await sendEmail({
         to: user?.email,
         subject: 'Email Verification',
-        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/auth/verify-email/${unHashedToken}`)
+       mailgenContent: emailVerificationMail(user.username,`${process.env.BACKEND_URL}/api/v1/auth/verify-email/${unHashedToken}`)
     });
     const createdUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
     if(!createdUser){
@@ -73,6 +73,11 @@ const loginUser = async (req, res) => {
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
+        }
+        if (!user.Verified) {
+        return res.status(403).json({
+        message: "Please verify your email before logging in"
+        });
         }
 
         const isPasswordValid = await user.isPasswordCorrect(password);
@@ -174,7 +179,7 @@ const resendVerificationEmail = async (req, res) => {
     await sendEmail({
         to: user.email,
         subject: 'Email Verification',
-        mailgenContent: emailVerificationMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/auth/verify-email/${unHashedToken}`)
+        mailgenContent: emailVerificationMail(user.username, `${process.env.BACKEND_URL}/api/v1/auth/verify-email/${unHashedToken}`)
     });
     return res.status(200).json({ message: "Verification email sent successfully" });
 
@@ -228,7 +233,7 @@ const forgotPassword = async (req, res) => {
     await sendEmail({
         to: user?.email,
         subject: 'Password Reset',
-        mailgenContent: forgotPasswordMail(user.username, `${req.protocol}://${req.get('host')}/api/v1/auth/forgot-password/${unHashedToken}`)
+        mailgenContent: forgotPasswordMail(user.username,`${process.env.FRONTEND_URL}/reset-password.html?token=${unHashedToken}`)
     });
     return res.status(200).json({ message: "Password reset email sent successfully" });
 };

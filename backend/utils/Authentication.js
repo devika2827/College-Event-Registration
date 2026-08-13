@@ -4,8 +4,8 @@ const sendEmail = async (options) => {
     const mailgenerator = new mailgen({
         theme: 'default',
         product: {
-            name: 'Event management',
-            link: 'https://yourcompany.com'
+            name: 'Nexus',
+            link: process.env.FRONTEND_URL
         }
     
     });
@@ -13,7 +13,7 @@ const sendEmail = async (options) => {
 
     const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
-    port: process.env.MAIL_PORT,
+    port: Number(process.env.MAIL_PORT),
     secure: false,
     auth: {
         user: process.env.MAIL_USER,
@@ -21,7 +21,7 @@ const sendEmail = async (options) => {
     },
     });
     const mail = {
-        from: process.env.MAIL_USER,
+        from: process.env.MAIL_FROM,
         to: options.to,
         subject: options.subject,
         html: emailHtml
@@ -30,6 +30,7 @@ const sendEmail = async (options) => {
         await transporter.sendMail(mail);
     } catch (error) {
         console.error('Error sending email:', error);
+        throw error;
     }
 };
 
