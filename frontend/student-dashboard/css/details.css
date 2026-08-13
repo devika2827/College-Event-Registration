@@ -186,3 +186,12 @@ button:hover {
     transform: none;
     box-shadow: none;
 }
+
+@media (max-width: 480px) {
+        #registerBtn {
+        height: 58px;
+        margin-top: 30px;
+        font-size: 18px;
+        border-radius: 30px;
+    }
+}
