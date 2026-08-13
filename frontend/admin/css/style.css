@@ -162,6 +162,7 @@ body{
     border-radius:18px;
     padding:30px;
     box-shadow:0 8px 20px rgba(0,0,0,.06);
+    overflow: hidden;
 }
 
 .events-header{
@@ -232,6 +233,7 @@ body{
 .table-wrapper{
     padding: 0 15px;
     overflow-x:auto;
+    width: 100%;
 }
 
 .modal{
@@ -789,6 +791,10 @@ button:hover {
         padding: 12px;
         font-size: 13px;
         white-space: nowrap;
+    }
+
+    .events-container table{
+        min-width: 600px;
     }
 
     .edit-btn,
