@@ -512,7 +512,25 @@ body{
 }
 
 @media(max-width:700px){
-
+    .topbar-top {
+        justify-content: space-between;
+        padding: 14px 20px;
+    }
+    .logo {
+        order: 1;
+    }
+    .topbar-right {
+        order: 2;
+        gap: 14px;
+    }
+    .event-link,
+    .profile {
+        padding: 8px 4px;
+        font-size: 15px;
+    }
+    .logo h2 {
+        font-size: 24px;
+    }
     .event-banner{
         height:180px;
     }
