@@ -261,3 +261,36 @@ body {
   width: 18px;
   text-align: center;
 }
+
+@media (max-width: 480px) {
+
+    /* Topbar */
+    .topbar-top{
+        padding: 15px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo h2{
+        font-size: 26px;
+    }
+
+    .topbar-right{
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .student-link{
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .student-link span{
+        display: none;
+    }
+
+    .profile{
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+  }
