@@ -793,10 +793,6 @@ button:hover {
         white-space: nowrap;
     }
 
-    .events-container table{
-        min-width: 600px;
-    }
-
     .edit-btn,
     .delete-btn{
         padding: 6px 10px;
