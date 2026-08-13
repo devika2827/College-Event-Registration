@@ -692,3 +692,148 @@ button:hover {
     overflow-y: auto;
     padding-right: 8px;
 }
+
+/* ===== PHONE (max-width: 480px) ===== */
+
+@media (max-width: 480px) {
+
+    /* Topbar */
+    .topbar-top{
+        padding: 15px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo h2{
+        font-size: 26px;
+    }
+
+    .topbar-right{
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .student-link{
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .student-link span{
+        display: none;
+    }
+
+    .profile{
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .topbar-nav{
+        gap: 10px;
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+
+    .topbar nav a{
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    /* Dropdown */
+    .dropdown{
+        width: 220px;
+    }
+
+    /* Main content */
+    .content{
+        padding: 20px 15px;
+    }
+
+    .manage-event{
+        padding: 15px;
+    }
+
+    /* Stat cards */
+    .stat-card{
+        min-height: auto;
+        padding: 18px;
+    }
+
+    .stat-card h2{
+        font-size: 32px;
+    }
+
+    /* Events container / toolbar */
+    .events-container{
+        padding: 15px;
+    }
+
+    .events-header{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .toolbar{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toolbar input,
+    .toolbar select{
+        width: 100%;
+    }
+
+    /* Table */
+    .events-container th,
+    .events-container td{
+        padding: 12px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .edit-btn,
+    .delete-btn{
+        padding: 6px 10px;
+        font-size: 13px;
+        display: block;
+        width: 100%;
+        margin: 4px 0 0 0;
+    }
+
+    /* Modals */
+    .modal{
+        padding: 15px;
+    }
+
+    .modal-content{
+        padding: 20px;
+    }
+
+    .modal-header h2{
+        font-size: 22px;
+    }
+
+    .form-grid{
+        gap: 12px;
+    }
+
+    .modal-actions{
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .modal-actions button{
+        width: 100%;
+    }
+
+    .delete-modal{
+        width: 90%;
+        padding: 25px;
+    }
+
+    /* Team modal */
+    #teamModalBody{
+        max-height: 50vh;
+    }
+
+}
