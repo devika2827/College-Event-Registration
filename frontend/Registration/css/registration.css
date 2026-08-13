@@ -351,6 +351,16 @@ body{
 }
 
 /* BUTTON */
+.join-id-row{
+    display: flex;
+    gap: 10px;
+}
+
+.join-id-row input{
+    flex: 1;
+    min-width: 0;
+}
+
 #findTeamBtn{
     text-decoration:none;
     color:white;
@@ -360,6 +370,9 @@ body{
     border-radius:10px;
     font-size:14px;
     font-weight:600;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
     transition:.3s;
 }
 .submit-section{
@@ -517,5 +530,11 @@ body{
     }
     .event-banner{
         height:150px;
+    }
+    .join-id-row{
+        flex-direction: column;
+    }
+    #findTeamBtn{
+        width: 100%;
     }
 }
