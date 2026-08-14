@@ -142,27 +142,42 @@ const getCurrentUser = async (req, res) => {
     .status(200)
     .json({ user: req.user, message: "Current user retrieved successfully" });
 };
-const verifyEmail = async(req, res)=> {
-    const {verificationToken} = req.params;
-    if(!verificationToken){
-        return res.status(400).json({ message: "Verification token is required" });
+const verifyEmail = async (req, res) => {
+    const { verificationToken } = req.params;
+    if (!verificationToken) {
+
+        return res.status(400).json({
+            message: "Verification token is required"
+        });
     }
-    let hashedToken;
     try {
-        hashedToken = crypto.createHash("sha256").update(verificationToken).digest("hex");
+        const hashedToken = crypto
+            .createHash("sha256")
+            .update(verificationToken)
+            .digest("hex");
+
+        const user = await User.findOne({
+
+            emailVerificationToken: hashedToken,
+
+            emailVerificationExpiry: {
+                $gt: Date.now()
+            }
+        });
+        if (!user) {
+            return res.status(400).json({ message:"Invalid or expired verification token"});
+        }
+        user.Verified = true;
+        user.emailVerificationToken = undefined;
+        user.emailVerificationExpiry = undefined;
+        await user.save({
+            validateBeforeSave: false
+        });
+        return res.status(200).json({message:"Email verified successfully"});
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        console.error( "Email verification error:",error);
+        return res.status(500).json({message:"Unable to verify email"});
     }
-    const user = await User.findOne( { emailVerificationToken: hashedToken ,
-        emailVerificationExpiry: { $gt: Date.now() }} );
-    if(!user){
-        return res.status(400).json({ message: "Invalid or Expired verification token" });
-    }
-    user.Verified = true;
-    user.emailVerificationToken = undefined;
-    user.emailVerificationExpiry = undefined;
-    await user.save({ validateBeforeSave: false });
-    return res.status(200).json({ message: "Email verified successfully" });
 };
 const resendVerificationEmail = async (req, res) => {
     const user= await User.findById(req.user._id);
