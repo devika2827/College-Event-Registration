@@ -124,22 +124,18 @@ signupForm.addEventListener("submit", async (e) => {
 
 
         // ================= SUCCESS =================
+        const data = await response.json();
+       if (response.ok) {
 
-        if (response.ok) {
+    alert(
+        data.message ||
+        "Please verify your email."
+    );
 
-            alert(
-                data.message ||
-                "Registration Successful! Please verify your email."
-            );
+    window.location.href ="verification.html";
 
-           if (response.ok) {
-
-        window.location.href =`verification.html?email=${encodeURIComponent(email)}`;
-        }
-
-            return;
-        }
-
+    return;
+}
 
         // ================= BACKEND ERROR =================
 
