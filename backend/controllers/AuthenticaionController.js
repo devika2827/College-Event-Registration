@@ -231,10 +231,13 @@ const forgotPassword = async (req, res) => {
     user.forgotPasswordTokenExpiry = expiryTime;
     await user.save({ validateBeforeSave: false });
     await sendEmail({
-        to: user?.email,
-        subject: 'Password Reset',
-        mailgenContent: forgotPasswordMail(user.username,`${process.env.FRONTEND_URL}/Authentication/html/forgot-password-reset.html?token=${unHashedToken}`)
-    });
+    to: user.email,
+    subject: "Password Reset",
+    mailgenContent: forgotPasswordMail(
+        user.username,
+        `${process.env.FRONTEND_URL}/Authentication/html/forgot-password-reset.html?token=${unHashedToken}`
+    )
+});
     return res.status(200).json({ message: "Password reset email sent successfully" });
 };
 const resetforgotPassword = async (req, res) => {
