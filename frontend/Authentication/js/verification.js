@@ -1,10 +1,24 @@
-const API_URL ="https://college-event-registration-n942.onrender.com/api/v1/auth";
-const params =new URLSearchParams(window.location.search);
-const email =params.get("email");
-const emailMessage =document.getElementById("emailMessage");
-const message =document.getElementById("message");
-const resendBtn =document.getElementById("resendBtn");
+const API_URL = "https://college-event-registration-n942.onrender.com/api/v1/auth";
 
+const params = new URLSearchParams(window.location.search);
+const email = params.get("email");
+
+const emailMessage = document.getElementById("emailMessage");
+const message = document.getElementById("message");
+const resendBtn = document.getElementById("resendBtn");
+
+// Create timer text
+const timerText = document.createElement("div");
+timerText.id = "timerText";
+timerText.style.fontSize = "12px";
+timerText.style.color = "#7C8296";
+timerText.style.textAlign = "center";
+timerText.style.marginTop = "8px";
+
+resendBtn.parentNode.insertBefore(timerText, resendBtn.nextSibling);
+
+
+// Show email
 if (!email) {
 
     emailMessage.textContent =
@@ -16,29 +30,57 @@ if (!email) {
 
     emailMessage.textContent =
         `We've sent a verification link to ${email}. Please check your inbox.`;
+
+}
+
+
+// Start 30 second cooldown
+function startCooldown() {
+
+    let seconds = 30;
+
+    resendBtn.disabled = true;
+
+    timerText.textContent =
+        `You can resend again in ${seconds}s`;
+
+    const timer = setInterval(() => {
+
+        seconds--;
+
+        if (seconds > 0) {
+
+            timerText.textContent =
+                `You can resend again in ${seconds}s`;
+
+        } else {
+
+            clearInterval(timer);
+
+            resendBtn.disabled = false;
+
+            timerText.textContent =
+                "You can resend the verification email now.";
+
+        }
+
+    }, 1000);
 }
 
 
 // Resend verification email
-
 resendBtn.addEventListener("click", async () => {
 
     if (!email) {
         return;
     }
 
-
     resendBtn.disabled = true;
 
-    resendBtn.textContent =
-        "Sending...";
-
+    resendBtn.textContent = "Sending...";
 
     message.textContent = "";
-
-    message.className =
-        "toast";
-
+    message.className = "toast";
 
     try {
 
@@ -57,10 +99,7 @@ resendBtn.addEventListener("click", async () => {
             }
         );
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         if (!response.ok) {
 
@@ -70,12 +109,17 @@ resendBtn.addEventListener("click", async () => {
             );
         }
 
-
         message.textContent =
             "A new verification email has been sent.";
 
         message.className =
             "toast success";
+
+        // Start 30 second timer ONLY after successful request
+        resendBtn.textContent =
+            "Resend Verification Email";
+
+        startCooldown();
 
 
     } catch (error) {
@@ -92,8 +136,7 @@ resendBtn.addEventListener("click", async () => {
         message.className =
             "toast error";
 
-    } finally {
-
+        // Allow retry immediately if request failed
         resendBtn.disabled = false;
 
         resendBtn.textContent =
