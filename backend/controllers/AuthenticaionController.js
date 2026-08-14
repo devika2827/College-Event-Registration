@@ -35,7 +35,8 @@ const regUser = async (req, res) => {
     await sendEmail({
         to: user?.email,
         subject: 'Email Verification',
-       mailgenContent: emailVerificationMail(user.username,`${process.env.BACKEND_URL}/api/v1/auth/verify-email/${unHashedToken}`)
+      mailgenContent: emailVerificationMail(user.username,`${process.env.FRONTEND_URL}/Authentication/html/verify-email.html?token=${unHashedToken}`
+)
     });
     const createdUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
     if(!createdUser){
@@ -175,7 +176,8 @@ const verifyEmail = async (req, res) => {
         await user.save({
             validateBeforeSave: false
         });
-        return res.status(200).json({message:"Email verified successfully"});
+        return res.status(200).json({ success: true,
+            message:"Email verified successfully"});
     } catch (error) {
         console.error( "Email verification error:",error);
         return res.status(500).json({message:"Unable to verify email"});
@@ -192,7 +194,9 @@ const resendVerificationEmail = async (req, res) => {
     }
 
     try {
+
         const user = await User.findOne({ email });
+
         if (!user) {
             return res.status(404).json({
                 message: "User not found"
@@ -204,145 +208,319 @@ const resendVerificationEmail = async (req, res) => {
                 message: "Email is already verified"
             });
         }
-        const {unHashedToken,hashedToken,expiryTime} = user.generateTemporaryToken();
+
+        const {
+            unHashedToken,
+            hashedToken,
+            expiryTime
+        } = user.generateTemporaryToken();
+
         user.emailVerificationToken = hashedToken;
         user.emailVerificationExpiry = expiryTime;
+
         await user.save({
             validateBeforeSave: false
         });
+
         await sendEmail({
             to: user.email,
             subject: "Email Verification",
-            mailgenContent: emailVerificationMail(user.username,`${process.env.FRONTEND_URL}/Authentication/html/verify-email.html?token=${unHashedToken}`
+            mailgenContent: emailVerificationMail(
+                user.username,
+                `${process.env.FRONTEND_URL}/Authentication/html/verify-email.html?token=${unHashedToken}`
             )
         });
-        return res.status(200).json({message: "A new verification email has been sent."});
+
+        return res.status(200).json({
+            message: "A new verification email has been sent."
+        });
+
     } catch (error) {
+
         console.error(
             "Resend verification email error:",
             error
         );
-        return res.status(500).json({ message: "Unable to send verification email"});
+
+        return res.status(500).json({
+            message: "Unable to send verification email"
+        });
     }
 };
+
+
 const refreshAccessToken = async (req, res) => {
-    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+
+    const incomingRefreshToken =
+        req.cookies?.refreshToken ||
+        req.body?.refreshToken;
+
     if (!incomingRefreshToken) {
-        return res.status(401).json({ message: "Refresh token is required" });
+        return res.status(401).json({
+            message: "Refresh token is required"
+        });
     }
-    try{
-        const decodedtoken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET);
-        const user=await User.findById(decodedtoken?._id);
-        if (!user){
-            return res.status(401).json({ message: "Invalid refresh token" });
+
+    try {
+
+        const decodedToken = jwt.verify(
+            incomingRefreshToken,
+            process.env.REFRESH_TOKEN_SECRET
+        );
+
+        const user = await User.findById(
+            decodedToken?._id
+        );
+
+        if (!user) {
+            return res.status(401).json({
+                message: "Invalid refresh token"
+            });
         }
-        if(user.refreshToken !== incomingRefreshToken){
-            return res.status(401).json({ message: "Refresh token is expired" });
+
+        if (user.refreshToken !== incomingRefreshToken) {
+            return res.status(401).json({
+                message: "Refresh token is expired or invalid"
+            });
         }
+
+        const {
+            accessToken,
+            refreshToken: newRefreshToken
+        } = await generateAccessAndRefreshTokens(
+            user._id
+        );
+
         const options = {
             httpOnly: true,
             secure: true,
-            sameSite: "none",
-
+            sameSite: "none"
         };
-        const { accessToken, refreshToken: newrefreshToken } = await generateAccessAndRefreshTokens(user._id);
-        user.refreshToken = newrefreshToken;
-        await user.save();
-        return res.status(200)
-            .cookie("accessToken", accessToken, options)
-            .cookie("refreshToken", newrefreshToken, options)
+
+        return res
+            .status(200)
+            .cookie(
+                "accessToken",
+                accessToken,
+                options
+            )
+            .cookie(
+                "refreshToken",
+                newRefreshToken,
+                options
+            )
             .json({
                 success: true,
                 accessToken,
-                refreshToken: newrefreshToken,
+                refreshToken: newRefreshToken,
                 message: "Access token refreshed successfully"
             });
+
     } catch (error) {
-        return res.status(403).json({ message: "Invalid refresh token" });
+
+        console.error(
+            "Refresh token error:",
+            error
+        );
+
+        return res.status(403).json({
+            message: "Invalid or expired refresh token"
+        });
     }
 };
+
+
 const forgotPassword = async (req, res) => {
+
     const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-        return res.status(404).json({ message: "User not found" });
+
+    if (!email) {
+        return res.status(400).json({
+            message: "Email is required"
+        });
     }
-    const { unHashedToken, hashedToken, expiryTime } = user.generateTemporaryToken();
-    user.forgotPasswordToken = hashedToken;
-    user.forgotPasswordTokenExpiry = expiryTime;
-    await user.save({ validateBeforeSave: false });
-    await sendEmail({
-    to: user.email,
-    subject: "Password Reset",
-    mailgenContent: forgotPasswordMail(
-        user.username,
-        `${process.env.FRONTEND_URL}/Authentication/html/forgot-password-reset.html?token=${unHashedToken}`
-    )
-});
-    return res.status(200).json({ message: "Password reset email sent successfully" });
+
+    try {
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const {
+            unHashedToken,
+            hashedToken,
+            expiryTime
+        } = user.generateTemporaryToken();
+
+        user.forgotPasswordToken = hashedToken;
+        user.forgotPasswordTokenExpiry = expiryTime;
+
+        await user.save({
+            validateBeforeSave: false
+        });
+
+        await sendEmail({
+            to: user.email,
+            subject: "Password Reset",
+            mailgenContent: forgotPasswordMail(
+                user.username,
+                `${process.env.FRONTEND_URL}/Authentication/html/forgot-password-reset.html?token=${unHashedToken}`
+            )
+        });
+
+        return res.status(200).json({
+            message: "Password reset email sent successfully"
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Forgot password error:",
+            error
+        );
+
+        return res.status(500).json({
+            message: "Unable to send password reset email"
+        });
+    }
 };
+
+
 const resetforgotPassword = async (req, res) => {
 
     const { ResetToken } = req.params;
     const { newPassword } = req.body;
+
+    if (!ResetToken) {
+        return res.status(400).json({
+            message: "Reset token is required"
+        });
+    }
+
     if (!newPassword) {
         return res.status(400).json({
             message: "New password is required"
         });
     }
+
     if (newPassword.length < 8) {
         return res.status(400).json({
             message: "Password must be at least 8 characters long"
         });
     }
-    const hashedToken = crypto
-        .createHash("sha256")
-        .update(ResetToken)
-        .digest("hex");
-    const user = await User.findOne({
-        forgotPasswordToken: hashedToken,
-        forgotPasswordTokenExpiry: {
-            $gt: Date.now()
-        }
-    });
-
-    if (!user) {
-        return res.status(400).json({
-            message: "Token is invalid or expired"
-        });
-    }
 
     try {
+
+        const hashedToken = crypto
+            .createHash("sha256")
+            .update(ResetToken)
+            .digest("hex");
+
+        const user = await User.findOne({
+            forgotPasswordToken: hashedToken,
+            forgotPasswordTokenExpiry: {
+                $gt: Date.now()
+            }
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                message: "Token is invalid or expired"
+            });
+        }
+
         user.password = newPassword;
+
         user.forgotPasswordToken = undefined;
         user.forgotPasswordTokenExpiry = undefined;
 
         await user.save();
+
         return res.status(200).json({
             message: "Password reset successfully"
         });
 
     } catch (error) {
-        console.error("Reset password error:", error);
-        return res.status(400).json({
-            message: error.message || "Unable to reset password"
+
+        console.error(
+            "Reset password error:",
+            error
+        );
+
+        return res.status(500).json({
+            message: "Unable to reset password"
         });
     }
 };
-const changeCurrentPassword= async (req ,res) =>{
-    const{oldPassword , newPassword}=req.body;
-    const user= await User.findById(req.user?._id);
-    const isPasswordValid=await user.isPasswordCorrect(oldPassword);
 
-    if(!isPasswordValid){
-        return res.status(400).json({ message: "Invalid old password"})
+
+const changeCurrentPassword = async (req, res) => {
+
+    const {
+        oldPassword,
+        newPassword
+    } = req.body;
+
+    if (!oldPassword || !newPassword) {
+        return res.status(400).json({
+            message: "Old password and new password are required"
+        });
     }
-    user.password=newPassword;
-    await user.save({validateBeforeSave:false});
 
-    return res.status(200).json({message: "Password changed successfully"});
+    if (newPassword.length < 8) {
+        return res.status(400).json({
+            message: "New password must be at least 8 characters long"
+        });
+    }
 
+    try {
 
+        const user = await User.findById(
+            req.user?._id
+        );
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const isPasswordValid =
+            await user.isPasswordCorrect(
+                oldPassword
+            );
+
+        if (!isPasswordValid) {
+            return res.status(400).json({
+                message: "Invalid old password"
+            });
+        }
+
+        user.password = newPassword;
+
+        await user.save({
+            validateBeforeSave: false
+        });
+
+        return res.status(200).json({
+            message: "Password changed successfully"
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Change password error:",
+            error
+        );
+
+        return res.status(500).json({
+            message: "Unable to change password"
+        });
+    }
 };
 module.exports={regUser, 
                 loginUser, 
