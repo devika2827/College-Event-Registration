@@ -50,7 +50,13 @@ loginForm.addEventListener("submit", async (e) => {
              window.location.href = "../../student-dashboard/html/index.html";
 
         } else {
-            alert(data.message || "Login failed");
+             if (data.unverified) {
+                window.location.href =`verification.html?email=${encodeURIComponent(data.email)}`;
+                return;
+            }
+            throw new Error(
+                data.message || "Login failed"
+            );
         }
 
     } catch (error) {
