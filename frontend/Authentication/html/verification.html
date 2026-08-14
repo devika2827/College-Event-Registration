@@ -31,48 +31,24 @@
 
             <h1>Verify Your Email</h1>
 
-            <p>
-                We've sent a verification link to your email address.
-                Please check your inbox and verify your account.
+            <p id="emailMessage">
+                We've sent a verification link to your email.
             </p>
 
         </div>
 
+        <div
+            id="message"
+            class="toast"
+        ></div>
 
-        <form id="resendForm">
-
-            <div class="field">
-
-                <div class="input-wrap">
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="message"
-                class="toast"
-            ></div>
-
-
-            <button
-                type="submit"
-                id="resendBtn"
-                class="submit-btn"
-            >
-                Resend Verification Email
-            </button>
-
-        </form>
-
+        <button
+            type="button"
+            id="resendBtn"
+            class="submit-btn"
+        >
+            Resend Verification Email
+        </button>
 
         <div class="form-foot">
 
@@ -85,7 +61,6 @@
         </div>
 
     </main>
-
 
     <script src="../js/verification.js"></script>
 

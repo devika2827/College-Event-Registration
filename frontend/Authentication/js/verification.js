@@ -1,35 +1,29 @@
 const API_URL ="https://college-event-registration-n942.onrender.com/api/v1/auth";
+const params =new URLSearchParams(window.location.search);
+const email =params.get("email");
+const emailMessage =document.getElementById("emailMessage");
+const message =document.getElementById("message");
+const resendBtn =document.getElementById("resendBtn");
+
+if (!email) {
+
+    emailMessage.textContent =
+        "Verification email was sent. Please check your inbox.";
+
+    resendBtn.disabled = true;
+
+} else {
+
+    emailMessage.textContent =
+        `We've sent a verification link to ${email}. Please check your inbox.`;
+}
 
 
-const form =
-    document.getElementById("resendForm");
+// Resend verification email
 
-const emailInput =
-    document.getElementById("email");
-
-const message =
-    document.getElementById("message");
-
-const resendBtn =
-    document.getElementById("resendBtn");
-
-
-form.addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    const email =
-        emailInput.value.trim();
-
+resendBtn.addEventListener("click", async () => {
 
     if (!email) {
-
-        message.textContent =
-            "Please enter your email.";
-
-        message.className =
-            "toast error";
-
         return;
     }
 
@@ -38,6 +32,12 @@ form.addEventListener("submit", async (e) => {
 
     resendBtn.textContent =
         "Sending...";
+
+
+    message.textContent = "";
+
+    message.className =
+        "toast";
 
 
     try {
@@ -66,13 +66,13 @@ form.addEventListener("submit", async (e) => {
 
             throw new Error(
                 data.message ||
-                "Unable to send verification email."
+                "Unable to resend verification email."
             );
         }
 
 
         message.textContent =
-            data.message;
+            "A new verification email has been sent.";
 
         message.className =
             "toast success";
@@ -80,8 +80,14 @@ form.addEventListener("submit", async (e) => {
 
     } catch (error) {
 
+        console.error(
+            "Resend verification error:",
+            error
+        );
+
         message.textContent =
-            error.message;
+            error.message ||
+            "Unable to resend verification email.";
 
         message.className =
             "toast error";
