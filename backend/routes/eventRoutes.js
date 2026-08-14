@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { verifyToken } = require("../middleware/auth");
-const {getEvents, getSingleEvent, getMyEvents, createEvent, updateEvent, deleteEvent, getRegistrationsForMyEvents} = require("../controllers/eventController");
+const {getEvents, getSingleEvent, getMyEvents, createEvent, 
+    updateEvent, deleteEvent, getRegistrationsForMyEvents} = require("../controllers/eventController");
 
 router.get("/", getEvents);
 router.get("/my", verifyToken, getMyEvents);

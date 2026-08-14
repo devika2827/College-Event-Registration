@@ -1,4 +1,5 @@
 const Registration = require("../models/Registration");
+const Event = require("../models/Event");
 
 function generateRegistrationId(){
     const random = Math.floor(Math.random() * 9000) + 1000;
@@ -17,13 +18,11 @@ async function generateUniqueRegistrationId(){
     return id;
 }
 
-/* CREATE REGISTRATION */
-
 const createRegistration = async (req, res) => {
 
     try {
-
         const registrationId = await generateUniqueRegistrationId();
+
         const registration = await Registration.create({
             ...req.body,
             registrationId,
@@ -42,8 +41,6 @@ const createRegistration = async (req, res) => {
 
 };
 
-/* WITHDRAW / LEAVE REGISTRATION (self-service) */
-
 const withdrawFromRegistration = async (req, res) => {
     try {
         const { registrationId } = req.params;
@@ -61,13 +58,13 @@ const withdrawFromRegistration = async (req, res) => {
 
             if (registration.teamMembers.length > 0) {
                 return res.status(400).json({
-                    message: "You can't leave as team leader while other members are still on the team. Please have them leave first, or cancel individually."
+                    message: "You can't withdraw while other members are still active. All other team members must withdraw before you can cancel the registration."
                 });
             }
 
-            // Leader backing out cancels the whole registration
             await Registration.findByIdAndDelete(registration._id);
             return res.status(200).json({ message: "Registration cancelled." });
+
         }
 
         const memberIndex = registration.teamMembers.findIndex(
@@ -88,12 +85,9 @@ const withdrawFromRegistration = async (req, res) => {
     }
 };
 
-/* DELETE REGISTRATION */
-
 const deleteRegistration = async (req, res) => {
 
     try {
-
         const registration = await Registration.findById(req.params.id).populate("eventId");
 
         if (!registration) {
@@ -125,8 +119,6 @@ const deleteRegistration = async (req, res) => {
 
 };
 
-/* GET REGISTRATIONS FOR STUDENT DASHBOARD */
-
 const getMyRegistrations = async (req, res) => {
     try {
 
@@ -150,9 +142,6 @@ const getMyRegistrations = async (req, res) => {
     }
 };
 
-/* GET REGISTRATIONS FOR ADMIN DASHBOARD */
-const Event = require("../models/Event");
-
 const getRegistrationsForMyEvents = async (req, res) => {
     try {
         const myEventIds = await Event.find({ createdBy: req.user._id }).distinct("_id");
@@ -169,8 +158,6 @@ const getRegistrationsForMyEvents = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
-/* LOOKUP TEAM BY REGISTRATION ID (for the "Join Team" flow) */
 
 const lookupTeam = async (req, res) => {
     try {
@@ -193,8 +180,6 @@ const lookupTeam = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
-/* JOIN AN EXISTING TEAM */
 
 const joinTeam = async (req, res) => {
     try {

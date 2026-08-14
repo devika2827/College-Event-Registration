@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-/* ===============================
-   Team Leader Schema
-================================ */
-
 const leaderSchema = new mongoose.Schema({
+
     registeredBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -54,11 +51,9 @@ const leaderSchema = new mongoose.Schema({
 
 }, { _id: false });
 
-/* ===============================
-   Team Member Schema
-================================ */
 
 const memberSchema = new mongoose.Schema({
+
     registeredBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -108,9 +103,6 @@ const memberSchema = new mongoose.Schema({
 
 }, { _id: false });
 
-/* ===============================
-   Registration Schema
-================================ */
 
 const registrationSchema = new mongoose.Schema({
    

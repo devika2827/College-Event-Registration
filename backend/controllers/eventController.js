@@ -1,7 +1,7 @@
 const Event = require("../models/Event");
 const Registration = require("../models/Registration");
 
-// GET all events (public — students browsing)
+
 const getEvents = async (req, res) => {
     try {
         const events = await Event.find().sort({ createdAt: -1 });
@@ -11,7 +11,6 @@ const getEvents = async (req, res) => {
     }
 };
 
-// GET only the logged-in admin's own events
 const getMyEvents = async (req, res) => {
     try {
         const events = await Event.find({ createdBy: req.user._id }).sort({ createdAt: -1 });
@@ -21,7 +20,6 @@ const getMyEvents = async (req, res) => {
     }
 };
 
-// CREATE event
 const createEvent = async (req, res) => {
     try {
         const eventData = { ...req.body, createdBy: req.user._id };
@@ -59,11 +57,9 @@ const getSingleEvent = async (req, res) => {
     }
 };
 
-// UPDATE event
 const updateEvent = async (req, res) => {
 
     try {
-
         const existing = await Event.findById(req.params.id);
 
         if (!existing) {
@@ -84,6 +80,7 @@ const updateEvent = async (req, res) => {
                 .split("\n")
                 .map(rule => rule.trim());
         }
+
         const event = await Event.findByIdAndUpdate(
             req.params.id,
             eventData,
@@ -113,11 +110,9 @@ const updateEvent = async (req, res) => {
 
 };
 
-// DELETE event
 const deleteEvent = async (req, res) => {
 
     try {
-
         const event = await Event.findById(req.params.id);
 
         if (!event) {
@@ -177,4 +172,3 @@ module.exports = {
     deleteEvent,
     getRegistrationsForMyEvents
 };
-
