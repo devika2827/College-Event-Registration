@@ -1,5 +1,4 @@
 const form = document.getElementById("changePasswordForm");
-
 const toast = document.getElementById("toast");
 
 form.addEventListener("submit", async (e) => {

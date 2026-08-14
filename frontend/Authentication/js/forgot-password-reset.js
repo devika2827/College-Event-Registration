@@ -18,7 +18,7 @@ const resetBtn =
     document.getElementById("resetBtn");
 
 
-// ================= PASSWORD VISIBILITY =================
+// PASSWORD VISIBILITY 
 
 document.querySelectorAll(".toggle-eye").forEach(button => {
 
@@ -39,7 +39,7 @@ document.querySelectorAll(".toggle-eye").forEach(button => {
 });
 
 
-// ================= GET TOKEN =================
+// GET TOKEN 
 
 const params =
     new URLSearchParams(
@@ -62,7 +62,7 @@ if (!token) {
 }
 
 
-// ================= RESET PASSWORD =================
+// RESET PASSWORD 
 
 form.addEventListener("submit", async (e) => {
 
@@ -79,7 +79,7 @@ form.addEventListener("submit", async (e) => {
     const confirmPassword =
         confirmPasswordInput.value;
 
-    // ================= VALIDATION =================
+    // VALIDATION 
     if (newPassword.length < 8) {
 
     message.textContent =
@@ -127,8 +127,7 @@ form.addEventListener("submit", async (e) => {
     }
 
 
-    // ================= SEND REQUEST =================
-
+    //  SEND REQUEST 
     resetBtn.disabled = true;
 
     resetBtn.textContent =
@@ -166,8 +165,6 @@ form.addEventListener("submit", async (e) => {
         }
 
 
-        // ================= SUCCESS =================
-
         message.textContent =
             data.message ||
             "Password reset successfully.";
@@ -179,12 +176,8 @@ form.addEventListener("submit", async (e) => {
         newPasswordInput.value = "";
         confirmPasswordInput.value = "";
 
-
         resetBtn.textContent =
             "Password Reset";
-
-
-        // Redirect to login
 
         setTimeout(() => {
 
@@ -201,14 +194,12 @@ form.addEventListener("submit", async (e) => {
             error
         );
 
-
         message.textContent =
             error.message ||
             "Unable to reset password.";
 
         message.className =
             "toast error";
-
 
         resetBtn.disabled = false;
 

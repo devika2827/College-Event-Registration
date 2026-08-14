@@ -1,5 +1,4 @@
-const API_URL =
-    "https://college-event-registration-n942.onrender.com/api/v1/auth";
+const API_URL = "https://college-event-registration-n942.onrender.com/api/v1/auth";
 
 const form = document.getElementById("forgotPasswordForm");
 
@@ -14,7 +13,6 @@ form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    // Clear previous messages
     emailError.textContent = "";
     message.className = "toast";
     message.textContent = "";
@@ -22,7 +20,7 @@ form.addEventListener("submit", async (e) => {
     const email = emailInput.value.trim();
 
 
-    // ================= VALIDATION =================
+    // VALIDATION 
 
     if (!email) {
         emailError.textContent =
