@@ -1,5 +1,8 @@
 const signupForm = document.getElementById("signupForm");
 
+
+// ================= PASSWORD VISIBILITY =================
+
 document.querySelectorAll(".toggle-eye").forEach(button => {
 
     button.addEventListener("click", () => {
@@ -10,16 +13,20 @@ document.querySelectorAll(".toggle-eye").forEach(button => {
 
         input.type =
             input.type === "password"
-            ? "text"
-            : "password";
+                ? "text"
+                : "password";
 
     });
 
 });
 
+
+// ================= SIGNUP =================
+
 signupForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
+
 
     const name =
         document.getElementById("name").value.trim();
@@ -37,18 +44,25 @@ signupForm.addEventListener("submit", async (e) => {
         document.getElementById("confirmPassword").value;
 
 
+    // ================= VALIDATION =================
+
     if (username.includes(" ")) {
+
         alert("Username cannot contain spaces.");
+
         return;
+
     }
 
-    if(password !== confirmPassword){
+
+    if (password !== confirmPassword) {
 
         alert("Passwords do not match.");
 
         return;
 
     }
+
 
     const body = {
 
@@ -59,49 +73,91 @@ signupForm.addEventListener("submit", async (e) => {
 
     };
 
-    try{
+
+    try {
 
         const response = await fetch(
             "https://college-event-registration-n942.onrender.com/api/v1/auth/register",
             {
 
-                method:"POST",
+                method: "POST",
 
-                headers:{
-                    "Content-Type":"application/json"
+                headers: {
+                    "Content-Type": "application/json"
                 },
 
-                credentials:"include",
+                credentials: "include",
 
-                body:JSON.stringify(body)
+                body: JSON.stringify(body)
 
             }
-
         );
 
-        const data = await response.json();
 
-        if(response.ok){
+        // ================= READ RESPONSE =================
 
-            alert("Registration Successful!");
+        const contentType =
+            response.headers.get("content-type") || "";
 
-            window.location.href="login.html";
+        let data;
 
+
+        if (contentType.includes("application/json")) {
+
+            data = await response.json();
+
+        } else {
+
+            const text = await response.text();
+
+            console.error(
+                "Server returned non-JSON response:",
+                text
+            );
+
+            alert(
+                `Server error (${response.status}). Please try again.`
+            );
+
+            return;
         }
 
-        else{
 
-            alert(data.message);
+        // ================= SUCCESS =================
 
+        if (response.ok) {
+
+            alert(
+                data.message ||
+                "Registration Successful! Please verify your email."
+            );
+
+            window.location.href = "../html/login.html";
+
+            return;
         }
+
+
+        // ================= BACKEND ERROR =================
+
+        alert(
+            data.message ||
+            "Registration failed."
+        );
 
     }
 
-    catch(error){
 
-        console.error(error);
+    catch (error) {
 
-        alert("Could not connect to the server.");
+        console.error(
+            "Signup error:",
+            error
+        );
+
+        alert(
+            "Could not connect to the server."
+        );
 
     }
 
