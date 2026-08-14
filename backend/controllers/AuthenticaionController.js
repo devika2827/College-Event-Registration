@@ -41,7 +41,7 @@ const regUser = async (req, res) => {
     if(!createdUser){
         return res.status(400).json({ message: "User not found" });
     }
-    return res.status(201).json({ message: "User registered successfully", user: createdUser });
+    return res.status(201).json({ message: "Account created. A verification email has been sent to your email address.", user: createdUser });
 };
 const generateAccessAndRefreshTokens = async (UserID) => {
     try {
@@ -180,24 +180,48 @@ const verifyEmail = async (req, res) => {
     }
 };
 const resendVerificationEmail = async (req, res) => {
-    const user= await User.findById(req.user._id);
-    if(!user){
-        return res.status(404).json({ message: "User not found" });
-    }
-    if(user.Verified){
-        return res.status(409).json({ message: "Email already verified" });
-    }
-    const  { unHashedToken, hashedToken, expiryTime } = user.generateTemporaryToken();
-    user.emailVerificationToken = hashedToken;
-    user.emailVerificationExpiry = expiryTime;
-    await user.save({ validateBeforeSave: false });
-    await sendEmail({
-        to: user.email,
-        subject: 'Email Verification',
-        mailgenContent: emailVerificationMail(user.username, `${process.env.BACKEND_URL}/api/v1/auth/verify-email/${unHashedToken}`)
-    });
-    return res.status(200).json({ message: "Verification email sent successfully" });
 
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({
+            message: "Email is required"
+        });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        if (user.Verified) {
+            return res.status(409).json({
+                message: "Email is already verified"
+            });
+        }
+        const {unHashedToken,hashedToken,expiryTime} = user.generateTemporaryToken();
+        user.emailVerificationToken = hashedToken;
+        user.emailVerificationExpiry = expiryTime;
+        await user.save({
+            validateBeforeSave: false
+        });
+        await sendEmail({
+            to: user.email,
+            subject: "Email Verification",
+            mailgenContent: emailVerificationMail(user.username,`${process.env.FRONTEND_URL}/Authentication/html/verify-email.html?token=${unHashedToken}`
+            )
+        });
+        return res.status(200).json({message: "A new verification email has been sent."});
+    } catch (error) {
+        console.error(
+            "Resend verification email error:",
+            error
+        );
+        return res.status(500).json({ message: "Unable to send verification email"});
+    }
 };
 const refreshAccessToken = async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;

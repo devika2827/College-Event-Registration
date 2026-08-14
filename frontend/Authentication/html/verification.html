@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Nexus - Verify Your Email</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="auth-card">
+
+        <div class="brand">
+            Nexus
+        </div>
+
+        <div class="auth-head">
+
+            <h1>Verify Your Email</h1>
+
+            <p>
+                We've sent a verification link to your email address.
+                Please check your inbox and verify your account.
+            </p>
+
+        </div>
+
+
+        <form id="resendForm">
+
+            <div class="field">
+
+                <div class="input-wrap">
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="message"
+                class="toast"
+            ></div>
+
+
+            <button
+                type="submit"
+                id="resendBtn"
+                class="submit-btn"
+            >
+                Resend Verification Email
+            </button>
+
+        </form>
+
+
+        <div class="form-foot">
+
+            Already verified?
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <script src="../js/verification.js"></script>
+
+</body>
+
+</html>
