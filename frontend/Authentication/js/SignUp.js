@@ -124,7 +124,6 @@ signupForm.addEventListener("submit", async (e) => {
 
 
         // ================= SUCCESS =================
-        const data = await response.json();
        if (response.ok) {
 
     alert(
