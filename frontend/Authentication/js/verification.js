@@ -20,6 +20,8 @@ const resendBtn =
 
 const timerText =
     document.getElementById("timerText");
+    console.log("timerText element:", timerText);
+console.log("resendBtn element:", resendBtn);
 
 
 if (!email) {
@@ -174,3 +176,4 @@ resendBtn.addEventListener(
 
     }
 );
+timerText.textContent = "TEST TIMER IS WORKING";
