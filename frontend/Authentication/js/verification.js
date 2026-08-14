@@ -173,4 +173,3 @@ resendBtn.addEventListener(
 
     }
 );
-timerText.textContent = "TEST TIMER IS WORKING";
