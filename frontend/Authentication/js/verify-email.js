@@ -12,6 +12,8 @@ const toast =
 
 const loginBtn =
     document.getElementById("loginBtn");
+const closeMessage =
+    document.getElementById("closeMessage");
 
 
 // Get token from URL
@@ -74,20 +76,12 @@ async function verifyEmail() {
 
         // SUCCESS
 
-        title.textContent =
-            "Email Verified!";
-
-        message.textContent =
-            "Your email has been verified successfully.";
-
-        toast.textContent =
-            "You can now login to your Nexus account.";
-
-        toast.className =
-            "toast success";
-
-        loginBtn.style.display =
-            "block";
+        title.textContent ="Email Verified!";
+        message.textContent ="Your email has been verified successfully.";
+        toast.textContent ="You can now login to your Nexus account.";
+        toast.className ="toast success";
+        loginBtn.style.display ="block";
+        closeMessage.textContent ="Your email has been verified successfully. You can close this window now.";
 
 
     } catch (error) {
