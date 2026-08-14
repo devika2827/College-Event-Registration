@@ -1,7 +1,6 @@
 const API_URL =
     "https://college-event-registration-n942.onrender.com/api/v1/auth";
 
-
 const form = document.getElementById("forgotPasswordForm");
 
 const emailInput = document.getElementById("email");
@@ -26,23 +25,18 @@ form.addEventListener("submit", async (e) => {
     // ================= VALIDATION =================
 
     if (!email) {
-
         emailError.textContent =
             "Please enter your email address.";
-
         return;
     }
 
 
-    // Basic email validation
     const emailPattern =
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(email)) {
-
         emailError.textContent =
             "Please enter a valid email address.";
-
         return;
     }
 
@@ -50,7 +44,6 @@ form.addEventListener("submit", async (e) => {
     // ================= BUTTON STATE =================
 
     submitBtn.disabled = true;
-
     submitBtn.textContent = "Sending...";
 
 
@@ -72,7 +65,31 @@ form.addEventListener("submit", async (e) => {
         );
 
 
-        const data = await response.json();
+        // ================= READ RESPONSE =================
+
+        const contentType =
+            response.headers.get("content-type") || "";
+
+        let data;
+
+        if (contentType.includes("application/json")) {
+
+            data = await response.json();
+
+        } else {
+
+            // Backend returned HTML/text instead of JSON
+            const text = await response.text();
+
+            console.error(
+                "Server returned non-JSON response:",
+                text
+            );
+
+            throw new Error(
+                `Server error (${response.status}). Please try again later.`
+            );
+        }
 
 
         // ================= ERROR =================
@@ -80,7 +97,8 @@ form.addEventListener("submit", async (e) => {
         if (!response.ok) {
 
             throw new Error(
-                data.message || "Something went wrong."
+                data.message ||
+                "Unable to send reset link."
             );
         }
 
@@ -88,6 +106,7 @@ form.addEventListener("submit", async (e) => {
         // ================= SUCCESS =================
 
         message.textContent =
+            data.message ||
             "Password reset link has been sent to your email.";
 
         message.className =
