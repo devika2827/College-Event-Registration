@@ -79,8 +79,17 @@ form.addEventListener("submit", async (e) => {
     const confirmPassword =
         confirmPasswordInput.value;
 
-
     // ================= VALIDATION =================
+    if (newPassword.length < 8) {
+
+    message.textContent =
+        "Password must be at least 8 characters long.";
+
+    message.className =
+        "toast error";
+
+    return;
+}
 
     if (!newPassword || !confirmPassword) {
 

@@ -241,28 +241,52 @@ const forgotPassword = async (req, res) => {
     return res.status(200).json({ message: "Password reset email sent successfully" });
 };
 const resetforgotPassword = async (req, res) => {
-    const {ResetToken} = req.params
-    const {newPassword} = req.body
 
-    let hashedToken= crypto
-    .createHash("sha256")
-    .update(ResetToken)
-    .digest("hex")
-
-    const user=await User.findOne({
-        forgotPasswordToken:hashedToken,
-        forgotPasswordTokenExpiry:{ $gt: Date.now()}
-    })
-    if(!user){
-        return res.status(400).json({ message: "Token is invalid or expired"})
+    const { ResetToken } = req.params;
+    const { newPassword } = req.body;
+    if (!newPassword) {
+        return res.status(400).json({
+            message: "New password is required"
+        });
     }
-    user.forgotPasswordToken=undefined;
-    user.forgotPasswordTokenExpiry=undefined;
+    if (newPassword.length < 8) {
+        return res.status(400).json({
+            message: "Password must be at least 8 characters long"
+        });
+    }
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(ResetToken)
+        .digest("hex");
+    const user = await User.findOne({
+        forgotPasswordToken: hashedToken,
+        forgotPasswordTokenExpiry: {
+            $gt: Date.now()
+        }
+    });
 
-    user.password=newPassword;
-    await user.save({ validateBeforeSave:false});
+    if (!user) {
+        return res.status(400).json({
+            message: "Token is invalid or expired"
+        });
+    }
 
-    return res.status(200).json({ message: "Password reset succesfully"});
+    try {
+        user.password = newPassword;
+        user.forgotPasswordToken = undefined;
+        user.forgotPasswordTokenExpiry = undefined;
+
+        await user.save();
+        return res.status(200).json({
+            message: "Password reset successfully"
+        });
+
+    } catch (error) {
+        console.error("Reset password error:", error);
+        return res.status(400).json({
+            message: error.message || "Unable to reset password"
+        });
+    }
 };
 const changeCurrentPassword= async (req ,res) =>{
     const{oldPassword , newPassword}=req.body;
