@@ -131,7 +131,7 @@ signupForm.addEventListener("submit", async (e) => {
         "Please verify your email."
     );
 
-    window.location.href ="verification.html";
+    window.location.href =`verification.html?email=${encodeURIComponent(email)}`;
 
     return;
 }
