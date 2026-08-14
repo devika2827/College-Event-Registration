@@ -1,24 +1,27 @@
-const API_URL = "https://college-event-registration-n942.onrender.com/api/v1/auth";
+console.log("NEW VERIFICATION JS LOADED");
 
-const params = new URLSearchParams(window.location.search);
-const email = params.get("email");
+const API_URL =
+    "https://college-event-registration-n942.onrender.com/api/v1/auth";
 
-const emailMessage = document.getElementById("emailMessage");
-const message = document.getElementById("message");
-const resendBtn = document.getElementById("resendBtn");
+const params =
+    new URLSearchParams(window.location.search);
 
-// Create timer text
-const timerText = document.createElement("div");
-timerText.id = "timerText";
-timerText.style.fontSize = "12px";
-timerText.style.color = "#7C8296";
-timerText.style.textAlign = "center";
-timerText.style.marginTop = "8px";
+const email =
+    params.get("email");
 
-resendBtn.parentNode.insertBefore(timerText, resendBtn.nextSibling);
+const emailMessage =
+    document.getElementById("emailMessage");
+
+const message =
+    document.getElementById("message");
+
+const resendBtn =
+    document.getElementById("resendBtn");
+
+const timerText =
+    document.getElementById("timerText");
 
 
-// Show email
 if (!email) {
 
     emailMessage.textContent =
@@ -34,7 +37,10 @@ if (!email) {
 }
 
 
-// Start 30 second cooldown
+// ------------------------------
+// 30 SECOND COOLDOWN
+// ------------------------------
+
 function startCooldown() {
 
     let seconds = 30;
@@ -44,103 +50,127 @@ function startCooldown() {
     timerText.textContent =
         `You can resend again in ${seconds}s`;
 
-    const timer = setInterval(() => {
 
-        seconds--;
+    const timer =
+        setInterval(() => {
 
-        if (seconds > 0) {
+            seconds--;
 
-            timerText.textContent =
-                `You can resend again in ${seconds}s`;
+            if (seconds > 0) {
 
-        } else {
+                timerText.textContent =
+                    `You can resend again in ${seconds}s`;
 
-            clearInterval(timer);
+            } else {
 
-            resendBtn.disabled = false;
+                clearInterval(timer);
 
-            timerText.textContent =
-                "You can resend the verification email now.";
+                resendBtn.disabled = false;
 
-        }
+                timerText.textContent =
+                    "You can resend the verification email now.";
 
-    }, 1000);
+            }
+
+        }, 1000);
 }
 
 
-// Resend verification email
-resendBtn.addEventListener("click", async () => {
+// ------------------------------
+// RESEND VERIFICATION EMAIL
+// ------------------------------
 
-    if (!email) {
-        return;
-    }
+resendBtn.addEventListener(
+    "click",
+    async () => {
 
-    resendBtn.disabled = true;
-
-    resendBtn.textContent = "Sending...";
-
-    message.textContent = "";
-    message.className = "toast";
-
-    try {
-
-        const response = await fetch(
-            `${API_URL}/resend-verification-email`,
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    email: email
-                })
-            }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                "Unable to resend verification email."
-            );
+        if (!email) {
+            return;
         }
 
-        message.textContent =
-            "A new verification email has been sent.";
-
-        message.className =
-            "toast success";
-
-        // Start 30 second timer ONLY after successful request
-        resendBtn.textContent =
-            "Resend Verification Email";
-
-        startCooldown();
-
-
-    } catch (error) {
-
-        console.error(
-            "Resend verification error:",
-            error
-        );
-
-        message.textContent =
-            error.message ||
-            "Unable to resend verification email.";
-
-        message.className =
-            "toast error";
-
-        // Allow retry immediately if request failed
-        resendBtn.disabled = false;
+        resendBtn.disabled = true;
 
         resendBtn.textContent =
-            "Resend Verification Email";
+            "Sending...";
+
+        message.textContent = "";
+
+        message.className =
+            "toast";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_URL}/resend-verification-email`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to resend verification email."
+                );
+
+            }
+
+
+            message.textContent =
+                "A new verification email has been sent.";
+
+            message.className =
+                "toast success";
+
+
+            resendBtn.textContent =
+                "Resend Verification Email";
+
+
+            // START 30 SECOND TIMER
+            startCooldown();
+
+
+        } catch (error) {
+
+            console.error(
+                "Resend verification error:",
+                error
+            );
+
+
+            message.textContent =
+                error.message ||
+                "Unable to resend verification email.";
+
+            message.className =
+                "toast error";
+
+
+            resendBtn.disabled =
+                false;
+
+            resendBtn.textContent =
+                "Resend Verification Email";
+
+        }
+
     }
-
-});
+);
