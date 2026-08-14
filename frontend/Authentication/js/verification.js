@@ -52,31 +52,28 @@ function startCooldown() {
     timerText.textContent =
         `You can resend again in ${seconds}s`;
 
+    const timer = setInterval(() => {
 
-    const timer =
-        setInterval(() => {
+        seconds--;
 
-            seconds--;
+        if (seconds > 0) {
 
-            if (seconds > 0) {
+            timerText.textContent =
+                `You can resend again in ${seconds}s`;
 
-                timerText.textContent =
-                    `You can resend again in ${seconds}s`;
+        } else {
 
-            } else {
+            clearInterval(timer);
 
-                clearInterval(timer);
+            resendBtn.disabled = false;
 
-                resendBtn.disabled = false;
+            timerText.textContent =
+                "You can resend the verification email now.";
 
-                timerText.textContent =
-                    "You can resend the verification email now.";
+        }
 
-            }
-
-        }, 1000);
+    }, 1000);
 }
-
 
 // ------------------------------
 // RESEND VERIFICATION EMAIL
