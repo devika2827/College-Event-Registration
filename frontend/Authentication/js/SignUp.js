@@ -126,15 +126,27 @@ signupForm.addEventListener("submit", async (e) => {
         // ================= SUCCESS =================
        if (response.ok) {
 
-    alert(
-        data.message ||
-        "Please verify your email."
+    // Save email for the verification page
+    sessionStorage.setItem(
+        "verificationEmail",
+        email
     );
 
-    window.location.href ="verification.html";
+    alert(
+        data.message ||
+        "A verification email has been sent. Please check your inbox."
+    );
+
+    window.location.href =
+        "verification.html";
 
     return;
 }
+
+alert(
+    data.message ||
+    "Registration failed."
+);
 
         // ================= BACKEND ERROR =================
 
