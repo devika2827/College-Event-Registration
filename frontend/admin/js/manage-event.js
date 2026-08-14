@@ -396,16 +396,15 @@ function filterEvents(){
             event.category.toLowerCase().includes(search) ||
             (event.venue || "").toLowerCase().includes(search);
 
-        const matchesCategory =
-            !category || event.category === category;
+        const matchesCategory = !category || event.category === category;
 
-        const matchesStatus =
-            !status || computedStatus === status;
+        const matchesStatus = !status || computedStatus === status;
 
         return matchesSearch &&
                matchesCategory &&
                matchesStatus;
     });
+
     displayEvents(filtered);
 }
     

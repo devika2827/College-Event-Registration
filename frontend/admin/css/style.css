@@ -13,7 +13,6 @@ body{
     display:block;
 }
 
-/* Top Bar */
 .topbar{
     position: sticky;
     top: 0;
@@ -111,7 +110,6 @@ body{
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Main */
 
 .content{
     width:100%;
@@ -407,12 +405,6 @@ input[type="file"]{
     margin-bottom:20px;
 }
 
-@media(max-width:900px){
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-}
-
 .modal-actions{
     display:flex;
     justify-content:flex-end;
@@ -555,6 +547,12 @@ body.modal-open{
     }
 }
 
+@media(max-width:900px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+
 .view-all-btn{
     text-decoration:none;
     color:white;
@@ -581,6 +579,7 @@ body.modal-open{
     .topbar-top {
         padding: 8px;
     }
+
     .topbar nav {
         width: 100%;
         display: flex;
@@ -594,7 +593,6 @@ body.modal-open{
 .profile-container{
     position:relative;
 }
-
 
 .dropdown{
     position:absolute;
@@ -612,13 +610,9 @@ body.modal-open{
     display:block;
 }
 
-/* User Info */
-
 .user-info{
     padding:18px;
 }
-
-/* Dropdown Links */
 
 .dropdown a{
     display:block;
@@ -695,11 +689,8 @@ button:hover {
     padding-right: 8px;
 }
 
-/* ===== PHONE (max-width: 480px) ===== */
-
 @media (max-width: 480px) {
 
-    /* Topbar */
     .topbar-top{
         padding: 15px;
         flex-wrap: wrap;
@@ -740,12 +731,10 @@ button:hover {
         font-size: 14px;
     }
 
-    /* Dropdown */
     .dropdown{
         width: 220px;
     }
 
-    /* Main content */
     .content{
         padding: 20px 15px;
     }
@@ -754,7 +743,6 @@ button:hover {
         padding: 15px;
     }
 
-    /* Stat cards */
     .stat-card{
         min-height: auto;
         padding: 18px;
@@ -764,7 +752,6 @@ button:hover {
         font-size: 32px;
     }
 
-    /* Events container / toolbar */
     .events-container{
         padding: 15px;
     }
@@ -785,7 +772,6 @@ button:hover {
         width: 100%;
     }
 
-    /* Table */
     .events-container th,
     .events-container td{
         padding: 12px;
@@ -806,7 +792,6 @@ button:hover {
         margin: 4px 0 0 0;
     }
 
-    /* Modals */
     .modal{
         padding: 15px;
     }
@@ -837,7 +822,6 @@ button:hover {
         padding: 25px;
     }
 
-    /* Team modal */
     #teamModalBody{
         max-height: 50vh;
     }

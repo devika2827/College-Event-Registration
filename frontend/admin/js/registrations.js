@@ -5,7 +5,6 @@ let registrations = [];
 let events = [];
 
 async function fetchRegistrations() {
-
     try {
 
         const response = await fetch(`${REGISTRATIONS_API_URL}/mine-as-host`, { credentials: "include" });
@@ -13,15 +12,12 @@ async function fetchRegistrations() {
         filterRegistrations();
 
     } catch (error) {
-
         console.log(error);
-
     }
 
 }
 
 async function fetchEventsForFilter() {
-
     try {
 
         const response = await fetch(EVENTS_API_URL);
@@ -34,9 +30,7 @@ async function fetchEventsForFilter() {
         });
 
     } catch (error) {
-
         console.log(error);
-
     }
 
 }
@@ -51,7 +45,6 @@ function displayRegistrations(filtered = registrations) {
     tableBody.innerHTML = "";
 
     if (filtered.length === 0) {
-
         tableBody.innerHTML = `
             <tr>
                 <td colspan="7" class="empty-state">
@@ -60,7 +53,6 @@ function displayRegistrations(filtered = registrations) {
             </tr>
         `;
         return;
-
     }
 
     filtered.forEach(reg => {
