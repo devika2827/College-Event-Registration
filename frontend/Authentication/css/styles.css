@@ -1,4 +1,3 @@
-/* ===== Design tokens ===== */
 :root {
   --ink: #1F2430;
   --muted: #7C8296;
@@ -16,7 +15,9 @@
   --font-body: 'Inter', 'Segoe UI', sans-serif;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { 
+  box-sizing: border-box; margin: 0; padding: 0; 
+}
 
 body {
   font-family: var(--font-body);
@@ -29,7 +30,7 @@ body {
   background: var(--bg);
 }
 
-/* ===== Card ===== */
+
 .auth-card {
   width: 100%;
   max-width: 400px;
@@ -50,7 +51,10 @@ body {
   margin-bottom: 18px;
 }
 
-.auth-head { text-align: center; margin-bottom: 26px; }
+.auth-head { 
+  text-align: center; 
+  margin-bottom: 26px;
+}
 
 .auth-head h1 {
   font-family: var(--font-display);
@@ -71,9 +75,16 @@ form {
   gap: 14px;
 }
 
-.field { display: flex; flex-direction: column; }
+.field { 
+  display: flex; 
+  flex-direction: column; 
+}
 
-.input-wrap { position: relative; display: flex; align-items: center; }
+.input-wrap { 
+  position: relative; 
+  display: flex; 
+  align-items: center; 
+}
 
 .input-wrap input,
 .input-wrap select {
@@ -89,14 +100,18 @@ form {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.input-wrap input::placeholder { color: #A6ABBC; }
+.input-wrap input::placeholder { 
+  color: #A6ABBC; 
+}
 
 .input-wrap input:focus {
   border-color: var(--blue);
   box-shadow: 0 0 0 4px var(--blue-soft);
 }
 
-.input-wrap.has-toggle input { padding-right: 42px; }
+.input-wrap.has-toggle input { 
+  padding-right: 42px; 
+}
 
 .toggle-eye {
   position: absolute;
@@ -108,10 +123,21 @@ form {
   display: flex;
   padding: 4px;
 }
-.toggle-eye:hover { color: var(--ink); }
-.toggle-eye svg { width: 18px; height: 18px; }
 
-.field-error { font-size: 11.5px; color: var(--danger); min-height: 14px; }
+.toggle-eye:hover { 
+  color: var(--ink); 
+}
+
+.toggle-eye svg { 
+  width: 18px; 
+  height: 18px; 
+}
+
+.field-error { 
+  font-size: 11.5px; 
+  color: var(--danger); 
+  min-height: 14px; 
+}
 
 .form-row {
   display: flex;
@@ -126,14 +152,22 @@ form {
   color: var(--blue);
   text-decoration: none;
 }
-.link:hover { text-decoration: underline; }
 
-.role-select { display: flex; gap: 10px; }
-.role-select input { display: none; }
+.link:hover { 
+  text-decoration: underline; 
+}
+
+.role-select { 
+  display: flex; gap: 10px; 
+}
+
+.role-select input { 
+  display: none; 
+}
+
 .role-pill {
   flex: 1;
   text-align: center;
-
   font-size: 13.5px;
   font-weight: 600;
   color: var(--muted);
@@ -142,13 +176,13 @@ form {
   cursor: pointer;
   transition: all 0.15s ease;
 }
+
 .role-select input:checked + .role-pill {
   background: var(--blue-soft);
   border-color: var(--blue);
   color: var(--blue-dark);
 }
 
-/* Primary button */
 .submit-btn {
   margin-top: 6px;
   font-family: var(--font-display);
@@ -162,9 +196,18 @@ form {
   cursor: pointer;
   transition: background 0.15s ease, transform 0.08s ease;
 }
-.submit-btn:hover { background: var(--blue-dark); }
-.submit-btn:active { transform: scale(0.98); }
-.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.submit-btn:hover { 
+  background: var(--blue-dark); 
+}
+
+.submit-btn:active { 
+  transform: scale(0.98); 
+}
+
+.submit-btn:disabled { 
+  opacity: 0.6; cursor: not-allowed; 
+}
 
 .form-foot {
   margin-top: 4px;
@@ -172,10 +215,17 @@ form {
   color: var(--muted);
   text-align: center;
 }
-.form-foot a { color: var(--blue); font-weight: 700; text-decoration: none; }
-.form-foot a:hover { text-decoration: underline; }
 
-/* Divider */
+.form-foot a { 
+  color: var(--blue); 
+  font-weight: 700; 
+  text-decoration: none; 
+}
+
+.form-foot a:hover { 
+  text-decoration: underline; 
+}
+
 .divider {
   display: flex;
   align-items: center;
@@ -184,6 +234,7 @@ form {
   color: var(--muted);
   font-size: 12.5px;
 }
+
 .divider::before, .divider::after {
   content: "";
   flex: 1;
@@ -191,7 +242,6 @@ form {
   background: var(--border);
 }
 
-/* Social buttons */
 .social-btn {
   width: 100%;
   display: flex;
@@ -210,16 +260,30 @@ form {
   transition: background 0.15s ease;
   margin-bottom: 10px;
 }
-.social-btn:last-child { margin-bottom: 0; }
-.social-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.social-btn:last-child { 
+  margin-bottom: 0; 
+}
+
+.social-btn svg { 
+  width: 18px; 
+  height: 18px; 
+  flex-shrink: 0; 
+}
 
 .social-btn.facebook {
   background: var(--fb);
   border-color: var(--fb);
   color: #fff;
 }
-.social-btn.facebook:hover { background: #1665D8; }
-.social-btn.google:hover { background: #F7F8FB; }
+
+.social-btn.facebook:hover { 
+  background: #1665D8; 
+}
+
+.social-btn.google:hover { 
+  background: #F7F8FB; 
+}
 
 .toast {
   display: none;
@@ -228,19 +292,21 @@ form {
   padding: 9px 12px;
   border-radius: 8px;
 }
+
 .toast.error {
   display: block;
   background: rgba(225,75,67,0.08);
   color: var(--danger);
   border: 1px solid rgba(225,75,67,0.25);
 }
+
 .toast.success {
   display: block;
   background: rgba(31,156,110,0.08);
   color: var(--success);
   border: 1px solid rgba(31,156,110,0.25);
 }
-/* Verification page resend button */
+
 #resendBtn {
     width: auto;
     min-width: 230px;
@@ -248,7 +314,6 @@ form {
     margin: 8px auto 0;
 }
 
-/* Verification resend cooldown */
 #timerText {
     margin-top: 10px;
     text-align: center;
@@ -258,12 +323,14 @@ form {
     min-height: 20px;
     transition: 0.2s ease;
 }
+
 .close-message {
     margin-top: 14px;
     text-align: center;
     font-size: 12.5px;
     color: var(--muted);
 }
+
 @media (max-width: 440px) {
   .auth-card { padding: 30px 22px 24px; }
 }
