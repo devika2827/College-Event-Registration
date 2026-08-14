@@ -1,54 +1,31 @@
-const API_URL =
-    "https://college-event-registration-n942.onrender.com/api/v1/auth";
+const API_URL = "https://college-event-registration-n942.onrender.com/api/v1/auth";
 
-const title =
-    document.getElementById("title");
-
-const message =
-    document.getElementById("message");
-
-const toast =
-    document.getElementById("toast");
-
-const loginBtn =
-    document.getElementById("loginBtn");
-const closeMessage =
-    document.getElementById("closeMessage");
+const title = document.getElementById("title");
+const message = document.getElementById("message");
+const toast = document.getElementById("toast");
+const loginBtn = document.getElementById("loginBtn");
+const closeMessage = document.getElementById("closeMessage");
 
 
 // Get token from URL
-
 const params =
     new URLSearchParams(window.location.search);
 
 const token =
     params.get("token");
 
-
-// No token
-
 if (!token) {
 
-    title.textContent =
-        "Verification Failed";
-
-    message.textContent =
-        "The verification link is invalid.";
-
-    toast.textContent =
-        "Verification token is missing.";
-
-    toast.className =
-        "toast error";
+    title.textContent = "Verification Failed";
+    message.textContent = "The verification link is invalid.";
+    toast.textContent = "Verification token is missing.";
+    toast.className = "toast error";
 
 } else {
-
     verifyEmail();
 }
 
-
 // Verify email
-
 async function verifyEmail() {
 
     try {
@@ -60,10 +37,7 @@ async function verifyEmail() {
             }
         );
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         if (!response.ok) {
 
@@ -73,16 +47,12 @@ async function verifyEmail() {
             );
         }
 
-
-        // SUCCESS
-
         title.textContent ="Email Verified!";
         message.textContent ="Your email has been verified successfully.";
         toast.textContent ="You can now login to your Nexus account.";
         toast.className ="toast success";
         loginBtn.style.display ="block";
         closeMessage.textContent ="Your email has been verified successfully. You can close this window now.";
-
 
     } catch (error) {
 
@@ -91,18 +61,11 @@ async function verifyEmail() {
             error
         );
 
-
-        title.textContent =
-            "Verification Failed";
-
-        message.textContent =
-            "We could not verify your email.";
-
+        title.textContent = "Verification Failed";
+        message.textContent = "We could not verify your email.";
         toast.textContent =
             error.message ||
             "The verification link is invalid or expired.";
-
-        toast.className =
-            "toast error";
+        toast.className = "toast error";
     }
 }

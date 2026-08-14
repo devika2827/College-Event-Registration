@@ -27,7 +27,6 @@ loginForm.addEventListener("submit", async (e) => {
 
     const body = { password };
 
-    // Determine whether the user entered an email or username
     if (identifier.includes("@")) {
         body.email = identifier;
     } else {

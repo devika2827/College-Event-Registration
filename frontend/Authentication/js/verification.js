@@ -1,24 +1,11 @@
-const API_URL =
-    "https://college-event-registration-n942.onrender.com/api/v1/auth";
+const API_URL = "https://college-event-registration-n942.onrender.com/api/v1/auth";
 
 
-const emailMessage =
-    document.getElementById("emailMessage");
-
-const message =
-    document.getElementById("message");
-
-const resendBtn =
-    document.getElementById("resendBtn");
-
-const timerText =
-    document.getElementById("timerText");
-
-
-// Get email saved during signup
-
-const email =
-    sessionStorage.getItem("verificationEmail");
+const emailMessage = document.getElementById("emailMessage");
+const message = document.getElementById("message");
+const resendBtn = document.getElementById("resendBtn");
+const timerText = document.getElementById("timerText");
+const email = sessionStorage.getItem("verificationEmail");
 
 
 if (!email) {
@@ -35,11 +22,6 @@ if (!email) {
 
 }
 
-
-// -----------------------------
-// 30 SECOND COOLDOWN
-// -----------------------------
-
 function startCooldown() {
 
     let seconds = 30;
@@ -48,7 +30,6 @@ function startCooldown() {
 
     timerText.textContent =
         `You can resend again in ${seconds}s`;
-
 
     const timer =
         setInterval(() => {
@@ -74,11 +55,7 @@ function startCooldown() {
         }, 1000);
 }
 
-
-// -----------------------------
-// RESEND VERIFICATION EMAIL
-// -----------------------------
-
+// Resend Verification Email
 resendBtn.addEventListener(
     "click",
     async () => {
@@ -94,17 +71,10 @@ resendBtn.addEventListener(
             return;
         }
 
-
         resendBtn.disabled = true;
-
-        resendBtn.textContent =
-            "Sending...";
-
+        resendBtn.textContent = "Sending...";
         message.textContent = "";
-
-        message.className =
-            "toast";
-
+        message.className = "toast";
 
         try {
 
@@ -113,22 +83,18 @@ resendBtn.addEventListener(
                     `${API_URL}/resend-verification-email`,
                     {
                         method: "POST",
-
                         headers: {
                             "Content-Type":
                                 "application/json"
                         },
-
                         body: JSON.stringify({
                             email: email
                         })
                     }
                 );
 
-
             const data =
                 await response.json();
-
 
             if (!response.ok) {
 
@@ -138,20 +104,11 @@ resendBtn.addEventListener(
                 );
             }
 
-
-            message.textContent =
-                "A new verification email has been sent.";
-
-            message.className =
-                "toast success";
-
-
-            resendBtn.textContent =
-                "Resend Verification Email";
-
+            message.textContent = "A new verification email has been sent.";
+            message.className = "toast success";
+            resendBtn.textContent = "Resend Verification Email";
 
             startCooldown();
-
 
         } catch (error) {
 
@@ -160,20 +117,15 @@ resendBtn.addEventListener(
                 error
             );
 
-
             message.textContent =
                 error.message ||
                 "Unable to resend verification email.";
 
-            message.className =
-                "toast error";
+            message.className = "toast error";
 
+            resendBtn.disabled = false;
 
-            resendBtn.disabled =
-                false;
-
-            resendBtn.textContent =
-                "Resend Verification Email";
+            resendBtn.textContent = "Resend Verification Email";
         }
 
     }

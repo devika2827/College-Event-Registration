@@ -1,7 +1,6 @@
 const signupForm = document.getElementById("signupForm");
 
-
-// ================= PASSWORD VISIBILITY =================
+// Password Visibility
 
 document.querySelectorAll(".toggle-eye").forEach(button => {
 
@@ -20,57 +19,36 @@ document.querySelectorAll(".toggle-eye").forEach(button => {
 
 });
 
-
-// ================= SIGNUP =================
+// Signup 
 
 signupForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
 
-    const name =
-        document.getElementById("name").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-    const username =
-        document.getElementById("username").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const password =
-        document.getElementById("password").value;
-
-    const confirmPassword =
-        document.getElementById("confirmPassword").value;
-
-
-    // ================= VALIDATION =================
+    // Validation 
 
     if (username.includes(" ")) {
-
         alert("Username cannot contain spaces.");
-
         return;
-
     }
-
 
     if (password !== confirmPassword) {
-
         alert("Passwords do not match.");
-
         return;
-
     }
 
-
     const body = {
-
         name,
         username,
         email,
         password
-
     };
 
 
@@ -81,20 +59,14 @@ signupForm.addEventListener("submit", async (e) => {
             {
 
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json"
                 },
-
                 credentials: "include",
-
                 body: JSON.stringify(body)
 
             }
         );
-
-
-        // ================= READ RESPONSE =================
 
         const contentType =
             response.headers.get("content-type") || "";
@@ -122,33 +94,23 @@ signupForm.addEventListener("submit", async (e) => {
             return;
         }
 
-
-        // ================= SUCCESS =================
        if (response.ok) {
 
-    // Save email for the verification page
-    sessionStorage.setItem(
-        "verificationEmail",
-        email
-    );
+            sessionStorage.setItem(
+                "verificationEmail",
+                email
+            );
 
-    alert(
-        data.message ||
-        "A verification email has been sent. Please check your inbox."
-    );
+            alert(
+                data.message ||
+                "A verification email has been sent. Please check your inbox."
+            );
 
-    window.location.href =
-        "verification.html";
+            window.location.href =
+                "verification.html";
 
-    return;
-}
-
-alert(
-    data.message ||
-    "Registration failed."
-);
-
-        // ================= BACKEND ERROR =================
+            return;
+        }
 
         alert(
             data.message ||
@@ -156,7 +118,6 @@ alert(
         );
 
     }
-
 
     catch (error) {
 

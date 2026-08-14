@@ -20,17 +20,14 @@ form.addEventListener("submit", async (e) => {
     const email = emailInput.value.trim();
 
 
-    // VALIDATION 
-
+    // Validation
     if (!email) {
         emailError.textContent =
             "Please enter your email address.";
         return;
     }
 
-
-    const emailPattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(email)) {
         emailError.textContent =
@@ -38,12 +35,8 @@ form.addEventListener("submit", async (e) => {
         return;
     }
 
-
-    // ================= BUTTON STATE =================
-
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending...";
-
 
     try {
 
@@ -51,19 +44,14 @@ form.addEventListener("submit", async (e) => {
             `${API_URL}/forgot-password`,
             {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json"
                 },
-
                 body: JSON.stringify({
                     email: email
                 })
             }
         );
-
-
-        // ================= READ RESPONSE =================
 
         const contentType =
             response.headers.get("content-type") || "";
@@ -76,7 +64,6 @@ form.addEventListener("submit", async (e) => {
 
         } else {
 
-            // Backend returned HTML/text instead of JSON
             const text = await response.text();
 
             console.error(
@@ -89,9 +76,6 @@ form.addEventListener("submit", async (e) => {
             );
         }
 
-
-        // ================= ERROR =================
-
         if (!response.ok) {
 
             throw new Error(
@@ -99,9 +83,6 @@ form.addEventListener("submit", async (e) => {
                 "Unable to send reset link."
             );
         }
-
-
-        // ================= SUCCESS =================
 
         message.textContent =
             data.message ||
