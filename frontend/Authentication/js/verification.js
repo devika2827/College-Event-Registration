@@ -1,4 +1,4 @@
-console.log("NEW VERIFICATION JS LOADED");
+console.log("VERIFICATION JS LOADED");
 
 const API_URL =
     "https://college-event-registration-n942.onrender.com/api/v1/auth";
@@ -20,16 +20,13 @@ const resendBtn =
 
 const timerText =
     document.getElementById("timerText");
-    console.log("timerText element:", timerText);
-console.log("resendBtn element:", resendBtn);
 
 
+// Show email
 if (!email) {
 
     emailMessage.textContent =
         "Verification email was sent. Please check your inbox.";
-
-    resendBtn.disabled = true;
 
 } else {
 
@@ -39,9 +36,9 @@ if (!email) {
 }
 
 
-// ------------------------------
-// 30 SECOND COOLDOWN
-// ------------------------------
+// -----------------------------
+// COOLDOWN
+// -----------------------------
 
 function startCooldown() {
 
@@ -52,124 +49,145 @@ function startCooldown() {
     timerText.textContent =
         `You can resend again in ${seconds}s`;
 
-    const timer = setInterval(() => {
+    const timer =
+        setInterval(() => {
 
-        seconds--;
+            seconds--;
 
-        if (seconds > 0) {
+            if (seconds > 0) {
 
-            timerText.textContent =
-                `You can resend again in ${seconds}s`;
+                timerText.textContent =
+                    `You can resend again in ${seconds}s`;
 
-        } else {
+            } else {
 
-            clearInterval(timer);
+                clearInterval(timer);
 
-            resendBtn.disabled = false;
+                resendBtn.disabled = false;
 
-            timerText.textContent =
-                "You can resend the verification email now.";
-
-        }
-
-    }, 1000);
-}
-
-// ------------------------------
-// RESEND VERIFICATION EMAIL
-// ------------------------------
-
-resendBtn.addEventListener(
-    "click",
-    async () => {
-
-        if (!email) {
-            return;
-        }
-
-        resendBtn.disabled = true;
-
-        resendBtn.textContent =
-            "Sending...";
-
-        message.textContent = "";
-
-        message.className =
-            "toast";
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_URL}/resend-verification-email`,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            email: email
-                        })
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.message ||
-                    "Unable to resend verification email."
-                );
+                timerText.textContent =
+                    "You can resend the verification email now.";
 
             }
 
-
-            message.textContent =
-                "A new verification email has been sent.";
-
-            message.className =
-                "toast success";
+        }, 1000);
+}
 
 
-            resendBtn.textContent =
-                "Resend Verification Email";
+// -----------------------------
+// RESEND
+// -----------------------------
+
+resendBtn.addEventListener("click", async () => {
+
+    if (!email) {
+
+        message.textContent =
+            "Email address is missing.";
+
+        message.className =
+            "toast error";
+
+        return;
+    }
 
 
-            // START 30 SECOND TIMER
-            startCooldown();
+    resendBtn.disabled = true;
+
+    resendBtn.textContent =
+        "Sending...";
+
+    message.textContent = "";
+
+    message.className =
+        "toast";
 
 
-        } catch (error) {
+    try {
 
-            console.error(
-                "Resend verification error:",
-                error
+        console.log("Sending resend request...");
+
+
+        const response =
+            await fetch(
+                `${API_URL}/resend-verification-email`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email: email
+                    })
+                }
             );
 
 
-            message.textContent =
-                error.message ||
-                "Unable to resend verification email.";
-
-            message.className =
-                "toast error";
+        const data =
+            await response.json();
 
 
-            resendBtn.disabled =
-                false;
+        console.log(
+            "Resend response:",
+            response.status,
+            data
+        );
 
-            resendBtn.textContent =
-                "Resend Verification Email";
 
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to resend verification email."
+            );
         }
 
+
+        // SUCCESS MESSAGE
+
+        message.textContent =
+            "A new verification email has been sent.";
+
+        message.className =
+            "toast success";
+
+
+        // Restore button text
+
+        resendBtn.textContent =
+            "Resend Verification Email";
+
+
+        // START TIMER
+
+        startCooldown();
+
+
+    } catch (error) {
+
+        console.error(
+            "Resend verification error:",
+            error
+        );
+
+
+        message.textContent =
+            error.message ||
+            "Unable to resend verification email.";
+
+        message.className =
+            "toast error";
+
+
+        resendBtn.disabled =
+            false;
+
+        resendBtn.textContent =
+            "Resend Verification Email";
+
     }
-);
+
+});
