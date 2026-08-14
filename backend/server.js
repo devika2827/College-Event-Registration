@@ -19,6 +19,7 @@ app.use(cors({
     origin: "https://nexus-college-event-registration.onrender.com", 
     credentials: true,
 }));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../frontend")));
