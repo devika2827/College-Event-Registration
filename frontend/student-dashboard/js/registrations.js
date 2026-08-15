@@ -96,11 +96,11 @@ function buildCard(reg, event, isUpcoming) {
             </span>
 
             ${reg.participationType === "Team" ? `
-                <button class="edit-btn" onclick="viewTeam('${reg.registrationId}')">View Team</button>
+                <button class="view-team-btn" onclick="viewTeam('${reg.registrationId}')">View Team</button>
             ` : ""}
 
             <button class="withdraw-btn" onclick="withdrawRegistration('${reg.registrationId}')">
-                ${reg.participationType === "Team" ? "Leave / Cancel" : "Withdraw"}
+                ${"Withdraw"}
             </button>
 
 
@@ -118,11 +118,7 @@ function viewTeam(registrationId) {
         return `
             <p><strong>Name:</strong> ${person.name}</p>
             <p><strong>College:</strong> ${person.college}</p>
-            <p><strong>Department:</strong> ${person.department}</p>
-            <p><strong>Year:</strong> ${person.year}</p>
-            <p><strong>Roll No:</strong> ${person.rollNo}</p>
-            <p><strong>Email:</strong> ${person.email}</p>
-            <p><strong>Phone:</strong> ${person.phone}</p>
+            <p><strong>Branch:</strong> ${person.department}</p>
         `;
     }
 
