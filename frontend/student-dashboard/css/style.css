@@ -111,7 +111,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Top Bar */
 .topbar-top{
     display: flex;
     align-items: center;
@@ -178,13 +177,9 @@ body {
     display:block;
 }
 
-/* ===== User Info ===== */
-
 .user-info{
     padding:18px;
 }
-
-/* ===== Dropdown Links ===== */
 
 .dropdown a{
     display:block;
@@ -197,28 +192,6 @@ body {
 .dropdown a:hover{
     background:#f4f4f4;
     color:#4b46df;
-}
-
-/* ===== Responsive ===== */
-
-@media(max-width:768px){
-
-    .navbar{
-        padding:18px 25px;
-    }
-
-    .logo a{
-        font-size:26px;
-    }
-
-    .nav-links{
-        gap:15px;
-    }
-
-    .nav-links a{
-        font-size:17px;
-    }
-
 }
 
 #userName{
@@ -294,3 +267,23 @@ body {
 
     }
   }
+
+@media(max-width:768px){
+
+    .navbar{
+        padding:18px 25px;
+    }
+
+    .logo a{
+        font-size:26px;
+    }
+
+    .nav-links{
+        gap:15px;
+    }
+
+    .nav-links a{
+        font-size:17px;
+    }
+
+}

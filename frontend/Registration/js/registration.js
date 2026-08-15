@@ -264,7 +264,7 @@ async function submitRegistration(e){
             return;
         }
 
-        const member = getTeamLeader();   // same fields, reused for the joining person
+        const member = getTeamLeader();  
 
         if (member.name === "" || !isValidEmail(member.email) || !isValidPhone(member.phone)) {
             alert("Please fill in your details correctly.");
@@ -340,7 +340,6 @@ async function submitRegistration(e){
     }
 
 }
-
 
 function showSuccess(registration){
 
