@@ -1,82 +1,104 @@
-NEXUS – College Event Management System
+# Nexus — College Event Management System
 
-NEXUS is a web-based College Event Management System designed to provide a centralized platform for discovering, managing, and registering for college events. It simplifies the registration process for students and helps organizers efficiently manage events and participant information.
+Nexus is a web-based platform that centralizes how college events are discovered, managed, and registered for. It streamlines registration for students and gives organizers the tools to manage events and participant data efficiently.
 
-LINK-https://nexus-college-event-registration.onrender.com
+**Live demo:** [nexus-college-event-registration.onrender.com](https://nexus-college-event-registration.onrender.com)
 
-PROJECT OVERVIEW
+---
 
-The system allows students to create accounts, log in securely, browse available events, view event details, and register for individual or team-based events. Organizers can create and manage events, update event information, upload event banners, and view registration details.
+## Table of Contents
 
-KEY FEATURES
+- [Overview](#overview)
+- [Features](#features)
+- [Event Categories](#event-categories)
+- [Tech Stack](#tech-stack)
+- [System Workflow](#system-workflow)
+- [Database](#database)
+- [Security](#security)
 
-Student Features
-• Student registration and secure login
-• Browse upcoming college events
-• Search and filter events
-• View detailed event information
-• Register for individual or team events
-• Registration confirmation with Registration ID
+---
 
-Event Management
-• Create and manage events
-• Update event details
-• Manage event status and availability
-• Upload event banners
-• View registered participants
+## Overview
 
-Registration Management
-• Structured collection of student and team information
-• Validation of registration data
-• Automatic Registration ID generation
-• Storage and retrieval of registration records
-• Support for different team sizes
+Nexus allows students to create accounts, log in securely, browse available events, view event details, and register — either individually or as part of a team. Organizers can create and manage events, update event details, upload banners, and view participant registrations, all from a dedicated admin dashboard.
 
-EVENT CATEGORIES
+---
 
-• Technical
-• Workshop
-• Culture
-• Sports
+## Features
 
-TECHNOLOGY STACK
+### For Students
+- Secure registration and login
+- Browse upcoming college events
+- Search and filter events by category
+- View detailed event information
+- Register individually or as part of a team
+- Instant registration confirmation with a unique Registration ID
 
-Frontend: HTML, CSS, JavaScript
-Backend: Node.js, Express.js
-Database: MongoDB, Mongoose
-Authentication: JWT
-Version Control: Git and GitHub
-Development Environment: Visual Studio Code
+### Event Management (Admin)
+- Create and manage events
+- Update event details
+- Manage event status and availability
+- Upload event banners
+- View and manage registered participants
 
-SYSTEM WORKFLOW
+### Registration Management
+- Structured collection of student and team information
+- Server-side validation of registration data
+- Automatic, unique Registration ID generation
+- Persistent storage and retrieval of registration records
+- Support for flexible team sizes (solo, fixed team, or a min–max range)
 
-1. Student creates an account or logs in.
-2. Student browses available college events.
+---
+
+## Event Categories
+
+| Category   |
+|------------|
+| Technical  |
+| Workshop   |
+| Culture    |
+| Sports     |
+
+---
+
+## Tech Stack
+
+| Layer                     | Technology                      |
+|----------------------------|----------------------------------|
+| Frontend                   | HTML, CSS, JavaScript           |
+| Backend                    | Node.js, Express.js             |
+| Database                   | MongoDB with Mongoose           |
+| Authentication              | JWT (JSON Web Tokens)           |
+| Version Control            | Git & GitHub                    |
+| Development Environment    | Visual Studio Code              |
+
+---
+
+## System Workflow
+
+1. A student creates an account or logs in.
+2. The student browses available college events.
 3. Events can be searched or filtered by category.
-4. Student views the details of the selected event.
-5. Student submits the registration form.
-6. Registration data is validated and processed.
-7. Validated information is stored in MongoDB.
-8. A unique Registration ID is generated.
-9. Organizers can manage events and view registration information.
+4. The student views details for a selected event.
+5. The student submits the registration form.
+6. Registration data is validated on the server.
+7. Validated data is stored in MongoDB.
+8. A unique Registration ID is generated and returned.
+9. Organizers manage events and review registrations through the admin dashboard.
 
-DATABASE
+---
 
-MongoDB is used to store application data, while Mongoose is used for schema definition and database interaction.
+## Database
 
-The major data collections include:
-• Users
-• Events
-• Registrations
+MongoDB is used for data storage, with Mongoose handling schema definition and data interaction. The core collections are:
 
-SECURITY
+- **Users** — student and admin accounts
+- **Events** — event details, banners, categories, and team-size rules
+- **Registrations** — participant and team registration records, linked to both users and events
 
-JWT-based authentication is used to manage authenticated users and protect authorized operations. Sensitive information such as database credentials and authentication secrets is maintained through environment variables and is not included in the repository.
+---
 
-PROJECT COMPLETION
+## Security
 
-The NEXUS College Event Management System has been successfully developed and implemented as a functional web-based platform. The system integrates authentication, event management, event registration, database storage, and participant management into a unified application.
-
-TEAM
-
-NEXUS is a collaborative college project with contributions across frontend development, backend development, authentication, registration, event management, and database integration.
+- **JWT-based authentication** protects authorized operations and manages logged-in sessions.
+- **Environment variables** are used for sensitive configuration (database credentials, JWT secrets), which are excluded from version control.
