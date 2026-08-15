@@ -8,21 +8,17 @@
 
     <link rel="stylesheet" href="../css/registration.css">
 
-    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
-
+    <!-- Topbar -->
     <header class="topbar">
 
         <div class="topbar-top">
@@ -66,11 +62,9 @@
     </header>
 
 
-    <!-- ================= MAIN PAGE ================= -->
+    <!-- Main -->
 
     <main class="registration-page">
-
-        <!-- PAGE HEADING -->
 
         <section class="page-heading">
             <h1>Event Registration</h1>
@@ -79,12 +73,9 @@
 
         <div class="registration-container">
 
-            <!-- ================= REGISTRATION FORM ================= -->
-
             <form id="registrationForm">
 
-                <!-- PARTICIPATION TYPE -->
-
+                <!-- Participation Type-->
                 <section class="card form-section">
 
                     <div class="section-heading" id="participationSection">
@@ -135,7 +126,7 @@
 
                 </section>
 
-                <!-- ================= TEAM INFORMATION ================= -->
+                <!-- Team Info -->
 
                 <section class="card form-section" id="teamInfoSection">
 
@@ -166,8 +157,7 @@
 
                     <div class="form-grid" id="createTeamFields">
 
-                        <!-- TEAM NAME -->
-
+                        <!-- Team Name -->
                         <div class="form-group">
 
                             <label for="teamName">
@@ -190,8 +180,7 @@
 
                         </div>
 
-                        <!-- TEAM SIZE -->
-
+                        <!-- Team Size -->
                         <div class="form-group">
 
                             <label for="teamSize">
@@ -218,8 +207,7 @@
 
                     </div>
 
-                    <!-- JOIN TEAM FIELDS -->
-
+                    <!-- Join Exisitng Team-->
                     <div class="form-grid" id="joinTeamFields" style="display:none;">
 
                         <div class="form-group full-width">
@@ -248,8 +236,7 @@
 
                 </section>
 
-                <!-- ================= TEAM LEADER ================= -->
-
+                <!-- Team Leader Info -->
                 <section class="card form-section">
 
                     <div class="section-heading">
@@ -259,8 +246,7 @@
 
                     <div class="form-grid">
 
-                        <!-- NAME -->
-
+                        <!-- Name -->
                         <div class="form-group">
 
                             <label for="leaderName">
@@ -283,8 +269,7 @@
 
                         </div>
 
-                        <!-- COLLEGE -->
-
+                        <!-- College -->
                         <div class="form-group">
 
                             <label for="leaderCollege">
@@ -307,8 +292,7 @@
 
                         </div>
 
-                        <!-- DEPARTMENT -->
-
+                        <!-- Branch -->
                         <div class="form-group">
 
                             <label for="leaderDepartment">
@@ -331,8 +315,7 @@
 
                         </div>
 
-                        <!-- YEAR -->
-
+                        <!-- Year -->
                         <div class="form-group">
 
                             <label for="leaderYear">
@@ -356,8 +339,7 @@
 
                         </div>
 
-                        <!-- ROLL NUMBER -->
-
+                        <!-- Roll Number-->
                         <div class="form-group">
 
                             <label for="leaderRollNo">
@@ -370,8 +352,8 @@
                                 id="leaderRollNo"
                                 name="leaderRollNo"
                                 placeholder="Enter roll number"
-                                required
-                            >
+                                required>
+                            
 
                             <span
                                 class="error-message"
@@ -380,8 +362,7 @@
 
                         </div>
 
-                        <!-- EMAIL -->
-
+                        <!-- Email -->
                         <div class="form-group">
 
                             <label for="leaderEmail">
@@ -394,9 +375,8 @@
                                 id="leaderEmail"
                                 name="leaderEmail"
                                 placeholder="Enter email address"
-                                required
-                            >
-
+                                required>
+                        
                             <span
                                 class="error-message"
                                 id="leaderEmailError"
@@ -404,8 +384,7 @@
 
                         </div>
 
-                        <!-- PHONE -->
-
+                        <!-- Contact -->
                         <div class="form-group full-width">
 
                             <label for="leaderPhone">
@@ -421,8 +400,7 @@
                                 maxlength="10"
                                 pattern="[0-9]{10}"
                                 inputmode="numeric"
-                                required
-                            >
+                                required>
 
                             <span
                                 class="error-message"
@@ -435,27 +413,10 @@
 
                 </section>
 
-                <!-- ================= DYNAMIC TEAM MEMBERS ================= -->
+                <!-- Team Member -->
+                <div id="teamMembersContainer"> </div>
 
-                <div id="teamMembersContainer">
-
-                    <!--
-
-                    JavaScript will automatically create:
-
-                    Team Member 2
-                    Team Member 3
-                    Team Member 4
-                    etc.
-
-                    depending on Team Size.
-
-                    -->
-
-                </div>
-
-                <!-- ================= DECLARATION ================= -->
-
+                <!-- Declaration-->
                 <section class="card declaration-section">
 
                     <label class="declaration-label">
@@ -464,8 +425,7 @@
                             type="checkbox"
                             id="terms"
                             name="terms"
-                            required
-                        >
+                            required>
 
                         <span>
                             I confirm that the information provided above
@@ -498,13 +458,11 @@
 
             </form>
 
-            <!-- ================= SUCCESS MESSAGE ================= -->
-
             <section
                 class="card success-section"
                 id="successSection"
-                hidden
-            >
+                hidden></section>
+            
 
                 <div class="success-icon">
                     ✓
@@ -544,8 +502,6 @@
         </div>
 
     </main>
-
-    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="../js/registration.js"></script>
     <script src="../../profile.js"></script>

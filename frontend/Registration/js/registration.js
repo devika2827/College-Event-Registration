@@ -1,7 +1,5 @@
 const API_URL = "https://college-event-registration-n942.onrender.com/api/registrations";
 
-/* SELECTED EVENT */
-
 const eventData = JSON.parse(localStorage.getItem("selectedEvent"));
 
 if (!eventData) {
@@ -9,7 +7,6 @@ if (!eventData) {
     window.location.href = "../../student-dashboard/html/index.html";
 }
 
-/* SOLO / TEAM */
 
 const soloRadio=document.getElementById("soloOption");
 const teamRadio=document.getElementById("teamOption");
@@ -32,7 +29,6 @@ function buildTeamSizeOptions() {
 
 buildTeamSizeOptions();   
 
-/* EVENT TYPE */
 
 const maxTeamSize = Number(eventData.maxTeamSize);
 const minTeamSize = Number(eventData.minTeamSize);
@@ -42,7 +38,6 @@ const teamInfoSection = document.getElementById("teamInfoSection");
 const leaderHeading = document.getElementById("leaderSectionHeading");
 const leaderSubheading = document.getElementById("leaderSectionSubheading");
 const teamNameInput = document.getElementById("teamName");
-
 const teamModeOptions = document.getElementById("teamModeOptions");
 const createTeamOption = document.getElementById("createTeamOption");
 const joinTeamOption = document.getElementById("joinTeamOption");
@@ -118,20 +113,24 @@ findTeamBtn.addEventListener("click", async () => {
 });
 
 function showTeamFields(){
+
     teamInfoSection.style.display = "";
     leaderHeading.textContent = "Team Leader Information";
     leaderSubheading.textContent = "Enter the details of the team leader.";
     teamSize.disabled = false;
     teamNameInput.required = true;
     teamSize.required = true;
+
     if(!teamSize.value || Number(teamSize.value) < 2){
         teamSize.value = String(Math.max(2, minTeamSize));
     }
+
     createTeamOption.checked = true;
     showCreateMode();
 }
 
 function showSoloFields(){
+
     teamInfoSection.style.display = "none";
     leaderHeading.textContent = "Your Information";
     leaderSubheading.textContent = "Enter your details.";
@@ -143,7 +142,6 @@ function showSoloFields(){
 
 if(minTeamSize === 1 && maxTeamSize === 1){
 
-    /* SOLO ONLY — hide participation choice and team fields entirely */
     participationSection.style.display = "none";
     soloRadio.checked = true;
     teamRadio.disabled = true;
@@ -151,7 +149,6 @@ if(minTeamSize === 1 && maxTeamSize === 1){
 
 }else if(minTeamSize === 1 && maxTeamSize > 1){
 
-    /* FLEXIBLE — let the student pick */
     participationSection.style.display = "";
     soloRadio.disabled = false;
     teamRadio.disabled = false;
@@ -164,7 +161,6 @@ if(minTeamSize === 1 && maxTeamSize === 1){
 
 }else{
 
-    /* TEAM ONLY — no solo mention anywhere */
     participationSection.style.display = "none";
     teamRadio.checked = true;
     soloRadio.disabled = true;
@@ -172,7 +168,6 @@ if(minTeamSize === 1 && maxTeamSize === 1){
 
 }
 
-/* VALIDATION FUNCTIONS */
 
 function isValidEmail(email){
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -183,7 +178,6 @@ function isValidPhone(phone){
 }
 
 
-/* GET TEAM LEADER */
 
 function getTeamLeader(){
 
@@ -199,7 +193,6 @@ function getTeamLeader(){
 
 }
 
-/* FORM VALIDATION */
 
 function validateForm(){
 
@@ -245,7 +238,6 @@ function validateForm(){
         return false;
     }
 
-
     if (!soloRadio.checked && document.getElementById("teamName").value.trim() === "") {
             alert("Please enter Team Name.");
             return false;
@@ -254,9 +246,6 @@ function validateForm(){
     return true;
 }
 
-
-
-/* SUBMIT FORM */
 
 const registrationForm = document.getElementById("registrationForm");
 
@@ -312,7 +301,6 @@ async function submitRegistration(e){
         return;
     }
 
-
     if(!validateForm()) return;
 
     const eventId = eventData._id;
@@ -334,7 +322,6 @@ async function submitRegistration(e){
             headers:{
                 "Content-Type":"application/json"
             },
-
             body:JSON.stringify(registration)
 
         });
@@ -354,7 +341,6 @@ async function submitRegistration(e){
 
 }
 
-/* SUCCESS PAGE */
 
 function showSuccess(registration){
 
