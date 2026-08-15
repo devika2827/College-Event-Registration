@@ -22,7 +22,8 @@ function displayEvents(list) {
         <p class="info"><i class="fa-solid fa-calendar"></i> ${new Date(event.date).toLocaleDateString()}</p>
         <p class="info"><i class="fa-solid fa-location-dot"></i> ${event.mode === "Online" ? "Online" : event.venue }</p>
         <p class="info">Category : ${event.category}</p>
-        <p class="info">Team size : ${event.minTeamSize === event.maxTeamSize ? event.minTeamSize : `${event.minTeamSize} - ${event.maxTeamSize}`}</p>        <p class="info">${event.eligibility === "College Only" ? "IGDTUW Students Only" : "Open to All"}</p>
+        <p class="info">Team size : ${event.minTeamSize === event.maxTeamSize ? event.minTeamSize : `${event.minTeamSize} - ${event.maxTeamSize}`}</p>       
+        <p class="info">${event.eligibility === "College Only" ? "IGDTUW Students Only" : "Open to All"}</p>
         <button onclick="viewDetails('${event._id}')">View Details</button>
       </div>
     `;
