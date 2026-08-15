@@ -6,15 +6,12 @@ const jwt = require("jsonwebtoken");
 const regUser = async (req, res) => {
 
     const {name, email, username, password} = req.body;
-
     const existedUser = await User.findOne({
         $or: [{email}]
     });
-
     if (existedUser) {
         return res.status(400).json({ message: "Email already registered" });
     }
-
     const existedUser2 = await User.findOne({
         $or: [{username}]
     });
@@ -22,16 +19,13 @@ const regUser = async (req, res) => {
     if (existedUser2) {
         return res.status(400).json({ message: "Username already taken" });
     }
-
     let user;
 
     try {
         user = await User.create({ name, email, username, password, Verified: false });
 
     } catch (error) {
-
         return res.status(400).json({ message: error.message });
-        
     }
 
 
@@ -50,9 +44,7 @@ const regUser = async (req, res) => {
     const createdUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken -emailVerificationExpiry");
 
     if(!createdUser){
-
         return res.status(400).json({ message: "User not found" });
-
     }
 
     return res.status(201).json({ message: "Account created. A verification email has been sent to your email address.", user: createdUser });
@@ -62,9 +54,7 @@ const regUser = async (req, res) => {
 const generateAccessAndRefreshTokens = async (UserID) => {
 
     try {
-
         const user = await User.findById(UserID);
-
         const accessToken = user.generateAccessToken();
         const refreshToken = user.generateRefreshToken();
 

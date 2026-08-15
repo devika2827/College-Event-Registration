@@ -88,7 +88,6 @@ const emailVerificationMail = ( username, verificationLink ) => {
                     link: verificationLink
                 }
             },
-
             outro: "If you did not create an account, no further action is required."
         }
     };

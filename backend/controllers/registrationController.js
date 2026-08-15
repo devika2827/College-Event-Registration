@@ -22,7 +22,6 @@ const createRegistration = async (req, res) => {
 
     try {
         const registrationId = await generateUniqueRegistrationId();
-
         const registration = await Registration.create({
             ...req.body,
             registrationId,
@@ -145,7 +144,6 @@ const getMyRegistrations = async (req, res) => {
 const getRegistrationsForMyEvents = async (req, res) => {
     try {
         const myEventIds = await Event.find({ createdBy: req.user._id }).distinct("_id");
-
         const registrations = await Registration.find({
             eventId: { $in: myEventIds }
         })

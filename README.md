@@ -2,6 +2,8 @@ NEXUS – College Event Management System
 
 NEXUS is a web-based College Event Management System designed to provide a centralized platform for discovering, managing, and registering for college events. It simplifies the registration process for students and helps organizers efficiently manage events and participant information.
 
+LINK-https://nexus-college-event-registration.onrender.com
+
 PROJECT OVERVIEW
 
 The system allows students to create accounts, log in securely, browse available events, view event details, and register for individual or team-based events. Organizers can create and manage events, update event information, upload event banners, and view registration details.
