@@ -68,4 +68,3 @@ function viewDetails(id) {
 
   window.location.href = "event.html";
 }
-

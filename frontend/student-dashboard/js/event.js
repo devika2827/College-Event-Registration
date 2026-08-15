@@ -19,12 +19,9 @@ eventData.rules.forEach((rule) => {
   });
 });
 
-/* CHECK IF ALREADY REGISTERED */
-
 async function checkRegistrationStatus() {
 
     try {
-
         const response = await fetch("https://college-event-registration-n942.onrender.com/api/registrations/my", {
             credentials: "include"
         });

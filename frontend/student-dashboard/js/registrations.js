@@ -4,7 +4,6 @@ const past = document.getElementById("past");
 async function loadRegistrations() {
 
     try {
-
         const response = await fetch("https://college-event-registration-n942.onrender.com/api/registrations/my", {
             credentials: "include",
         });
@@ -28,7 +27,6 @@ async function loadRegistrations() {
             const event = reg.eventId;
 
             if (!event) {
-                // Original event was deleted — still show the registration, just without live event details
                 const card = buildCard(reg, null, false);
                 past.innerHTML += card;
                 pastCount++;
@@ -37,7 +35,6 @@ async function loadRegistrations() {
 
             const eventDate = new Date(event.date);
             const isUpcoming = eventDate >= today;
-
             const card = buildCard(reg, event, isUpcoming);
 
             if (isUpcoming) {
@@ -101,7 +98,6 @@ async function withdrawRegistration(registrationId) {
     }
 
     try {
-
         const response = await fetch(`https://college-event-registration-n942.onrender.com/api/registrations/${registrationId}/leave`, {
             method: "DELETE",
             credentials: "include"
