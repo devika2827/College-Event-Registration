@@ -5,6 +5,9 @@ let allRegistrations = [];
 
 const teamModal = document.getElementById("teamModal");
 const teamModalBody = document.getElementById("teamModalBody");
+const closeTeamModalBtn = document.getElementById("closeTeamModal");
+
+closeTeamModalBtn.onclick = () => { teamModal.style.display = "none"; };
 
 window.addEventListener("click", (e) => {
     if (e.target === teamModal) teamModal.style.display = "none";
