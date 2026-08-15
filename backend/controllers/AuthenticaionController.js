@@ -97,7 +97,7 @@ const loginUser = async (req, res) => {
         const isPasswordValid = await user.isPasswordCorrect(password);
 
         if (!isPasswordValid) {
-            return res.status(400).json({ message: "Invalid credentials" });
+            return res.status(400).json({ message: "Invalid password" });
         }
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);

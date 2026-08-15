@@ -47,18 +47,16 @@ loginForm.addEventListener("submit", async (e) => {
 
         if (response.ok) {
              window.location.href = "../../student-dashboard/html/index.html";
-
-        } else {
-            if (data.unverified) {
+            return;
+        }
+        if (data.unverified) {
             sessionStorage.setItem("verificationEmail",data.email
             );
             window.location.href ="verification.html";
             return;
         }
-            throw new Error(
-                data.message || "Login failed"
-            );
-        }
+        alert(data.message || "Login failed");
+        
 
     } catch (error) {
         console.error("Error:", error);
