@@ -4,7 +4,7 @@ button {
   height: 50px;
   border: none;
   border-radius: 30px;
-  background: #4338ca;
+  background: #2563eb;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -109,7 +109,7 @@ button:hover {
   margin-top: 35px;
   border: none;
   border-radius: 40px;
-  background: linear-gradient(90deg, #16a34a, #22c55e);
+  background: #2563eb;
   color: white;
   font-size: 20px;
   font-weight: bold;
