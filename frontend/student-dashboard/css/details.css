@@ -4,7 +4,7 @@ button {
   height: 50px;
   border: none;
   border-radius: 30px;
-  background: linear-gradient(90deg, #7b2f3c, #4f46e5);
+  background: #4338ca;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -15,6 +15,7 @@ button {
 button:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+  background: #3730a3;
 }
 
 @media (max-width: 768px) {

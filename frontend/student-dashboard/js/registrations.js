@@ -1,6 +1,18 @@
 const upcoming = document.getElementById("upcoming");
 const past = document.getElementById("past");
 
+let allRegistrations = [];
+
+const teamModal = document.getElementById("teamModal");
+const teamModalBody = document.getElementById("teamModalBody");
+const closeTeamModalBtn = document.getElementById("closeTeamModal");
+
+closeTeamModalBtn.onclick = () => { teamModal.style.display = "none"; };
+
+window.addEventListener("click", (e) => {
+    if (e.target === teamModal) teamModal.style.display = "none";
+});
+
 async function loadRegistrations() {
 
     try {
@@ -9,6 +21,7 @@ async function loadRegistrations() {
         });
 
         const registrations = await response.json();
+        allRegistrations = registrations;
 
         upcoming.innerHTML = "";
         past.innerHTML = "";
@@ -81,6 +94,11 @@ function buildCard(reg, event, isUpcoming) {
             <span class="status ${event ? (isUpcoming ? "upcoming" : "past") : "past"}">
                 ${event ? (isUpcoming ? "Upcoming" : "Completed") : "Event Deleted"}
             </span>
+
+            ${reg.participationType === "Team" ? `
+                <button class="edit-btn" onclick="viewTeam('${reg.registrationId}')">View Team</button>
+            ` : ""}
+
             <button class="withdraw-btn" onclick="withdrawRegistration('${reg.registrationId}')">
                 ${reg.participationType === "Team" ? "Leave / Cancel" : "Withdraw"}
             </button>
@@ -88,6 +106,45 @@ function buildCard(reg, event, isUpcoming) {
 
         </div>
     `;
+
+}
+
+function viewTeam(registrationId) {
+
+    const reg = allRegistrations.find(r => r.registrationId === registrationId);
+    if (!reg) return;
+
+    function renderPerson(person) {
+        return `
+            <p><strong>Name:</strong> ${person.name}</p>
+            <p><strong>College:</strong> ${person.college}</p>
+            <p><strong>Department:</strong> ${person.department}</p>
+            <p><strong>Year:</strong> ${person.year}</p>
+            <p><strong>Roll No:</strong> ${person.rollNo}</p>
+            <p><strong>Email:</strong> ${person.email}</p>
+            <p><strong>Phone:</strong> ${person.phone}</p>
+        `;
+    }
+
+    const leaderBlock = `
+        <p style="margin-bottom:10px;"><strong class="detail-heading">Team Leader</strong></p>
+        ${renderPerson(reg.teamLeader)}
+    `;
+
+    const membersBlock = (reg.teamMembers && reg.teamMembers.length > 0)
+        ? `
+            <br>
+            <p style="margin-bottom:10px;"><strong class="detail-heading">Team Members</strong></p>
+            ${reg.teamMembers.map(m => `
+                <div style="margin-bottom:14px;">
+                    ${renderPerson(m)}
+                </div>
+            `).join("")}
+        `
+        : "";
+
+    teamModalBody.innerHTML = `${leaderBlock}${membersBlock}`;
+    teamModal.style.display = "flex";
 
 }
 
