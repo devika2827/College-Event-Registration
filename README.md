@@ -2,7 +2,7 @@
 
 Nexus is a web-based platform that centralizes how college events are discovered, managed, and registered for. It streamlines registration for students and gives organizers the tools to manage events and participant data efficiently.
 
-**Live demo:** [nexus-college-event-registration.onrender.com](https://nexus-college-event-registration.onrender.com)
+**Link:** [nexus-college-event-registration.onrender.com](https://nexus-college-event-registration.onrender.com)
 
 ---
 
@@ -10,7 +10,6 @@ Nexus is a web-based platform that centralizes how college events are discovered
 
 - [Overview](#overview)
 - [Features](#features)
-- [Event Categories](#event-categories)
 - [Tech Stack](#tech-stack)
 - [System Workflow](#system-workflow)
 - [Database](#database)
@@ -47,17 +46,6 @@ Nexus allows students to create accounts, log in securely, browse available even
 - Automatic, unique Registration ID generation
 - Persistent storage and retrieval of registration records
 - Support for flexible team sizes (solo, fixed team, or a min–max range)
-
----
-
-## Event Categories
-
-| Category   |
-|------------|
-| Technical  |
-| Workshop   |
-| Culture    |
-| Sports     |
 
 ---
 
