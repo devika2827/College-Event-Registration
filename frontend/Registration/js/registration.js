@@ -102,7 +102,7 @@ findTeamBtn.addEventListener("click", async () => {
 
         document.getElementById("foundTeamName").textContent = data.teamName;
         document.getElementById("foundLeaderName").textContent = data.leaderName;
-        document.getElementById("foundTeamSize").textContent = `${data.currentSize} / ${maxTeamSize}`;
+        document.getElementById("foundTeamSize").textContent = `${data.currentSize} / ${data.teamSize}`;
         teamFoundInfo.style.display = "block";
 
     } catch (error) {

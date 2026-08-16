@@ -171,7 +171,8 @@ const lookupTeam = async (req, res) => {
             eventId: registration.eventId,
             teamName: registration.teamName,
             leaderName: registration.teamLeader.name,
-            currentSize: 1 + registration.teamMembers.length
+            currentSize: 1 + registration.teamMembers.length,
+            teamSize: registration.teamSize
         });
 
     } catch (error) {
