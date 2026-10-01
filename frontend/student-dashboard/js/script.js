@@ -5,7 +5,15 @@ const cards = document.getElementById("cards");
 async function loadEvents() {
   try {
     const res = await fetch("https://college-event-registration-n942.onrender.com/api/events"); 
-    events = await res.json();
+    const all = await res.json();
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    events = all.filter((event) => {
+      const deadline = new Date(event.registrationDeadline);
+      deadline.setHours(23, 59, 59, 999); // open through the whole deadline day
+      return event.status !== "Closed" && deadline >= now;
+    });
     displayEvents(events);
   } catch (err) {
     console.error("Failed to load events:", err);
@@ -34,32 +42,23 @@ function displayEvents(list) {
 loadEvents();
 
 const search = document.getElementById("search");
+const category = document.getElementById("category");
 
-search.addEventListener("keyup", () => {
+function applyFilters() {
   const keyword = search.value.toLowerCase();
+  const value = category.value;
 
-  const filtered = events.filter((event) =>
-    event.name.toLowerCase().includes(keyword),
+  const filtered = events.filter(
+    (event) =>
+      event.name.toLowerCase().includes(keyword) &&
+      (value === "All" || event.category === value),
   );
 
   displayEvents(filtered);
-});
+}
 
-const category = document.getElementById("category");
-
-category.addEventListener("change", () => {
-  const value = category.value;
-
-  if (value === "All") {
-    displayEvents(events);
-
-    return;
-  }
-
-  const filtered = events.filter((event) => event.category === value);
-
-  displayEvents(filtered);
-});
+search.addEventListener("input", applyFilters);
+category.addEventListener("change", applyFilters);
 
 function viewDetails(id) {
   const selectedEvent = events.find((event) => event._id === id);

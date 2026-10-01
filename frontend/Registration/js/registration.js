@@ -346,6 +346,6 @@ function showSuccess(registration){
     registrationForm.style.display="none";
 
     document.getElementById("successSection").hidden=false;
-    document.getElementById("successEventName").innerHTML = eventData.name;
+    document.getElementById("successEventName").textContent = eventData.name;
     document.getElementById("registrationId").innerHTML= registration.registrationId;
 }

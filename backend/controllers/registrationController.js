@@ -18,24 +18,63 @@ async function generateUniqueRegistrationId(){
     return id;
 }
 
+function isEventClosed(event) {
+    const deadline = new Date(event.registrationDeadline);
+    deadline.setHours(23, 59, 59, 999);
+    return event.status === "Closed" || deadline < new Date();
+}
+
+async function userAlreadyInEvent(eventId, userId) {
+    return Registration.exists({
+        eventId,
+        $or: [
+            { "teamLeader.registeredBy": userId },
+            { "teamMembers.registeredBy": userId }
+        ]
+    });
+}
+
 const createRegistration = async (req, res) => {
 
     try {
+        const { eventId, teamName, teamSize, teamLeader } = req.body;
+
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ message: "Event not found." });
+        }
+
+        if (isEventClosed(event)) {
+            return res.status(400).json({ message: "Registrations are closed for this event." });
+        }
+
+        const size = Number(teamSize);
+        if (!Number.isInteger(size) || size < event.minTeamSize || size > event.maxTeamSize) {
+            return res.status(400).json({ message: "Invalid team size for this event." });
+        }
+
+        if (await userAlreadyInEvent(eventId, req.user._id)) {
+            return res.status(400).json({ message: "You are already registered for this event." });
+        }
+
         const registrationId = await generateUniqueRegistrationId();
         const registration = await Registration.create({
-            ...req.body,
+            eventId,
+            eventName: event.name,
             registrationId,
+            participationType: size === 1 ? "Solo" : "Team",
+            teamName,
+            teamSize: size,
             teamLeader: {
-                ...req.body.teamLeader,
+                ...teamLeader,
                 registeredBy: req.user._id
-            }
+            },
+            teamMembers: []
         });
         res.status(201).json(registration);
 
     } catch (error) {
-
-        res.status(400).json({ message: error.message});
-
+        res.status(400).json({ message: error.message });
     }
 
 };
@@ -193,6 +232,15 @@ const joinTeam = async (req, res) => {
 
         if (registration.eventId.toString() !== eventId) {
             return res.status(400).json({ message: "This Registration ID belongs to a different event." });
+        }
+
+        const event = await Event.findById(registration.eventId);
+        if (!event || isEventClosed(event)) {
+            return res.status(400).json({ message: "Registrations are closed for this event." });
+        }
+
+        if (await userAlreadyInEvent(registration.eventId, req.user._id)) {
+            return res.status(400).json({ message: "You are already registered for this event." });
         }
 
         const currentSize = 1 + registration.teamMembers.length;
